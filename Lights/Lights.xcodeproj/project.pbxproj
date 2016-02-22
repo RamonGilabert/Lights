@@ -9,17 +9,18 @@
 /* Begin PBXBuildFile section */
 		2982B7F41C7BBCE600270C74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982B7F31C7BBCE600270C74 /* AppDelegate.swift */; };
 		2982B7F61C7BBCE600270C74 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982B7F51C7BBCE600270C74 /* ViewController.swift */; };
-		2982B7FB1C7BBCE600270C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2982B7FA1C7BBCE600270C74 /* Assets.xcassets */; };
-		2982B7FE1C7BBCE600270C74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2982B7FC1C7BBCE600270C74 /* LaunchScreen.storyboard */; };
+		2982B80A1C7BBE1000270C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2982B8061C7BBE1000270C74 /* Assets.xcassets */; };
+		2982B80B1C7BBE1000270C74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2982B8071C7BBE1000270C74 /* LaunchScreen.storyboard */; };
+		2982B80C1C7BBE1000270C74 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2982B8091C7BBE1000270C74 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2982B7F01C7BBCE600270C74 /* Lights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2982B7F31C7BBCE600270C74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2982B7F51C7BBCE600270C74 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		2982B7FA1C7BBCE600270C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		2982B7FD1C7BBCE600270C74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		2982B7FF1C7BBCE600270C74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2982B8061C7BBE1000270C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2982B8081C7BBE1000270C74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2982B8091C7BBE1000270C74 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,11 +55,19 @@
 			children = (
 				2982B7F31C7BBCE600270C74 /* AppDelegate.swift */,
 				2982B7F51C7BBCE600270C74 /* ViewController.swift */,
-				2982B7FA1C7BBCE600270C74 /* Assets.xcassets */,
-				2982B7FC1C7BBCE600270C74 /* LaunchScreen.storyboard */,
-				2982B7FF1C7BBCE600270C74 /* Info.plist */,
+				2982B8051C7BBE1000270C74 /* Resources */,
 			);
 			path = Lights;
+			sourceTree = "<group>";
+		};
+		2982B8051C7BBE1000270C74 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2982B8061C7BBE1000270C74 /* Assets.xcassets */,
+				2982B8071C7BBE1000270C74 /* LaunchScreen.storyboard */,
+				2982B8091C7BBE1000270C74 /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,8 +128,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2982B7FE1C7BBCE600270C74 /* LaunchScreen.storyboard in Resources */,
-				2982B7FB1C7BBCE600270C74 /* Assets.xcassets in Resources */,
+				2982B80A1C7BBE1000270C74 /* Assets.xcassets in Resources */,
+				2982B80B1C7BBE1000270C74 /* LaunchScreen.storyboard in Resources */,
+				2982B80C1C7BBE1000270C74 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,10 +149,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		2982B7FC1C7BBCE600270C74 /* LaunchScreen.storyboard */ = {
+		2982B8071C7BBE1000270C74 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2982B7FD1C7BBCE600270C74 /* Base */,
+				2982B8081C7BBE1000270C74 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -235,7 +245,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = Lights/Info.plist;
+				INFOPLIST_FILE = Lights/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blackBox.Lights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -246,7 +257,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = Lights/Info.plist;
+				INFOPLIST_FILE = Lights/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.blackBox.Lights;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -272,6 +284,7 @@
 				2982B8041C7BBCE600270C74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
