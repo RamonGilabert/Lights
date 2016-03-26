@@ -29,6 +29,13 @@ class StartController: UIViewController {
   lazy var explanationView: ExplanationView = ExplanationView(title: Text.Explanation.title,
                                                               subtitle: Text.Explanation.subtitle)
 
+  lazy var tapGesture: UITapGestureRecognizer = { [unowned self] in
+    let gesture = UITapGestureRecognizer()
+    gesture.addTarget(self, action: #selector(handleTapGesture))
+
+    return gesture
+  }()
+
   lazy var searchingLabel: UILabel = {
     let label = UILabel()
     
@@ -40,6 +47,7 @@ class StartController: UIViewController {
 
     [startView, flameView, explanationView].forEach { view.addSubview($0) }
     view.backgroundColor = Color.General.background
+    view.addGestureRecognizer(tapGesture)
 
     setupConstraints()
   }
@@ -47,6 +55,18 @@ class StartController: UIViewController {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
     stone()
+  }
+
+  // MARK: - Action methods
+
+  func handleTapGesture() {
+    let location = tapGesture.locationInView(view)
+
+    droplet(location,
+            view: view,
+            size: 25,
+            duration: 1, multiplier: 2.5,
+            color: Color.General.ripple)
   }
 
   // MARK: - Constraints
@@ -84,6 +104,6 @@ extension StartController: StartViewDelegate {
   }
 
   func shouldDisplayRipple() {
-    stone(2.5)
+    stone(2)
   }
 }
