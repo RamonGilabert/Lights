@@ -29,7 +29,11 @@ class StartController: UIViewController {
   lazy var explanationView: ExplanationView = ExplanationView(title: Text.Explanation.title,
                                                               subtitle: Text.Explanation.subtitle)
 
-  var rippled = false
+  lazy var searchingLabel: UILabel = {
+    let label = UILabel()
+    
+    return label
+  }()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -42,16 +46,7 @@ class StartController: UIViewController {
 
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-
-    if !rippled {
-      rippled = true
-
-      ripple(startView.center,
-             view: view,
-             size: StartView.Dimensions.buttonSize,
-             duration: 4, multiplier: 1.65, divider: 1.5,
-             color: Color.General.ripple)
-    }
+    stone()
   }
 
   // MARK: - Constraints
@@ -70,11 +65,25 @@ class StartController: UIViewController {
       explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth)
       ])
   }
+
+  // MARK - Helper methods
+
+  func stone(duration: NSTimeInterval = 4) {
+    ripple(startView.center,
+           view: view,
+           size: StartView.Dimensions.buttonSize,
+           duration: duration, multiplier: 1.65, divider: 1.5,
+           color: Color.General.ripple)
+  }
 }
 
 extension StartController: StartViewDelegate {
 
   func startButtonDidPress() {
-    // TODO: Implement
+    calm()
+  }
+
+  func shouldDisplayRipple() {
+    stone(2.5)
   }
 }

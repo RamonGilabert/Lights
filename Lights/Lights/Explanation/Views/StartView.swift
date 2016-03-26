@@ -1,8 +1,10 @@
 import UIKit
+import Ripple
 
 protocol StartViewDelegate {
 
   func startButtonDidPress()
+  func shouldDisplayRipple()
 }
 
 class StartView: UIView {
@@ -23,10 +25,9 @@ class StartView: UIView {
 
     button.setTitle("Start".uppercaseString, forState: .Normal)
     button.setTitleColor(Color.General.background, forState: .Normal)
-    button.prepareShadow()
     button.backgroundColor = Color.Button.Start.background
-    button.layer.cornerRadius = Dimensions.buttonSize / 2
     button.titleLabel?.font = Font.General.start
+    button.layer.cornerRadius = Dimensions.buttonSize / 2
 
     return button
     }()
@@ -38,12 +39,23 @@ class StartView: UIView {
     return view
   }()
 
+  lazy var indicator: UIView = {
+    let view = UIView()
+    view.layer.borderColor = Color.General.life.CGColor
+    view.layer.borderWidth = 2
+    view.layer.cornerRadius = 7
+    view.backgroundColor = Color.General.background
+
+    return view
+  }()
+
   var delegate: StartViewDelegate?
 
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    [startButton, popView].forEach { addSubview($0) }
+    addSubview(startButton)
+    startButton.addSubview(popView)
 
     setupConstraints()
   }
@@ -57,6 +69,23 @@ class StartView: UIView {
   func startButtonDidPress() {
     delegate?.startButtonDidPress()
     animateBackground(Color.Button.Start.background)
+
+    let boundsAnimation = CABasicAnimation(keyPath: "bounds.size")
+    boundsAnimation.toValue = NSValue(CGSize: CGSize(
+      width: Dimensions.buttonSize - 4, height: Dimensions.buttonSize - 4))
+
+    let borderAnimation = CABasicAnimation(keyPath: "cornerRadius")
+    borderAnimation.toValue = (Dimensions.buttonSize - 4) / 2
+
+    let animationGroup = CAAnimationGroup()
+    animationGroup.animations = [boundsAnimation, borderAnimation]
+    animationGroup.duration = 0.35
+    animationGroup.delegate = self
+    animationGroup.timingFunction = CAMediaTimingFunction(controlPoints: 0.62, 0.68, 0.29, 0.98)
+    animationGroup.removedOnCompletion = false
+    animationGroup.fillMode = kCAFillModeForwards
+
+    popView.layer.addAnimation(animationGroup, forKey: "pop")
   }
 
   func startButtonDidPressDown() {
@@ -76,7 +105,10 @@ class StartView: UIView {
       startButton.topAnchor.constraintEqualToAnchor(topAnchor),
       startButton.rightAnchor.constraintEqualToAnchor(rightAnchor),
       startButton.bottomAnchor.constraintEqualToAnchor(bottomAnchor),
-      startButton.leftAnchor.constraintEqualToAnchor(leftAnchor)
+      startButton.leftAnchor.constraintEqualToAnchor(leftAnchor),
+
+      popView.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
+      popView.centerYAnchor.constraintEqualToAnchor(centerYAnchor)
       ])
   }
 
@@ -86,5 +118,12 @@ class StartView: UIView {
     UIView.animateWithDuration(0.25, animations: {
       self.startButton.backgroundColor = color
     })
+  }
+}
+
+extension StartView {
+
+  override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+    delegate?.shouldDisplayRipple()
   }
 }
