@@ -7,6 +7,8 @@ class StartController: UIViewController {
     static let bottomOffset: CGFloat = -50
     static let flameHeight: CGFloat = 50
     static let flameOffset: CGFloat = 40
+    static let explanationOffset: CGFloat = 14
+    static let explanationWidth: CGFloat = -56
   }
 
   lazy var startView: StartView = { [unowned self] in
@@ -24,7 +26,8 @@ class StartController: UIViewController {
     return imageView
   }()
 
-  lazy var explanationView: ExplanationView = ExplanationView()
+  lazy var explanationView: ExplanationView = ExplanationView(title: Text.Explanation.title,
+                                                              subtitle: Text.Explanation.subtitle)
 
   var rippled = false
 
@@ -60,7 +63,11 @@ class StartController: UIViewController {
 
       flameView.heightAnchor.constraintEqualToConstant(Dimensions.flameHeight),
       flameView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      flameView.topAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.flameOffset)
+      flameView.topAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.flameOffset),
+
+      explanationView.topAnchor.constraintEqualToAnchor(flameView.bottomAnchor, constant: Dimensions.explanationOffset),
+      explanationView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
+      explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth)
       ])
   }
 }
