@@ -3,6 +3,12 @@ import Ripple
 
 class StartController: UIViewController {
 
+  struct Dimensions {
+    static let bottomOffset: CGFloat = -50
+    static let flameHeight: CGFloat = 50
+    static let flameOffset: CGFloat = 40
+  }
+
   lazy var startView: StartView = { [unowned self] in
     let view = StartView()
     view.delegate = self
@@ -10,12 +16,22 @@ class StartController: UIViewController {
     return view
   }()
 
+  lazy var flameView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: Image.flame)
+    imageView.contentMode = .ScaleAspectFit
+
+    return imageView
+  }()
+
+  lazy var explanationView: ExplanationView = ExplanationView()
+
   var rippled = false
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.addSubview(startView)
+    [startView, flameView, explanationView].forEach { view.addSubview($0) }
     view.backgroundColor = Color.General.background
 
     setupConstraints()
@@ -40,7 +56,11 @@ class StartController: UIViewController {
   func setupConstraints() {
     NSLayoutConstraint.activateConstraints([
       startView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      startView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 110)
+      startView.bottomAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.bottomOffset),
+
+      flameView.heightAnchor.constraintEqualToConstant(Dimensions.flameHeight),
+      flameView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
+      flameView.topAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.flameOffset)
       ])
   }
 }
