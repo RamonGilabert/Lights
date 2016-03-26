@@ -1,4 +1,5 @@
 import UIKit
+import Ripple
 
 class StartController: UIViewController {
 
@@ -10,6 +11,8 @@ class StartController: UIViewController {
     return view
   }()
 
+  var rippled = false
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -17,6 +20,20 @@ class StartController: UIViewController {
     view.backgroundColor = Color.General.background
 
     setupConstraints()
+  }
+
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+
+    if !rippled {
+      rippled = true
+
+      ripple(startView.startButton.center,
+             view: startView,
+             size: StartView.Dimensions.buttonSize,
+             duration: 4, multiplier: 1.65, divider: 1.5,
+             color: Color.General.ripple)
+    }
   }
 
   // MARK: - Constraints
