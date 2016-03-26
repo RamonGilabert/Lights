@@ -15,7 +15,7 @@ class StartView: UIView {
     let button = UIButton()
     button.addTarget(self, action: #selector(startButtonDidPress),
                      forControlEvents: .TouchUpInside)
-    button.backgroundColor = UIColor.blackColor()
+    button.backgroundColor = Color.General.life
     button.translatesAutoresizingMaskIntoConstraints = false
     button.layer.cornerRadius = Dimensions.buttonSize / 2
     button.prepareShadow()
@@ -25,6 +25,7 @@ class StartView: UIView {
 
   lazy var popView: UIView = {
     let view = UIView()
+    view.backgroundColor = Color.General.background
     view.translatesAutoresizingMaskIntoConstraints = false
     
     return view

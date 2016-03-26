@@ -14,7 +14,7 @@ class StartController: UIViewController {
     super.viewDidLoad()
 
     view.addSubview(startView)
-    view.backgroundColor = UIColor.whiteColor()
+    view.backgroundColor = Color.General.background
 
     setupConstraints()
   }
