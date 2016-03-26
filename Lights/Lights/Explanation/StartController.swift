@@ -4,7 +4,9 @@ class StartController: UIViewController {
 
   lazy var startView: StartView = { [unowned self] in
     let view = StartView()
+    view.translatesAutoresizingMaskIntoConstraints = false
     view.delegate = self
+    view.backgroundColor = UIColor.redColor()
 
     return view
   }()
@@ -14,6 +16,19 @@ class StartController: UIViewController {
 
     view.addSubview(startView)
     view.backgroundColor = UIColor.whiteColor()
+
+    setupConstraints()
+  }
+
+  // MARK: - Constraints
+
+  func setupConstraints() {
+    NSLayoutConstraint.activateConstraints([
+      startView.widthAnchor.constraintEqualToAnchor(view.widthAnchor),
+      startView.heightAnchor.constraintEqualToAnchor(view.heightAnchor, multiplier: 0.5),
+      startView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
+      startView.topAnchor.constraintEqualToAnchor(view.topAnchor)
+      ])
   }
 }
 

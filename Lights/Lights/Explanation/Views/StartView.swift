@@ -17,6 +17,7 @@ class StartView: UIView {
                      forControlEvents: .TouchUpInside)
     button.backgroundColor = UIColor.blackColor()
     button.translatesAutoresizingMaskIntoConstraints = false
+    button.layer.cornerRadius = Dimensions.buttonSize / 2
 
     return button
     }()
@@ -55,7 +56,7 @@ class StartView: UIView {
       startButton.widthAnchor.constraintEqualToConstant(Dimensions.buttonSize),
       startButton.heightAnchor.constraintEqualToConstant(Dimensions.buttonSize),
       startButton.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
-      startButton.centerYAnchor.constraintEqualToAnchor(centerYAnchor, constant: 110)
+      startButton.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: -35)
       ])
   }
 }
