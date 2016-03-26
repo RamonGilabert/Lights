@@ -28,7 +28,7 @@ class StartController: UIViewController {
     if !rippled {
       rippled = true
 
-      ripple(startView.startButton.center,
+      ripple(startView.center,
              view: view,
              size: StartView.Dimensions.buttonSize,
              duration: 4, multiplier: 1.65, divider: 1.5,
@@ -40,10 +40,8 @@ class StartController: UIViewController {
 
   func setupConstraints() {
     NSLayoutConstraint.activateConstraints([
-      startView.widthAnchor.constraintEqualToAnchor(view.widthAnchor),
-      startView.heightAnchor.constraintEqualToAnchor(view.heightAnchor, multiplier: 0.5),
       startView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      startView.topAnchor.constraintEqualToAnchor(view.topAnchor)
+      startView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 110)
       ])
   }
 }

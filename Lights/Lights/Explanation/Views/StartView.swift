@@ -75,8 +75,10 @@ class StartView: UIView {
     NSLayoutConstraint.activateConstraints([
       startButton.widthAnchor.constraintEqualToConstant(Dimensions.buttonSize),
       startButton.heightAnchor.constraintEqualToConstant(Dimensions.buttonSize),
-      startButton.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
-      startButton.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: -Dimensions.bottomOffset)
+      startButton.topAnchor.constraintEqualToAnchor(topAnchor),
+      startButton.rightAnchor.constraintEqualToAnchor(rightAnchor),
+      startButton.bottomAnchor.constraintEqualToAnchor(bottomAnchor),
+      startButton.leftAnchor.constraintEqualToAnchor(leftAnchor)
       ])
   }
 
