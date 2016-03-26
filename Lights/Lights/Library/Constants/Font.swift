@@ -3,11 +3,11 @@ import UIKit
 struct Font {
 
   private struct Brandon {
-    static let bold = "Brandon Grotesque Bold"
+    static let bold = "BrandonGrotesque-Bold"
   }
 
   private struct Lato {
-    static let bold = "Lato Bold"
+    static let bold = "Lato-Bold"
   }
 
   struct General {

@@ -18,6 +18,9 @@ class StartView: UIView {
     button.backgroundColor = Color.General.life
     button.translatesAutoresizingMaskIntoConstraints = false
     button.layer.cornerRadius = Dimensions.buttonSize / 2
+    button.titleLabel?.font = Font.General.start
+    button.setTitle("Start".uppercaseString, forState: .Normal)
+    button.setTitleColor(Color.General.background, forState: .Normal)
     button.prepareShadow()
 
     return button
