@@ -1,5 +1,6 @@
 import UIKit
 import Ripple
+import Walker
 
 protocol StartViewDelegate {
 
@@ -12,6 +13,7 @@ class StartView: UIView {
   struct Dimensions {
     static let buttonSize: CGFloat = 180
     static let bottomOffset: CGFloat = 45
+    static let indicatorSize: CGFloat = 14
   }
 
   lazy var startButton: UIButton = { [unowned self] in
@@ -45,6 +47,8 @@ class StartView: UIView {
     view.layer.borderWidth = 2
     view.layer.cornerRadius = 7
     view.backgroundColor = Color.General.background
+    view.transform = CGAffineTransformMakeScale(0.1, 0.1)
+    view.alpha = 0
 
     return view
   }()
@@ -56,6 +60,7 @@ class StartView: UIView {
 
     addSubview(startButton)
     startButton.addSubview(popView)
+    startButton.addSubview(indicator)
 
     setupConstraints()
   }
@@ -68,6 +73,7 @@ class StartView: UIView {
 
   func startButtonDidPress() {
     delegate?.startButtonDidPress()
+    startButton.userInteractionEnabled = false
     animateBackground(Color.Button.Start.background)
 
     let boundsAnimation = CABasicAnimation(keyPath: "bounds.size")
@@ -108,7 +114,12 @@ class StartView: UIView {
       startButton.leftAnchor.constraintEqualToAnchor(leftAnchor),
 
       popView.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
-      popView.centerYAnchor.constraintEqualToAnchor(centerYAnchor)
+      popView.centerYAnchor.constraintEqualToAnchor(centerYAnchor),
+
+      indicator.widthAnchor.constraintEqualToConstant(Dimensions.indicatorSize),
+      indicator.heightAnchor.constraintEqualToConstant(Dimensions.indicatorSize),
+      indicator.centerYAnchor.constraintEqualToAnchor(topAnchor, constant: 2),
+      indicator.centerXAnchor.constraintEqualToAnchor(centerXAnchor)
       ])
   }
 
@@ -119,11 +130,37 @@ class StartView: UIView {
       self.startButton.backgroundColor = color
     })
   }
+
+  func rotateView() {
+    let duration: NSTimeInterval = 1
+    let curve = Animation.Curve.Bezier(0.31, 0.62, 0.69, 0.44)
+
+    animate(startButton, duration: duration, curve: curve) {
+      $0.transform3D = CATransform3DMakeRotation(3.14, 0, 0, 1)
+    }.chain(duration: duration, curve: curve) {
+      $0.transform3D = CATransform3DMakeRotation(6.28, 0, 0, 1)
+    }.finally {
+      self.startButton.layer.transform = CATransform3DIdentity
+      self.rotateView()
+    }
+  }
 }
 
 extension StartView {
 
   override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
     delegate?.shouldDisplayRipple()
+    popView.layer.removeAnimationForKey("pop")
+
+    popView.layer.bounds.size = CGSize(
+      width: Dimensions.buttonSize - 4, height: Dimensions.buttonSize - 4)
+    popView.layer.cornerRadius = (Dimensions.buttonSize - 4) / 2
+    indicator.alpha = 1
+
+    spring(indicator, spring: 100, friction: 25, mass: 10) {
+      $0.transform = CGAffineTransformIdentity
+    }.finally {
+      self.rotateView()
+    }
   }
 }
