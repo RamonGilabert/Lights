@@ -33,7 +33,6 @@ class StartController: UIViewController {
              size: StartView.Dimensions.buttonSize,
              duration: 4, multiplier: 1.65, divider: 1.5,
              color: Color.General.ripple)
-      view.bringSubviewToFront(startView)
     }
   }
 

@@ -1,10 +1,12 @@
 PODS:
+  - Hue (1.1)
   - Morgan (0.9.1):
     - Walker
   - Ripple (2.0)
   - Walker (0.9.1)
 
 DEPENDENCIES:
+  - Hue
   - Morgan (from `https://github.com/RamonGilabert/Morgan.git`)
   - Ripple (from `https://github.com/RamonGilabert/Ripple.git`)
 
@@ -23,6 +25,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/RamonGilabert/Ripple.git
 
 SPEC CHECKSUMS:
+  Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
   Morgan: 9cb6cdfd5eaafcdc98af5c05620cad575ace77de
   Ripple: 59c84addacbfa502274ce0d351e6de1fd20ef9fc
   Walker: 9a765e7f35adb19ce59079e26d425c1e8c463241

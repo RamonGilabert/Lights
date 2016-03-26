@@ -9,16 +9,22 @@ class StartView: UIView {
 
   struct Dimensions {
     static let buttonSize: CGFloat = 180
+    static let bottomOffset: CGFloat = 45
   }
 
   lazy var startButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(startButtonDidPress),
                      forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(startButtonDidPressDown),
+                     forControlEvents: .TouchDown)
+    button.addTarget(self, action: #selector(startButtonDidCancel),
+                     forControlEvents: .TouchDragExit)
+
     button.setTitle("Start".uppercaseString, forState: .Normal)
     button.setTitleColor(Color.General.background, forState: .Normal)
     button.prepareShadow()
-    button.backgroundColor = Color.General.life
+    button.backgroundColor = Color.Button.Start.background
     button.translatesAutoresizingMaskIntoConstraints = false
     button.layer.cornerRadius = Dimensions.buttonSize / 2
     button.titleLabel?.font = Font.General.start
@@ -52,6 +58,15 @@ class StartView: UIView {
 
   func startButtonDidPress() {
     delegate?.startButtonDidPress()
+    animateBackground(Color.Button.Start.background)
+  }
+
+  func startButtonDidPressDown() {
+    animateBackground(Color.Button.Start.hover)
+  }
+
+  func startButtonDidCancel() {
+    animateBackground(Color.Button.Start.background)
   }
 
   // MARK: - Constraints
@@ -61,7 +76,15 @@ class StartView: UIView {
       startButton.widthAnchor.constraintEqualToConstant(Dimensions.buttonSize),
       startButton.heightAnchor.constraintEqualToConstant(Dimensions.buttonSize),
       startButton.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
-      startButton.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: -35)
+      startButton.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: -Dimensions.bottomOffset)
       ])
+  }
+
+  // MARK: - Helper methods
+
+  func animateBackground(color: UIColor) {
+    UIView.animateWithDuration(0.25, animations: {
+      self.startButton.backgroundColor = color
+    })
   }
 }

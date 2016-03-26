@@ -4,3 +4,4 @@ platform :ios, '8.0'
 
 pod 'Ripple', :git => 'https://github.com/RamonGilabert/Ripple.git'
 pod 'Morgan', :git => 'https://github.com/RamonGilabert/Morgan.git'
+pod 'Hue'
