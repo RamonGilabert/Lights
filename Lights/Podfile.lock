@@ -1,16 +1,30 @@
 PODS:
   - Morgan (0.9.1):
     - Walker
-  - Ripple (1.0)
+  - Ripple (2.0)
   - Walker (0.9.1)
 
 DEPENDENCIES:
-  - Morgan
-  - Ripple
+  - Morgan (from `https://github.com/RamonGilabert/Morgan.git`)
+  - Ripple (from `https://github.com/RamonGilabert/Ripple.git`)
+
+EXTERNAL SOURCES:
+  Morgan:
+    :git: https://github.com/RamonGilabert/Morgan.git
+  Ripple:
+    :git: https://github.com/RamonGilabert/Ripple.git
+
+CHECKOUT OPTIONS:
+  Morgan:
+    :commit: 5728b9d7a2fdaa8384821a71403216b07fbbfbc4
+    :git: https://github.com/RamonGilabert/Morgan.git
+  Ripple:
+    :commit: b0987d4c88f3a971a4e56865c3d9966565fde682
+    :git: https://github.com/RamonGilabert/Ripple.git
 
 SPEC CHECKSUMS:
   Morgan: 9cb6cdfd5eaafcdc98af5c05620cad575ace77de
-  Ripple: 2605b14604f22f9faa3272ec765c9793eff1e85a
+  Ripple: 59c84addacbfa502274ce0d351e6de1fd20ef9fc
   Walker: 9a765e7f35adb19ce59079e26d425c1e8c463241
 
 COCOAPODS: 0.39.0.beta.4

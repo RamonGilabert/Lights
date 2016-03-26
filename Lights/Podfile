@@ -2,5 +2,5 @@ use_frameworks!
 
 platform :ios, '8.0'
 
-pod 'Ripple'
-pod 'Morgan'
+pod 'Ripple', :git => 'https://github.com/RamonGilabert/Ripple.git'
+pod 'Morgan', :git => 'https://github.com/RamonGilabert/Morgan.git'
