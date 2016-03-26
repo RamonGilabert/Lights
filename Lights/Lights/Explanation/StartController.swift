@@ -5,7 +5,6 @@ class StartController: UIViewController {
 
   lazy var startView: StartView = { [unowned self] in
     let view = StartView()
-    view.translatesAutoresizingMaskIntoConstraints = false
     view.delegate = self
 
     return view

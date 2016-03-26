@@ -25,7 +25,6 @@ class StartView: UIView {
     button.setTitleColor(Color.General.background, forState: .Normal)
     button.prepareShadow()
     button.backgroundColor = Color.Button.Start.background
-    button.translatesAutoresizingMaskIntoConstraints = false
     button.layer.cornerRadius = Dimensions.buttonSize / 2
     button.titleLabel?.font = Font.General.start
 
@@ -35,7 +34,6 @@ class StartView: UIView {
   lazy var popView: UIView = {
     let view = UIView()
     view.backgroundColor = Color.General.background
-    view.translatesAutoresizingMaskIntoConstraints = false
     
     return view
   }()

@@ -8,11 +8,11 @@ extension UIView {
     }
 
     dispatch_once(&Static.token) {
-      let originalSelector = #selector(UIView.init(frame:))
-      let swizzledSelector = #selector(UIView.swizzle_init(frame:))
+      let originalSelector = #selector(willMoveToSuperview)
+      let swizzledSelector = #selector(swizzle_willMoveToSuperview)
 
-      let originalMethod = class_getClassMethod(self, originalSelector)
-      let swizzledMethod = class_getClassMethod(self, swizzledSelector)
+      let originalMethod = class_getInstanceMethod(self, originalSelector)
+      let swizzledMethod = class_getInstanceMethod(self, swizzledSelector)
 
       let didAddMethod = class_addMethod(self, originalSelector,
                                          method_getImplementation(swizzledMethod),
@@ -26,8 +26,10 @@ extension UIView {
     }
   }
 
-  class func swizzle_init(frame frame: CGRect) {
-    swizzle_init(frame: frame)
-    UIView().translatesAutoresizingMaskIntoConstraints = false
+  func swizzle_willMoveToSuperview() {
+    swizzle_willMoveToSuperview()
+
+    layer.drawsAsynchronously = true
+    translatesAutoresizingMaskIntoConstraints = false
   }
 }
