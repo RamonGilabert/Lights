@@ -18,6 +18,7 @@ class StartView: UIView {
     button.backgroundColor = UIColor.blackColor()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.layer.cornerRadius = Dimensions.buttonSize / 2
+    button.prepareShadow()
 
     return button
     }()

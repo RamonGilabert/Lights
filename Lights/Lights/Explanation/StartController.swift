@@ -6,7 +6,6 @@ class StartController: UIViewController {
     let view = StartView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.delegate = self
-    view.backgroundColor = UIColor.redColor()
 
     return view
   }()
