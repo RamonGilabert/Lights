@@ -26,13 +26,11 @@ DerivedData
 *.ipa
 *.xcuserstate
 
-Pods/
-vendor/bundle
-.bundle/
-bin
-mystore-temp
-/screenshots
+# CocoaPods
+Pods
 
-*.dSYM.zip
+# Carthage
+Carthage
 
-*.paw
+# SPM
+.build/
