@@ -1,6 +1,7 @@
 import UIKit
 import Transition
 import Sugar
+import Walker
 
 class PairingController: UIViewController {
 
@@ -38,11 +39,11 @@ class PairingController: UIViewController {
     return label
   }()
 
-  lazy var pairedController: PairedController = { [unowned self] in
-    let controller = PairedController()
-    controller.delegate = self
+  lazy var pairedView: PairedView = { [unowned self] in
+    let view = PairedView()
+    view.delegate = self
 
-    return controller
+    return view
   }()
 
   lazy var transition: Transition = {
@@ -69,10 +70,12 @@ class PairingController: UIViewController {
 
     transitioningDelegate = transition
 
-    [flameView, titleLabel, pairingLabel].forEach {
+    [flameView, titleLabel, pairingLabel, pairedView].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       view.addSubview($0)
     }
+
+    pairedView.transform = CGAffineTransformMakeTranslation(0, UIScreen.mainScreen().bounds.height)
 
     view.backgroundColor = Color.General.background
 
@@ -86,8 +89,25 @@ class PairingController: UIViewController {
                                                    selector: #selector(timerDidFire),
                                                    userInfo: nil, repeats: true)
 
-    delay(1.5) {
-      // TODO: Present the paired view.
+    delay(2) {
+      let transform = CGAffineTransformMakeTranslation(0, -1000)
+      let duration: NSTimeInterval = 1.5
+
+      animate(self.flameView, duration: duration) {
+        $0.transform = transform
+      }
+
+      animate(self.titleLabel, duration: duration, delay: 0.2) {
+        $0.transform = transform
+      }
+
+      animate(self.pairingLabel, duration: duration, delay: 0.4) {
+        $0.transform = transform
+      }
+
+      spring(self.pairedView, delay: 0.6, spring: 40, friction: 50, mass: 50) {
+        $0.transform = CGAffineTransformIdentity
+      }
     }
   }
 
@@ -126,12 +146,17 @@ class PairingController: UIViewController {
       titleLabel.topAnchor.constraintEqualToAnchor(flameView.bottomAnchor, constant: Dimensions.titleOffset),
 
       pairingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3),
-      pairingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.pairingOffset)
+      pairingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.pairingOffset),
+
+      pairedView.widthAnchor.constraintEqualToAnchor(view.widthAnchor),
+      pairedView.heightAnchor.constraintEqualToAnchor(view.heightAnchor),
+      pairedView.topAnchor.constraintEqualToAnchor(view.topAnchor),
+      pairedView.leftAnchor.constraintEqualToAnchor(view.leftAnchor)
       ])
   }
 }
 
-extension PairingController: PairedControllerDelegate {
+extension PairingController: PairedViewDelegate {
 
   func startButtonDidPress() {
     // TODO: Handle button did press.

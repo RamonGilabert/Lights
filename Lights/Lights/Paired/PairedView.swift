@@ -1,6 +1,6 @@
 import UIKit
 
-protocol PairedControllerDelegate {
+protocol PairedViewDelegate {
 
   func startButtonDidPress()
 }
@@ -12,6 +12,7 @@ class PairedView: UIView {
     static let pairedOffset: CGFloat = -55
     static let titleOffset: CGFloat = 35
     static let subtitleOffset: CGFloat = 20
+    static let subtitleWidth: CGFloat = -56
     static let buttonWidth: CGFloat = -64
     static let buttonHeight: CGFloat = 60
     static let buttonOffset: CGFloat = -55
@@ -36,6 +37,7 @@ class PairedView: UIView {
 
   lazy var subtitleLabel: UILabel = {
     let label = UILabel()
+    label.numberOfLines = 0
     label.attributedText = Attributes.subtitle(Text.Pairing.control)
     
     return label
@@ -53,7 +55,7 @@ class PairedView: UIView {
     return button
   }()
 
-  var delegate: PairedControllerDelegate?
+  var delegate: PairedViewDelegate?
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -82,12 +84,13 @@ class PairedView: UIView {
     NSLayoutConstraint.activateConstraints([
       pairedView.widthAnchor.constraintEqualToConstant(Dimensions.pairedSize),
       pairedView.heightAnchor.constraintEqualToConstant(Dimensions.pairedSize),
-      pairedView.bottomAnchor.constraintEqualToAnchor(centerYAnchor, constant: -Dimensions.pairedOffset),
+      pairedView.bottomAnchor.constraintEqualToAnchor(centerYAnchor, constant: Dimensions.pairedOffset),
       pairedView.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
 
       titleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
       titleLabel.topAnchor.constraintEqualToAnchor(centerYAnchor, constant: Dimensions.titleOffset),
 
+      subtitleLabel.widthAnchor.constraintEqualToAnchor(widthAnchor, constant: Dimensions.subtitleWidth),
       subtitleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
       subtitleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: Dimensions.subtitleOffset),
 
