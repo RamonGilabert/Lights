@@ -47,6 +47,8 @@ class StartController: UIViewController {
     return label
   }()
 
+  var timer = NSTimer()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -99,8 +101,9 @@ class StartController: UIViewController {
       explanationView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth),
 
-      searchingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.searchingOffset),
-      searchingLabel.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor)
+      searchingLabel.widthAnchor.constraintEqualToAnchor(view.widthAnchor),
+      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: 106),
+      searchingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.searchingOffset)
       ])
   }
 
@@ -132,11 +135,9 @@ class StartController: UIViewController {
       $0.transform = transform
     }
 
-    spring(explanationView.subtitleLabel, delay: show ? 0.4 : 0,
+    spring(explanationView.subtitleLabel, delay: show ? 0.4 : 0.01,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = transform
-    }.finally {
-      self.explanationView.subtitleLabel.transform = transform
     }
   }
 
@@ -149,26 +150,37 @@ class StartController: UIViewController {
            duration: duration, multiplier: 1.65, divider: 1.5,
            color: Color.General.ripple)
   }
+
+  func timerDidFire() {
+    guard let text = searchingLabel.text else { return }
+
+    if text.characters.count == Text.Detail.searching.characters.count + 3 {
+      searchingLabel.text = Text.Detail.searching
+    } else {
+      searchingLabel.text = text + "."
+    }
+  }
 }
 
 extension StartController: StartViewDelegate {
 
   func startButtonDidPress() {
-
-    animateExplanation(false)
     calm()
-
-    UIView.animateWithDuration(1.2, delay: 0.6,
-                               usingSpringWithDamping: 1,
-                               initialSpringVelocity: 0.4,
-                               options: [], animations: {
-      self.searchingLabel.transform = CGAffineTransformIdentity
-    }, completion: { _ in
-
-    })
   }
 
   func shouldDisplayRipple() {
     stone(2)
+
+    let animation = (spring: CGFloat(30), friction: CGFloat(50), mass: CGFloat(50))
+
+    animateExplanation(false)
+
+    spring(searchingLabel, delay: 0.5, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
+      $0.transform = CGAffineTransformIdentity
+    }.finally {
+      self.startView.rotateView()
+      self.timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self,
+        selector: #selector(self.timerDidFire), userInfo: nil, repeats: true)
+    }
   }
 }

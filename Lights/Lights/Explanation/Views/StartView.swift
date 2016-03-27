@@ -149,18 +149,16 @@ class StartView: UIView {
 extension StartView {
 
   override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
-    delegate?.shouldDisplayRipple()
     popView.layer.removeAnimationForKey("pop")
 
     popView.layer.bounds.size = CGSize(
       width: Dimensions.buttonSize - 4, height: Dimensions.buttonSize - 4)
     popView.layer.cornerRadius = (Dimensions.buttonSize - 4) / 2
     indicator.alpha = 1
+    delegate?.shouldDisplayRipple()
 
     spring(indicator, spring: 100, friction: 25, mass: 10) {
       $0.transform = CGAffineTransformIdentity
-    }.finally {
-      self.rotateView()
     }
   }
 }
