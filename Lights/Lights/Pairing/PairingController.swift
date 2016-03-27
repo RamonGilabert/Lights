@@ -93,15 +93,15 @@ class PairingController: UIViewController {
       let transform = CGAffineTransformMakeTranslation(0, -1000)
       let duration: NSTimeInterval = 1.5
 
-      animate(self.flameView, duration: duration) {
+      animate(self.flameView, duration: duration, curve: .EaseInOut) {
         $0.transform = transform
       }
 
-      animate(self.titleLabel, duration: duration, delay: 0.2) {
+      animate(self.titleLabel, duration: duration, delay: 0.15, curve: .EaseInOut) {
         $0.transform = transform
       }
 
-      animate(self.pairingLabel, duration: duration, delay: 0.4) {
+      animate(self.pairingLabel, duration: duration, delay: 0.3, curve: .EaseInOut) {
         $0.transform = transform
       }
 

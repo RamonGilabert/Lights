@@ -9,13 +9,13 @@ class PairedView: UIView {
 
   struct Dimensions {
     static let pairedSize: CGFloat = 140
-    static let pairedOffset: CGFloat = -55
-    static let titleOffset: CGFloat = 35
-    static let subtitleOffset: CGFloat = 20
+    static let pairedOffset: CGFloat = -75
+    static let titleOffset: CGFloat = 25
+    static let subtitleOffset: CGFloat = 5
     static let subtitleWidth: CGFloat = -56
     static let buttonWidth: CGFloat = -64
     static let buttonHeight: CGFloat = 60
-    static let buttonOffset: CGFloat = -55
+    static let buttonOffset: CGFloat = -70
   }
 
   lazy var pairedView: UIImageView = {
@@ -47,6 +47,7 @@ class PairedView: UIView {
     let button = UIButton()
     button.addTarget(self, action: #selector(startButtonDidPress), forControlEvents: .TouchUpInside)
     button.setTitle(Text.Pairing.use, forState: .Normal)
+    button.setTitleColor(Color.General.life, forState: .Normal)
     button.titleLabel?.font = Font.General.button
     button.layer.borderColor = Color.General.life.CGColor
     button.layer.borderWidth = 2
@@ -94,10 +95,10 @@ class PairedView: UIView {
       subtitleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
       subtitleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: Dimensions.subtitleOffset),
 
-      subtitleLabel.widthAnchor.constraintEqualToAnchor(widthAnchor, constant: Dimensions.buttonWidth),
-      subtitleLabel.heightAnchor.constraintEqualToConstant(Dimensions.buttonHeight),
-      subtitleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
-      subtitleLabel.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: Dimensions.buttonOffset)
+      startButton.widthAnchor.constraintEqualToAnchor(widthAnchor, constant: Dimensions.buttonWidth),
+      startButton.heightAnchor.constraintEqualToConstant(Dimensions.buttonHeight),
+      startButton.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
+      startButton.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: Dimensions.buttonOffset)
       ])
   }
 }
