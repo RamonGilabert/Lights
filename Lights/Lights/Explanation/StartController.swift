@@ -1,6 +1,7 @@
 import UIKit
 import Ripple
 import Walker
+import Sugar
 
 class StartController: UIViewController {
 
@@ -112,7 +113,7 @@ class StartController: UIViewController {
   // MARK: - Animations
 
   func animateController(show: Bool) {
-    let animation = (spring: CGFloat(30), friction: CGFloat(50), mass: CGFloat(50))
+    let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
 
     spring(startView, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.01, 0.01)
@@ -125,7 +126,7 @@ class StartController: UIViewController {
 
   func animateExplanation(show: Bool) {
     let transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 300)
-    let animation = (spring: CGFloat(30), friction: CGFloat(50), mass: CGFloat(50))
+    let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
 
     spring(flameView, delay: show ? 0 : 0.4,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
@@ -140,6 +141,20 @@ class StartController: UIViewController {
     spring(explanationView.subtitleLabel, delay: show ? 0.4 : 0.01,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = transform
+    }
+  }
+
+  func lightFound() {
+    timer.invalidate()
+
+    animateController(false)
+
+    spring(searchingLabel, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
+      $0.transform = CGAffineTransformMakeScale(0.01, 0.01)
+    }
+
+    delay(0.5) {
+      timer.invalidate()
     }
   }
 
@@ -158,6 +173,7 @@ class StartController: UIViewController {
 
     if text.characters.count == Text.Detail.searching.characters.count + 3 {
       searchingLabel.text = Text.Detail.searching
+      lightFound()
     } else {
       searchingLabel.text = text + "."
     }
@@ -173,14 +189,14 @@ extension StartController: StartViewDelegate {
   func shouldDisplayRipple() {
     stone(2)
 
-    let animation = (spring: CGFloat(30), friction: CGFloat(50), mass: CGFloat(50))
+    let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
 
     animateExplanation(false)
 
-    spring(searchingLabel, delay: 0.5, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
+    spring(searchingLabel, delay: 0.45, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = CGAffineTransformIdentity
     }.finally {
-      self.startView.rotateView()
+      self.startView.loadingAnimation()
       self.timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self,
         selector: #selector(self.timerDidFire), userInfo: nil, repeats: true)
     }
