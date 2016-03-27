@@ -206,7 +206,7 @@ extension StartController: StartViewDelegate {
   }
 
   func shouldDisplayRipple() {
-    stone(2.5, multiplier: 1.75, divider: 2.5)
+    stone(2.5, multiplier: 1.65, divider: 2)
 
     animateExplanation(false)
 

@@ -107,6 +107,14 @@ class PairingController: UIViewController {
 
       spring(self.pairedView, delay: 0.6, spring: 40, friction: 50, mass: 50) {
         $0.transform = CGAffineTransformIdentity
+      }.finally {
+        for (index, element) in self.pairedView.subviews.enumerate() {
+          let delay: NSTimeInterval = 0.25 * Double(index)
+
+          animate(element, duration: duration, delay: delay, curve: .EaseInOut, options: [.Reverse, .Repeat(Float.infinity)]) {
+            $0.transform = CGAffineTransformMakeTranslation(0, -5)
+          }
+        }
       }
     }
   }
@@ -159,6 +167,6 @@ class PairingController: UIViewController {
 extension PairingController: PairedViewDelegate {
 
   func startButtonDidPress() {
-    // TODO: Handle button did press.
+    closeDistilleries()
   }
 }
