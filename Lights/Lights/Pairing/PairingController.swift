@@ -112,7 +112,7 @@ class PairingController: UIViewController {
           let delay: NSTimeInterval = 0.25 * Double(index)
 
           animate(element, duration: duration, delay: delay, curve: .EaseInOut, options: [.Reverse, .Repeat(Float.infinity)]) {
-            $0.transform = CGAffineTransformMakeTranslation(0, -5)
+            $0.transform = CGAffineTransformMakeTranslation(0, 5)
           }
         }
       }
