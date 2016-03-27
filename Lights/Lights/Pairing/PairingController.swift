@@ -38,6 +38,13 @@ class PairingController: UIViewController {
     return label
   }()
 
+  lazy var pairedController: PairedController = { [unowned self] in
+    let controller = PairedController()
+    controller.delegate = self
+
+    return controller
+  }()
+
   lazy var transition: Transition = {
     let transition = Transition() { controller, show in
       guard let controller = controller as? PairingController else { return }
@@ -121,5 +128,12 @@ class PairingController: UIViewController {
       pairingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3),
       pairingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.pairingOffset)
       ])
+  }
+}
+
+extension PairingController: PairedControllerDelegate {
+
+  func startButtonDidPress() {
+    // TODO: Handle button did press.
   }
 }

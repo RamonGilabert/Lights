@@ -5,7 +5,7 @@ protocol PairedControllerDelegate {
   func startButtonDidPress()
 }
 
-class PairedController: UIViewController {
+class PairedView: UIView {
 
   struct Dimensions {
     static let pairedSize: CGFloat = 140
@@ -55,15 +55,19 @@ class PairedController: UIViewController {
 
   var delegate: PairedControllerDelegate?
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  override init(frame: CGRect) {
+    super.init(frame: frame)
 
     [pairedView, titleLabel, subtitleLabel, startButton].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
-      view.addSubview($0)
+      addSubview($0)
     }
 
     setupConstraints()
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - Action methods
@@ -78,19 +82,19 @@ class PairedController: UIViewController {
     NSLayoutConstraint.activateConstraints([
       pairedView.widthAnchor.constraintEqualToConstant(Dimensions.pairedSize),
       pairedView.heightAnchor.constraintEqualToConstant(Dimensions.pairedSize),
-      pairedView.bottomAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: -Dimensions.pairedOffset),
-      pairedView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
+      pairedView.bottomAnchor.constraintEqualToAnchor(centerYAnchor, constant: -Dimensions.pairedOffset),
+      pairedView.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
 
-      titleLabel.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      titleLabel.topAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.titleOffset),
+      titleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
+      titleLabel.topAnchor.constraintEqualToAnchor(centerYAnchor, constant: Dimensions.titleOffset),
 
-      subtitleLabel.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
+      subtitleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
       subtitleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: Dimensions.subtitleOffset),
 
-      subtitleLabel.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.buttonWidth),
+      subtitleLabel.widthAnchor.constraintEqualToAnchor(widthAnchor, constant: Dimensions.buttonWidth),
       subtitleLabel.heightAnchor.constraintEqualToConstant(Dimensions.buttonHeight),
-      subtitleLabel.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      subtitleLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.buttonOffset)
+      subtitleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
+      subtitleLabel.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: Dimensions.buttonOffset)
       ])
   }
 }
