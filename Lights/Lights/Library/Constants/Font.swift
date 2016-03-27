@@ -13,6 +13,7 @@ struct Font {
   struct General {
     static let start = UIFont(name: Brandon.bold, size: 36)!
     static let button = UIFont(name: Brandon.bold, size: 22)!
+    static let detail = UIFont(name: Lato.bold, size: 34)!
   }
 
   struct Text {
