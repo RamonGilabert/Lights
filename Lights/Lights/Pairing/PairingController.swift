@@ -1,6 +1,6 @@
 import UIKit
-import Walker
 import Transition
+import Sugar
 
 class PairingController: UIViewController {
 
@@ -78,6 +78,10 @@ class PairingController: UIViewController {
     timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self,
                                                    selector: #selector(timerDidFire),
                                                    userInfo: nil, repeats: true)
+
+    delay(1.5) {
+      // TODO: Present the paired view.
+    }
   }
 
   // MARK: - Timer methods
