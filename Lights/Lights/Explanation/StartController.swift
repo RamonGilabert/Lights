@@ -44,10 +44,11 @@ class StartController: UIViewController {
     label.font = Font.General.detail
     label.textColor = Color.General.titles
     label.text = Text.Detail.searching
-    
+
     return label
   }()
 
+  let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
   var timer = NSTimer()
 
   override func viewDidLoad() {
@@ -90,8 +91,6 @@ class StartController: UIViewController {
   // MARK: - Constraints
 
   func setupConstraints() {
-    let width = UIScreen.mainScreen().bounds.width
-
     NSLayoutConstraint.activateConstraints([
       startView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       startView.bottomAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.bottomOffset),
@@ -104,8 +103,7 @@ class StartController: UIViewController {
       explanationView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth),
 
-      searchingLabel.widthAnchor.constraintEqualToAnchor(view.widthAnchor),
-      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3 - 20),
+      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: 106),
       searchingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.searchingOffset)
       ])
   }
@@ -113,8 +111,6 @@ class StartController: UIViewController {
   // MARK: - Animations
 
   func animateController(show: Bool) {
-    let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
-
     spring(startView, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.01, 0.01)
     }.finally {
@@ -146,15 +142,22 @@ class StartController: UIViewController {
 
   func lightFound() {
     timer.invalidate()
+    calm()
 
-    animateController(false)
-
-    spring(searchingLabel, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
-      $0.transform = CGAffineTransformMakeScale(0.01, 0.01)
-    }
+    UIView.animateWithDuration(0.3, animations: {
+      self.startView.indicator.transform = CGAffineTransformMakeScale(0.1, 0.1)
+    })
 
     delay(0.5) {
-      timer.invalidate()
+      closeDistilleries()
+
+      animate(self.startView, self.searchingLabel, duration: 0.1) {
+        $0.transform = CGAffineTransformMakeScale(1.1, 1.1)
+        $1.transform = CGAffineTransformMakeScale(1.1, 1.1)
+      }.chains(duration: 0.3) {
+        $0.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        $1.transform = CGAffineTransformMakeScale(0.01, 0.01)
+      }
     }
   }
 
@@ -171,12 +174,19 @@ class StartController: UIViewController {
   func timerDidFire() {
     guard let text = searchingLabel.text else { return }
 
+    let transition = CATransition()
+    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+    transition.type = kCATransitionFade
+    transition.duration = 0.4
+    searchingLabel.layer.addAnimation(transition, forKey: "transition")
+
     if text.characters.count == Text.Detail.searching.characters.count + 3 {
       searchingLabel.text = Text.Detail.searching
-      lightFound()
     } else {
       searchingLabel.text = text + "."
     }
+
+    searchingLabel.sizeToFit()
   }
 }
 
@@ -189,8 +199,6 @@ extension StartController: StartViewDelegate {
   func shouldDisplayRipple() {
     stone(2)
 
-    let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
-
     animateExplanation(false)
 
     spring(searchingLabel, delay: 0.45, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
@@ -199,6 +207,8 @@ extension StartController: StartViewDelegate {
       self.startView.loadingAnimation()
       self.timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self,
         selector: #selector(self.timerDidFire), userInfo: nil, repeats: true)
+
+      delay(4) { self.lightFound() } // TODO: Delete this line.
     }
   }
 }
