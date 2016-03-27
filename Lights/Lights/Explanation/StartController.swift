@@ -172,11 +172,11 @@ class StartController: UIViewController {
 
   // MARK - Helper methods
 
-  func stone(duration: NSTimeInterval = 4) {
+  func stone(duration: NSTimeInterval = 4, multiplier: CGFloat = 1.65, divider: CGFloat = 1.5) {
     ripple(startView.center,
            view: view,
            size: StartView.Dimensions.buttonSize,
-           duration: duration, multiplier: 1.65, divider: 1.5,
+           duration: duration, multiplier: multiplier, divider: divider,
            color: Color.General.ripple)
   }
 
@@ -206,7 +206,7 @@ extension StartController: StartViewDelegate {
   }
 
   func shouldDisplayRipple() {
-    stone(2)
+    stone(2.5, multiplier: 1.75, divider: 2.5)
 
     animateExplanation(false)
 

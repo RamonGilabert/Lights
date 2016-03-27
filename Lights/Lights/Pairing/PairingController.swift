@@ -49,11 +49,13 @@ class PairingController: UIViewController {
       controller.view.alpha = 1
     }
 
-    transition.spring = (0.6, 0.6)
+    transition.spring = (0.6, 0.4)
     transition.animationDuration = 1
 
     return transition
   }()
+
+  var timer = NSTimer()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -68,6 +70,34 @@ class PairingController: UIViewController {
     view.backgroundColor = Color.General.background
 
     setupConstraints()
+  }
+
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self,
+                                                   selector: #selector(timerDidFire),
+                                                   userInfo: nil, repeats: true)
+  }
+
+  // MARK: - Timer methods
+
+  func timerDidFire() {
+    guard let text = pairingLabel.text else { return }
+
+    let transition = CATransition()
+    transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+    transition.type = kCATransitionFade
+    transition.duration = 0.4
+    pairingLabel.layer.addAnimation(transition, forKey: "transition")
+
+    if text.characters.count == Text.Pairing.pairing.characters.count + 3 {
+      pairingLabel.text = Text.Pairing.pairing
+    } else {
+      pairingLabel.text = text + "."
+    }
+
+    pairingLabel.sizeToFit()
   }
 
   // MARK: - Constraints
