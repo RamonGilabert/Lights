@@ -62,6 +62,8 @@ class StartView: UIView {
     startButton.addSubview(popView)
     startButton.addSubview(indicator)
 
+    [startButton, popView, indicator].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+
     setupConstraints()
   }
 

@@ -27,7 +27,10 @@ class ExplanationView: UIView {
     titleLabel.text = title
     subtitleLabel.attributedText = Attributes.subtitle(subtitle)
 
-    [titleLabel, subtitleLabel].forEach { addSubview($0) }
+    [titleLabel, subtitleLabel].forEach {
+      $0.translatesAutoresizingMaskIntoConstraints = false
+      addSubview($0)
+    }
 
     setupConstraints()
   }

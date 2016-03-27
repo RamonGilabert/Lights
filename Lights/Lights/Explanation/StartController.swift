@@ -48,13 +48,19 @@ class StartController: UIViewController {
     return label
   }()
 
+  lazy var pairingController: PairingController = PairingController()
+
   let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
   var timer = NSTimer()
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    [startView, flameView, explanationView, searchingLabel].forEach { view.addSubview($0) }
+    [startView, flameView, explanationView, searchingLabel].forEach {
+      $0.translatesAutoresizingMaskIntoConstraints = false
+      view.addSubview($0)
+    }
+
     view.backgroundColor = Color.General.background
     view.addGestureRecognizer(tapGesture)
 
@@ -91,6 +97,8 @@ class StartController: UIViewController {
   // MARK: - Constraints
 
   func setupConstraints() {
+    let width = UIScreen.mainScreen().bounds.width
+
     NSLayoutConstraint.activateConstraints([
       startView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       startView.bottomAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.bottomOffset),
@@ -103,7 +111,7 @@ class StartController: UIViewController {
       explanationView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth),
 
-      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: 106),
+      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3 - 25),
       searchingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.searchingOffset)
       ])
   }
@@ -156,7 +164,8 @@ class StartController: UIViewController {
       }.chains(duration: 0.3) {
         [$0, $1].forEach { $0.transform = CGAffineTransformMakeScale(0.01, 0.01) }
       }.finally {
-        // TODO: Present the view
+        closeDistilleries()
+        self.presentViewController(self.pairingController, animated: true, completion: nil)
       }
     }
   }

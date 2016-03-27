@@ -30,6 +30,5 @@ extension UIView {
     swizzle_willMoveToSuperview()
 
     layer.drawsAsynchronously = true
-    translatesAutoresizingMaskIntoConstraints = false
   }
 }
