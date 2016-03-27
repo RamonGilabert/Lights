@@ -3,18 +3,22 @@ PODS:
   - Morgan (0.9.1):
     - Walker
   - Ripple (2.0)
+  - Transition (0.1.0)
   - Walker (0.9.1)
 
 DEPENDENCIES:
   - Hue
   - Morgan (from `https://github.com/RamonGilabert/Morgan.git`)
   - Ripple (from `https://github.com/RamonGilabert/Ripple.git`)
+  - Transition (from `https://github.com/hyperoslo/Transition`)
 
 EXTERNAL SOURCES:
   Morgan:
     :git: https://github.com/RamonGilabert/Morgan.git
   Ripple:
     :git: https://github.com/RamonGilabert/Ripple.git
+  Transition:
+    :git: https://github.com/hyperoslo/Transition
 
 CHECKOUT OPTIONS:
   Morgan:
@@ -23,11 +27,15 @@ CHECKOUT OPTIONS:
   Ripple:
     :commit: b0987d4c88f3a971a4e56865c3d9966565fde682
     :git: https://github.com/RamonGilabert/Ripple.git
+  Transition:
+    :commit: 0d94057f824787973ae34bac4906164e3d6a2c8b
+    :git: https://github.com/hyperoslo/Transition
 
 SPEC CHECKSUMS:
   Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
   Morgan: 9cb6cdfd5eaafcdc98af5c05620cad575ace77de
   Ripple: 59c84addacbfa502274ce0d351e6de1fd20ef9fc
+  Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
   Walker: 9a765e7f35adb19ce59079e26d425c1e8c463241
 
 COCOAPODS: 0.39.0.beta.4

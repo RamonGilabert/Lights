@@ -89,6 +89,8 @@ class StartController: UIViewController {
   // MARK: - Constraints
 
   func setupConstraints() {
+    let width = UIScreen.mainScreen().bounds.width
+
     NSLayoutConstraint.activateConstraints([
       startView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       startView.bottomAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.bottomOffset),
@@ -102,7 +104,7 @@ class StartController: UIViewController {
       explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth),
 
       searchingLabel.widthAnchor.constraintEqualToAnchor(view.widthAnchor),
-      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: 106),
+      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3 - 20),
       searchingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.searchingOffset)
       ])
   }
