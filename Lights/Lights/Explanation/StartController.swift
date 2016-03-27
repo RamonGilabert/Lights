@@ -152,11 +152,11 @@ class StartController: UIViewController {
       closeDistilleries()
 
       animate(self.startView, self.searchingLabel, duration: 0.1) {
-        $0.transform = CGAffineTransformMakeScale(1.1, 1.1)
-        $1.transform = CGAffineTransformMakeScale(1.1, 1.1)
+        [$0, $1].forEach { $0.transform = CGAffineTransformMakeScale(1.1, 1.1) }
       }.chains(duration: 0.3) {
-        $0.transform = CGAffineTransformMakeScale(0.01, 0.01)
-        $1.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        [$0, $1].forEach { $0.transform = CGAffineTransformMakeScale(0.01, 0.01) }
+      }.finally {
+        // TODO: Present the view
       }
     }
   }
