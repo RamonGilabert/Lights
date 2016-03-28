@@ -168,5 +168,11 @@ extension PairingController: PairedViewDelegate {
 
   func startButtonDidPress() {
     closeDistilleries()
+
+    animate(pairedView) {
+      $0.transform = CGAffineTransformMakeScale(0.01, 0.01)
+    }.finally {
+      self.presentViewController(LightsController(), animated: true, completion: nil)
+    }
   }
 }
