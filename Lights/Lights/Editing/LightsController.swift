@@ -146,9 +146,6 @@ extension LightsController: EditingViewDelegate {
     editingView.imageView.tintColor = color
     editingView.indicatorOverlay.backgroundColor = color
     editingView.indicator.backgroundColor = color
-    searchButton.tintColor = color
-    turnButton.setTitleColor(color, forState: .Normal)
-    turnButton.layer.borderColor = color.CGColor
   }
 
   func performRequest(color: UIColor) {

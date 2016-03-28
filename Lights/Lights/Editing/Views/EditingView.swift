@@ -91,6 +91,7 @@ class EditingView: UIView {
 
   var delegate: EditingViewDelegate?
   var previousRadius = Dimensions.size / 2
+  var previousPoint = CGPointZero
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -125,17 +126,17 @@ class EditingView: UIView {
     let reference = saturation(point)
     let color = UIColor(hue: reference.hue,
                         saturation: reference.saturation, brightness: 1, alpha: 1)
-    var size = sqrt(x * x + y * y) * 2
-
-    if abs(previousRadius - size / 2) < 0.5 {
-      size = previousRadius * 2
-    }
+    let size = sqrt(x * x + y * y) * 2
 
     previousRadius = size / 2
+    previousPoint = point
 
     if panGesture.state == .Ended || panGesture.state == .Cancelled {
       delegate?.performRequest(color)
-    } else if size >= Dimensions.size / 2 {
+    } else if panGesture.state == .Began {
+      previousRadius = overlay.frame.size.width / 2 + Dimensions.border
+      previousPoint = indicatorOverlay.center
+    } else if size >= Dimensions.imageHeight + 20 {
       let pathFrame = CGRect(x: (colorWheel.frame.width - size) / 2,
                              y: (colorWheel.frame.height - size) / 2,
                              width: size, height: size)
