@@ -22,6 +22,7 @@
 		294DDE611CA7F9280020E986 /* PairingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE601CA7F9280020E986 /* PairingController.swift */; };
 		294DDE631CA839D60020E986 /* PairedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE621CA839D60020E986 /* PairedView.swift */; };
 		294DDE651CA9719E0020E986 /* TapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE641CA9719E0020E986 /* TapViewController.swift */; };
+		294DDE681CA976A20020E986 /* EditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE671CA976A10020E986 /* EditingView.swift */; };
 		2982B7F41C7BBCE600270C74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982B7F31C7BBCE600270C74 /* AppDelegate.swift */; };
 		2982B80A1C7BBE1000270C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2982B8061C7BBE1000270C74 /* Assets.xcassets */; };
 		2982B80B1C7BBE1000270C74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2982B8071C7BBE1000270C74 /* LaunchScreen.storyboard */; };
@@ -44,6 +45,7 @@
 		294DDE601CA7F9280020E986 /* PairingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairingController.swift; sourceTree = "<group>"; };
 		294DDE621CA839D60020E986 /* PairedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedView.swift; sourceTree = "<group>"; };
 		294DDE641CA9719E0020E986 /* TapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapViewController.swift; sourceTree = "<group>"; };
+		294DDE671CA976A10020E986 /* EditingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditingView.swift; sourceTree = "<group>"; };
 		2982B7F01C7BBCE600270C74 /* Lights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2982B7F31C7BBCE600270C74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2982B8061C7BBE1000270C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		294DDE3B1CA696390020E986 /* Editing */ = {
 			isa = PBXGroup;
 			children = (
+				294DDE661CA9768B0020E986 /* Views */,
 				294DDE411CA696B60020E986 /* LightsController.swift */,
 			);
 			path = Editing;
@@ -150,6 +153,14 @@
 			isa = PBXGroup;
 			children = (
 				294DDE5A1CA6F3D80020E986 /* ExplanationView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		294DDE661CA9768B0020E986 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				294DDE671CA976A10020E986 /* EditingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -330,6 +341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294DDE681CA976A20020E986 /* EditingView.swift in Sources */,
 				294DDE421CA696B60020E986 /* LightsController.swift in Sources */,
 				294DDE561CA6B6DE0020E986 /* Image.swift in Sources */,
 				294DDE4C1CA6A6F20020E986 /* UIView+Shadow.swift in Sources */,

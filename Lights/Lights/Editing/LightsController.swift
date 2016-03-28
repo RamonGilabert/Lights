@@ -10,6 +10,9 @@ class LightsController: TapViewController {
     static let buttonHeight: CGFloat = 60
     static let buttonOffset: CGFloat = -85
 
+    static let wheelWidth: CGFloat = -60
+    static let wheelOffset: CGFloat = 30
+
     static let buttonTopOffset: CGFloat = 36
     static let buttonRightOffset: CGFloat = -20
   }
@@ -36,6 +39,12 @@ class LightsController: TapViewController {
     return button
   }()
 
+  lazy var editingView: EditingView = {
+    let view = EditingView()
+
+    return view
+  }()
+
   lazy var transition: Transition = {
     let transition = Transition() { controller, show in
       controller.view.alpha = 1
@@ -54,7 +63,7 @@ class LightsController: TapViewController {
     transitioningDelegate = transition
     view.backgroundColor = Color.General.background
 
-    [searchButton, turnButton].forEach {
+    [searchButton, editingView, turnButton].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       $0.transform = CGAffineTransformMakeTranslation(0, -UIScreen.mainScreen().bounds.height)
       view.addSubview($0)
@@ -90,12 +99,17 @@ class LightsController: TapViewController {
       ? CGAffineTransformIdentity
       : CGAffineTransformMakeTranslation(0, -UIScreen.mainScreen().bounds.height)
 
-    spring(searchButton, delay: show ? 0.2 : 0,
+    spring(searchButton, delay: show ? 0.4 : 0,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = transform
     }
 
-    spring(turnButton, delay: show ? 0 : 0.2,
+    spring(searchButton, delay: 0.2,
+           spring: animation.spring, friction: animation.friction, mass: animation.mass) {
+      $0.transform = transform
+    }
+
+    spring(turnButton, delay: show ? 0 : 0.4,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = transform
     }
@@ -107,6 +121,11 @@ class LightsController: TapViewController {
     NSLayoutConstraint.activateConstraints([
       searchButton.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: Dimensions.buttonTopOffset),
       searchButton.rightAnchor.constraintEqualToAnchor(view.rightAnchor, constant: Dimensions.buttonRightOffset),
+
+      editingView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.wheelWidth),
+      editingView.heightAnchor.constraintEqualToAnchor(editingView.heightAnchor),
+      editingView.topAnchor.constraintEqualToAnchor(searchButton.topAnchor, constant: Dimensions.wheelOffset),
+      editingView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
 
       turnButton.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.buttonWidth),
       turnButton.heightAnchor.constraintEqualToConstant(Dimensions.buttonHeight),
