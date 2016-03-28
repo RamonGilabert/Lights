@@ -3,7 +3,7 @@ import Transition
 import Walker
 import Sugar
 
-class LightsController: TapViewController {
+class LightsController: UIViewController {
 
   struct Dimensions {
     static let buttonWidth: CGFloat = -64
@@ -41,6 +41,7 @@ class LightsController: TapViewController {
 
   lazy var editingView: EditingView = {
     let view = EditingView()
+    view.userInteractionEnabled = true
 
     return view
   }()
@@ -123,7 +124,7 @@ class LightsController: TapViewController {
       searchButton.rightAnchor.constraintEqualToAnchor(view.rightAnchor, constant: Dimensions.buttonRightOffset),
 
       editingView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.wheelWidth),
-      editingView.heightAnchor.constraintEqualToAnchor(editingView.heightAnchor),
+      editingView.heightAnchor.constraintEqualToAnchor(editingView.widthAnchor),
       editingView.topAnchor.constraintEqualToAnchor(searchButton.bottomAnchor, constant: Dimensions.wheelOffset),
       editingView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
 

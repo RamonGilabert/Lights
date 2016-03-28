@@ -4,6 +4,9 @@ class EditingView: UIView {
 
   struct Dimensions {
     static let size: CGFloat = UIScreen.mainScreen().bounds.width + LightsController.Dimensions.wheelWidth
+    static let border: CGFloat = 7
+    static let imageWidth: CGFloat = 80
+    static let imageHeight: CGFloat = 140
   }
 
   typealias RGB = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
@@ -11,12 +14,60 @@ class EditingView: UIView {
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
+    imageView.contentMode = .ScaleAspectFit
+    imageView.image = UIImage(named: Image.flame)?.imageWithRenderingMode(.AlwaysTemplate)
+    imageView.tintColor = Color.General.life
+
     return imageView
   }()
 
   lazy var colorWheel: UIView = {
     let view = UIView()
+    view.layer.cornerRadius = Dimensions.size / 2
+    view.clipsToBounds = true
+
     return view
+  }()
+
+  lazy var mask: CAShapeLayer = {
+    let layer = CAShapeLayer()
+    let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0,
+      width: Dimensions.size, height: Dimensions.size),
+                            cornerRadius: Dimensions.size / 2)
+    layer.path = path.CGPath
+    layer.frame = CGRect(x: 0, y: 0, width: Dimensions.size, height: Dimensions.size)
+
+    return layer
+  }()
+
+  lazy var overlay: UIView = {
+    let view = UIView()
+    view.frame = CGRect(x: Dimensions.border, y: Dimensions.border,
+                        width: Dimensions.size - Dimensions.border * 2,
+                        height: Dimensions.size - Dimensions.border * 2)
+    view.backgroundColor = Color.General.background
+    view.layer.cornerRadius = (Dimensions.size - 20) / 2
+
+    return view
+  }()
+
+  lazy var indicator: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.blackColor()
+    view.frame = CGRect(x: Dimensions.size / 2 - 15, y: -8.5, width: 30, height: 30)
+    view.layer.cornerRadius = 15
+    view.userInteractionEnabled = true
+
+    return view
+  }()
+
+  lazy var panGesture: UIPanGestureRecognizer = { [unowned self] in
+    let panGesture = UIPanGestureRecognizer()
+    panGesture.addTarget(self, action: #selector(handlePanGesture))
+    panGesture.minimumNumberOfTouches = 1
+    panGesture.cancelsTouchesInView = false
+
+    return panGesture
   }()
 
   override init(frame: CGRect) {
@@ -27,16 +78,63 @@ class EditingView: UIView {
     wheelLayer.contents = createWheel()
     colorWheel.layer.addSublayer(wheelLayer)
 
-    [colorWheel].forEach {
+    [colorWheel, indicator, imageView].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       addSubview($0)
     }
+
+    colorWheel.addSubview(overlay)
+    colorWheel.layer.mask = mask
+    indicator.addGestureRecognizer(panGesture)
 
     setupConstraints()
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - Action methods
+
+  func handlePanGesture() {
+
+    if panGesture.state == .Ended || panGesture.state == .Cancelled {
+      // TODO: Do the request
+    } else {
+      let point = indicatorLocation(panGesture.locationInView(self))
+      let x = abs(point.x - colorWheel.center.x)
+      let y = abs(point.y - colorWheel.center.y)
+      let size = sqrt(x * x + y * y) * 2
+      let pathFrame = CGRect(x: (colorWheel.frame.width - size) / 2,
+                             y: (colorWheel.frame.height - size) / 2,
+                             width: size, height: size)
+      let path = UIBezierPath(roundedRect: pathFrame, cornerRadius: size / 2)
+
+      mask.path = path.CGPath
+      indicator.center = point
+      overlay.frame = CGRect(x: pathFrame.origin.x + Dimensions.border,
+                             y: pathFrame.origin.x + Dimensions.border,
+                             width: size - Dimensions.border * 2,
+                             height: size - Dimensions.border * 2)
+      overlay.layer.cornerRadius = overlay.frame.width / 2
+    }
+  }
+
+  func indicatorLocation(location: CGPoint) -> CGPoint {
+    let radius = Dimensions.size / 2
+    let center = colorWheel.center
+    let x: CGFloat = location.x - center.x
+    let y: CGFloat = location.y - center.y
+    let distance = sqrt(x * x + y * y)
+    var point = location
+
+    if distance > radius {
+      let theta = atan2(y, x)
+      point = CGPoint(x: radius * cos(theta) + center.x,
+                      y: radius * sin(theta) + center.y)
+    }
+
+    return point
   }
 
   // MARK: - Constraints
@@ -46,7 +144,12 @@ class EditingView: UIView {
       colorWheel.widthAnchor.constraintEqualToAnchor(widthAnchor),
       colorWheel.heightAnchor.constraintEqualToAnchor(heightAnchor),
       colorWheel.topAnchor.constraintEqualToAnchor(topAnchor),
-      colorWheel.leftAnchor.constraintEqualToAnchor(leftAnchor)
+      colorWheel.leftAnchor.constraintEqualToAnchor(leftAnchor),
+
+      imageView.widthAnchor.constraintEqualToConstant(Dimensions.imageWidth),
+      imageView.heightAnchor.constraintEqualToConstant(Dimensions.imageHeight),
+      imageView.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
+      imageView.centerYAnchor.constraintEqualToAnchor(centerYAnchor)
       ])
   }
 
@@ -72,7 +175,7 @@ class EditingView: UIView {
         let saturate = color.saturation
 
         if saturate < 1 {
-          let alpha: CGFloat = saturate > 0.99 ? (1 - saturate) * 100 : 1
+          let alpha: CGFloat = saturate > 0.992 ? (1 - saturate) * 100 : 1
 
           hsv = (hue: color.hue, saturation: saturate, brightness: 1, alpha: alpha)
           rgb = convertHSV(hsv)
