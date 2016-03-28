@@ -3,7 +3,7 @@ import Transition
 import Walker
 import Sugar
 
-class LightsController: UIViewController {
+class LightsController: TapViewController {
 
   struct Dimensions {
     static let buttonWidth: CGFloat = -64
@@ -29,7 +29,7 @@ class LightsController: UIViewController {
   lazy var turnButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(turnButtonDidPress), forControlEvents: .TouchUpInside)
-    button.setTitle(Text.Pairing.use, forState: .Normal)
+    button.setTitle(Text.Editing.turnOn, forState: .Normal)
     button.setTitleColor(Color.General.life, forState: .Normal)
     button.titleLabel?.font = Font.General.button
     button.layer.borderColor = Color.General.life.CGColor
@@ -91,7 +91,10 @@ class LightsController: UIViewController {
   }
 
   func turnButtonDidPress() {
+    let shouldTurn = turnButton.titleForState(.Normal) == Text.Editing.turnOn
+    let title = shouldTurn ? Text.Editing.turnOff : Text.Editing.turnOn
 
+    turnButton.setTitle(title, forState: .Normal)
   }
 
   // MARK: - Animations

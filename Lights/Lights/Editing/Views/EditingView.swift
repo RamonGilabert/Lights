@@ -84,11 +84,13 @@ class EditingView: UIView {
     panGesture.addTarget(self, action: #selector(handlePanGesture))
     panGesture.minimumNumberOfTouches = 1
     panGesture.cancelsTouchesInView = false
+    panGesture.delegate = self
 
     return panGesture
   }()
 
   var delegate: EditingViewDelegate?
+  var previousRadius = Dimensions.size / 2
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -120,14 +122,20 @@ class EditingView: UIView {
     let point = indicatorLocation(panGesture.locationInView(self))
     let x = abs(point.x - colorWheel.center.x)
     let y = abs(point.y - colorWheel.center.y)
-    let size = sqrt(x * x + y * y) * 2
     let reference = saturation(point)
     let color = UIColor(hue: reference.hue,
                         saturation: reference.saturation, brightness: 1, alpha: 1)
+    var size = sqrt(x * x + y * y) * 2
+
+    if abs(previousRadius - size / 2) < 0.5 {
+      size = previousRadius * 2
+    }
+
+    previousRadius = size / 2
 
     if panGesture.state == .Ended || panGesture.state == .Cancelled {
       delegate?.performRequest(color)
-    } else if size >= Dimensions.size / 3 {
+    } else if size >= Dimensions.size / 2 {
       let pathFrame = CGRect(x: (colorWheel.frame.width - size) / 2,
                              y: (colorWheel.frame.height - size) / 2,
                              width: size, height: size)
@@ -277,5 +285,12 @@ class EditingView: UIView {
     color.alpha = initial.alpha
 
     return color
+  }
+}
+
+extension EditingView: UIGestureRecognizerDelegate {
+
+  func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    return true
   }
 }

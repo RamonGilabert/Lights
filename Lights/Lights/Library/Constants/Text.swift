@@ -18,4 +18,9 @@ struct Text {
     static let control = "You can now control your lights from anywhere, change the intensity or even the color of the bulb."
     static let use = "Start using".uppercaseString
   }
+
+  struct Editing {
+    static let turnOn = "Turn on".uppercaseString
+    static let turnOff = "Turn off".uppercaseString
+  }
 }
