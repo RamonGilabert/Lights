@@ -75,7 +75,7 @@ class EditingView: UIView {
           let alpha: CGFloat = saturate > 0.99 ? (1 - saturate) * 100 : 1
 
           hsv = (hue: color.hue, saturation: saturate, brightness: 1, alpha: alpha)
-          rgb = hsv2rgb(hsv)
+          rgb = convertHSV(hsv)
         }
 
         let offset = Int(4 * (point.x + point.y * Dimensions.size))
@@ -97,22 +97,13 @@ class EditingView: UIView {
   }
 
   func saturation(position: CGPoint) -> (hue: CGFloat, saturation: CGFloat) {
-    let c: CGFloat = 150
-    let dx = CGFloat(position.x - c) / c
-    let dy = CGFloat(position.y - c) / c
-    let d = sqrt(CGFloat (dx * dx + dy * dy))
+    let dimension = Dimensions.size / 2
+    let diferentialX = CGFloat(position.x - dimension) / dimension
+    let diferentialY = CGFloat(position.y - dimension) / dimension
+    let saturation = sqrt(CGFloat(diferentialX * diferentialX + diferentialY * diferentialY))
+    let expression = acos(diferentialX / saturation) / CGFloat(M_PI) / 2
+    let hue = saturation == 0 ? 0 : diferentialY < 0 ? 1 - expression : expression
 
-    let saturation: CGFloat = d
-
-    var hue: CGFloat
-    if (d == 0) {
-      hue = 0;
-    } else {
-      hue = acos(dx/d) / CGFloat(M_PI) / 2.0
-      if (dy < 0) {
-        hue = 1.0 - hue
-      }
-    }
     return (hue, saturation)
   }
 
