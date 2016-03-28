@@ -1,13 +1,14 @@
 import UIKit
 import Transition
 import Walker
+import Sugar
 
 class LightsController: TapViewController {
 
   struct Dimensions {
     static let buttonWidth: CGFloat = -64
     static let buttonHeight: CGFloat = 60
-    static let buttonOffset: CGFloat = -106
+    static let buttonOffset: CGFloat = -85
 
     static let buttonTopOffset: CGFloat = 36
     static let buttonRightOffset: CGFloat = -20
@@ -37,7 +38,6 @@ class LightsController: TapViewController {
 
   lazy var transition: Transition = {
     let transition = Transition() { controller, show in
-      guard let controller = controller as? LightsController else { return }
       controller.view.alpha = 1
     }
 
@@ -56,7 +56,7 @@ class LightsController: TapViewController {
 
     [searchButton, turnButton].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
-      $0.transform = CGAffineTransformMakeTranslation(0, -1000)
+      $0.transform = CGAffineTransformMakeTranslation(0, -UIScreen.mainScreen().bounds.height)
       view.addSubview($0)
     }
 
@@ -72,7 +72,11 @@ class LightsController: TapViewController {
   // MARK: - Action methods
 
   func searchButtonDidPress() {
+    presentViews(false)
 
+    delay(0.75) {
+      self.presentViewController(StartController(), animated: true, completion: nil)
+    }
   }
 
   func turnButtonDidPress() {
@@ -82,14 +86,16 @@ class LightsController: TapViewController {
   // MARK: - Animations
 
   func presentViews(show: Bool) {
-    let transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, -300)
+    let transform = show
+      ? CGAffineTransformIdentity
+      : CGAffineTransformMakeTranslation(0, -UIScreen.mainScreen().bounds.height)
 
-    spring(searchButton, delay: show ? 0 : 0.2,
+    spring(searchButton, delay: show ? 0.2 : 0,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = transform
     }
 
-    spring(turnButton, delay: show ? 0.2 : 0,
+    spring(turnButton, delay: show ? 0 : 0.2,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = transform
     }

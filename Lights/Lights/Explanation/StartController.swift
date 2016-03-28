@@ -2,6 +2,7 @@ import UIKit
 import Ripple
 import Walker
 import Sugar
+import Transition
 
 class StartController: TapViewController {
 
@@ -41,6 +42,16 @@ class StartController: TapViewController {
     return label
   }()
 
+  lazy var transition: Transition = {
+    let transition = Transition() { controller, show in
+      controller.view.alpha = 1
+    }
+
+    transition.animationDuration = 0.15
+
+    return transition
+  }()
+
   lazy var pairingController: PairingController = PairingController()
 
   let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
@@ -48,6 +59,8 @@ class StartController: TapViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    transitioningDelegate = transition
 
     [startView, flameView, explanationView, searchingLabel].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
@@ -71,6 +84,7 @@ class StartController: TapViewController {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
 
+    closeDistilleries()
     animateController(true)
   }
 
