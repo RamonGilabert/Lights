@@ -3,7 +3,7 @@ import Transition
 import Sugar
 import Walker
 
-class PairingController: UIViewController {
+class PairingController: TapViewController {
 
   struct Dimensions {
     static let flameWidth: CGFloat = 75

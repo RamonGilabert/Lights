@@ -3,7 +3,7 @@ import Ripple
 import Walker
 import Sugar
 
-class StartController: UIViewController {
+class StartController: TapViewController {
 
   struct Dimensions {
     static let bottomOffset: CGFloat = -50
@@ -32,13 +32,6 @@ class StartController: UIViewController {
   lazy var explanationView: ExplanationView = ExplanationView(title: Text.Explanation.title,
                                                               subtitle: Text.Explanation.subtitle)
 
-  lazy var tapGesture: UITapGestureRecognizer = { [unowned self] in
-    let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: #selector(handleTapGesture))
-
-    return gesture
-  }()
-
   lazy var searchingLabel: UILabel = {
     let label = UILabel()
     label.font = Font.General.detail
@@ -62,7 +55,6 @@ class StartController: UIViewController {
     }
 
     view.backgroundColor = Color.General.background
-    view.addGestureRecognizer(tapGesture)
 
     setupConstraints()
   }
@@ -80,18 +72,6 @@ class StartController: UIViewController {
     super.viewDidAppear(animated)
 
     animateController(true)
-  }
-
-  // MARK: - Action methods
-
-  func handleTapGesture() {
-    let location = tapGesture.locationInView(view)
-
-    droplet(location,
-            view: view,
-            size: 25,
-            duration: 1, multiplier: 2.5,
-            color: Color.General.ripple)
   }
 
   // MARK: - Constraints
@@ -130,7 +110,6 @@ class StartController: UIViewController {
 
   func animateExplanation(show: Bool) {
     let transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeTranslation(0, 300)
-    let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
 
     spring(flameView, delay: show ? 0 : 0.4,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
