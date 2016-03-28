@@ -132,11 +132,13 @@ class EditingView: UIView {
                              y: (colorWheel.frame.height - size) / 2,
                              width: size, height: size)
       let path = UIBezierPath(roundedRect: pathFrame, cornerRadius: size / 2)
+      let constantX: CGFloat = point.x - colorWheel.center.x > 0 ? -3.5 : 3.5
+      let constantY: CGFloat = point.y - colorWheel.center.y > 0 ? -3.5 : 3.5
 
       delegate?.changeColor(color)
 
       mask.path = path.CGPath
-      indicatorOverlay.center = CGPoint(x: point.x, y: point.y)
+      indicatorOverlay.center = CGPoint(x: point.x + constantX, y: point.y + constantY)
       overlay.frame.size = CGSize(width: size - Dimensions.border * 2,
                                   height: size - Dimensions.border * 2)
       overlay.center = colorWheel.center
