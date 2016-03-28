@@ -2,6 +2,13 @@ import UIKit
 
 class EditingView: UIView {
 
+  struct Dimensions {
+    static let size: CGFloat = UIScreen.mainScreen().bounds.width + LightsController.Dimensions.wheelWidth
+  }
+
+  typealias RGB = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
+  typealias HSV = (hue: CGFloat, saturation: CGFloat, brightness: CGFloat, alpha: CGFloat)
+
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     return imageView
@@ -16,76 +23,80 @@ class EditingView: UIView {
     super.init(frame: frame)
 
     let wheelLayer = CALayer()
-    wheelLayer.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+    wheelLayer.frame = CGRect(x: 0, y: 0, width: Dimensions.size, height: Dimensions.size)
     wheelLayer.contents = createWheel()
     colorWheel.layer.addSublayer(wheelLayer)
 
-    colorWheel.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+    [colorWheel].forEach {
+      $0.translatesAutoresizingMaskIntoConstraints = false
+      addSubview($0)
+    }
 
-    addSubview(colorWheel)
+    setupConstraints()
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // MARK: - Constraints
+
+  func setupConstraints() {
+    NSLayoutConstraint.activateConstraints([
+      colorWheel.widthAnchor.constraintEqualToAnchor(widthAnchor),
+      colorWheel.heightAnchor.constraintEqualToAnchor(heightAnchor),
+      colorWheel.topAnchor.constraintEqualToAnchor(topAnchor),
+      colorWheel.leftAnchor.constraintEqualToAnchor(leftAnchor)
+      ])
+  }
+
   // MARK: - Helper methods
 
-  typealias RGB = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
-  typealias HSV = (hue: CGFloat, saturation: CGFloat, brightness: CGFloat, alpha: CGFloat)
-
   func createWheel() -> CGImageRef? {
-    let size = CGSize(width: 300, height: 300)
-
-    let originalWidth: CGFloat = size.width
-    let originalHeight: CGFloat = size.height
-    let dimension: CGFloat = min(originalWidth, originalHeight)
+    let dimension: CGFloat = Dimensions.size
     let bufferLength: Int = Int(dimension * dimension * 4)
-
     let bitmapData: CFMutableDataRef = CFDataCreateMutable(nil, 0)
-    CFDataSetLength(bitmapData, CFIndex(bufferLength))
-    let bitmap = CFDataGetMutableBytePtr(bitmapData)
 
-    for (var y: CGFloat = 0; y < dimension; y++) {
-      for (var x: CGFloat = 0; x < dimension; x++) {
+    CFDataSetLength(bitmapData, CFIndex(bufferLength))
+
+    let bitmap = CFDataGetMutableBytePtr(bitmapData)
+    let final = Int(Dimensions.size)
+
+    for x in 0 ..< final {
+      for y in 0 ..< final {
+        let point = CGPoint(x: CGFloat(x), y: CGFloat(y))
         var hsv: HSV = (hue: 0, saturation: 0, brightness: 0, alpha: 0)
         var rgb: RGB = (red: 0, green: 0, blue: 0, alpha: 0)
 
-        let color = hueSaturationAtPoint(CGPointMake(x, y))
-        let hue = color.hue
-        let saturation = color.saturation
-        var a: CGFloat = 0.0
-        if (saturation < 1.0) {
-          // Antialias the edge of the circle.
-          if (saturation > 0.99) {
-            a = (1.0 - saturation) * 100
-          } else {
-            a = 1.0;
-          }
+        let color = saturation(point)
+        let saturate = color.saturation
 
-          hsv.hue = hue
-          hsv.saturation = saturation
-          hsv.brightness = 1.0
-          hsv.alpha = a
+        if saturate < 1 {
+          let alpha: CGFloat = saturate > 0.99 ? (1 - saturate) * 100 : 1
+
+          hsv = (hue: color.hue, saturation: saturate, brightness: 1, alpha: alpha)
           rgb = hsv2rgb(hsv)
         }
-        let offset = Int(4 * (x + y * dimension))
-        bitmap[offset] = UInt8(rgb.red*255)
-        bitmap[offset + 1] = UInt8(rgb.green*255)
-        bitmap[offset + 2] = UInt8(rgb.blue*255)
-        bitmap[offset + 3] = UInt8(rgb.alpha*255)
+
+        let offset = Int(4 * (point.x + point.y * Dimensions.size))
+        bitmap[offset] = UInt8(rgb.red * 255)
+        bitmap[offset + 1] = UInt8(rgb.green * 255)
+        bitmap[offset + 2] = UInt8(rgb.blue * 255)
+        bitmap[offset + 3] = UInt8(rgb.alpha * 255)
       }
     }
 
-    // Convert the bitmap to a CGImage
-    let colorSpace: CGColorSpaceRef? = CGColorSpaceCreateDeviceRGB()
-    let dataProvider: CGDataProviderRef? = CGDataProviderCreateWithCFData(bitmapData)
+    let colorSpace = CGColorSpaceCreateDeviceRGB()
+    let dataProvider = CGDataProviderCreateWithCFData(bitmapData)
     let bitmapInfo = CGBitmapInfo(rawValue: CGBitmapInfo.ByteOrderDefault.rawValue | CGImageAlphaInfo.Last.rawValue)
-    let imageRef: CGImageRef? = CGImageCreate(Int(dimension), Int(dimension), 8, 32, Int(dimension) * 4, colorSpace, bitmapInfo, dataProvider, nil, false, CGColorRenderingIntent.RenderingIntentDefault)
-    return imageRef
+    let reference = CGImageCreate(final, final, 8, 32, final * 4,
+                                  colorSpace, bitmapInfo, dataProvider, nil,
+                                  false, .RenderingIntentDefault)
+
+    return reference
   }
 
-  func hueSaturationAtPoint(position: CGPoint) -> (hue: CGFloat, saturation: CGFloat) {
+  func saturation(position: CGPoint) -> (hue: CGFloat, saturation: CGFloat) {
     let c: CGFloat = 150
     let dx = CGFloat(position.x - c) / c
     let dy = CGFloat(position.y - c) / c
@@ -105,39 +116,27 @@ class EditingView: UIView {
     return (hue, saturation)
   }
 
-  func hsv2rgb(hsv: HSV) -> RGB {
-    // Converts HSV to a RGB color
-    var rgb: RGB = (red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
-    var r: CGFloat
-    var g: CGFloat
-    var b: CGFloat
+  func convertHSV(initial: HSV) -> RGB {
+    var color: RGB = (red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
 
-    let i = Int(hsv.hue * 6)
-    let f = hsv.hue * 6 - CGFloat(i)
-    let p = hsv.brightness * (1 - hsv.saturation)
-    let q = hsv.brightness * (1 - f * hsv.saturation)
-    let t = hsv.brightness * (1 - (1 - f) * hsv.saturation)
+    let i = Int(initial.hue * 6)
+    let f = initial.hue * 6 - CGFloat(i)
+    let p = initial.brightness * (1 - initial.saturation)
+    let q = initial.brightness * (1 - f * initial.saturation)
+    let t = initial.brightness * (1 - (1 - f) * initial.saturation)
+
     switch (i % 6) {
-    case 0: r = hsv.brightness; g = t; b = p; break;
-
-    case 1: r = q; g = hsv.brightness; b = p; break;
-
-    case 2: r = p; g = hsv.brightness; b = t; break;
-
-    case 3: r = p; g = q; b = hsv.brightness; break;
-
-    case 4: r = t; g = p; b = hsv.brightness; break;
-
-    case 5: r = hsv.brightness; g = p; b = q; break;
-
-    default: r = hsv.brightness; g = t; b = p;
+    case 0: color.red = initial.brightness; color.green = t; color.blue = p; break;
+    case 1: color.red = q; color.green = initial.brightness; color.blue = p; break;
+    case 2: color.red = p; color.green = initial.brightness; color.blue = t; break;
+    case 3: color.red = p; color.green = q; color.blue = initial.brightness; break;
+    case 4: color.red = t; color.green = p; color.blue = initial.brightness; break;
+    case 5: color.red = initial.brightness; color.green = p; color.blue = q; break;
+    default: color.red = initial.brightness; color.green = t; color.blue = p;
     }
 
-    rgb.red = r
-    rgb.green = g
-    rgb.blue = b
-    rgb.alpha = hsv.alpha
-    return rgb
-  }
+    color.alpha = initial.alpha
 
+    return color
+  }
 }

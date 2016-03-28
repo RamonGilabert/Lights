@@ -11,7 +11,7 @@ class LightsController: TapViewController {
     static let buttonOffset: CGFloat = -85
 
     static let wheelWidth: CGFloat = -60
-    static let wheelOffset: CGFloat = 30
+    static let wheelOffset: CGFloat = 40
 
     static let buttonTopOffset: CGFloat = 36
     static let buttonRightOffset: CGFloat = -20
@@ -104,7 +104,7 @@ class LightsController: TapViewController {
       $0.transform = transform
     }
 
-    spring(searchButton, delay: 0.2,
+    spring(editingView, delay: 0.2,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = transform
     }
@@ -124,7 +124,7 @@ class LightsController: TapViewController {
 
       editingView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.wheelWidth),
       editingView.heightAnchor.constraintEqualToAnchor(editingView.heightAnchor),
-      editingView.topAnchor.constraintEqualToAnchor(searchButton.topAnchor, constant: Dimensions.wheelOffset),
+      editingView.topAnchor.constraintEqualToAnchor(searchButton.bottomAnchor, constant: Dimensions.wheelOffset),
       editingView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
 
       turnButton.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.buttonWidth),
