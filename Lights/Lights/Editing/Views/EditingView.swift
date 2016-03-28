@@ -1,10 +1,18 @@
 import UIKit
 
+protocol EditingViewDelegate {
+
+  func changeColor(color: UIColor)
+  func performRequest(color: UIColor)
+}
+
 class EditingView: UIView {
 
   struct Dimensions {
-    static let size: CGFloat = UIScreen.mainScreen().bounds.width + LightsController.Dimensions.wheelWidth
+    static let size: CGFloat = UIScreen.mainScreen().bounds.width + LightsController.Dimensions.wheelWidth - 10
     static let border: CGFloat = 7
+    static let indicator: CGFloat = 19
+    static let indicatorOverlay: CGFloat = 26
     static let imageWidth: CGFloat = 80
     static let imageHeight: CGFloat = 140
   }
@@ -42,21 +50,31 @@ class EditingView: UIView {
 
   lazy var overlay: UIView = {
     let view = UIView()
-    view.frame = CGRect(x: Dimensions.border, y: Dimensions.border,
-                        width: Dimensions.size - Dimensions.border * 2,
-                        height: Dimensions.size - Dimensions.border * 2)
     view.backgroundColor = Color.General.background
-    view.layer.cornerRadius = (Dimensions.size - 20) / 2
+    view.layer.cornerRadius = (Dimensions.size - Dimensions.border * 2) / 2
+
+    return view
+  }()
+
+  lazy var indicatorOverlay: UIView = {
+    let view = UIView()
+    view.frame = CGRect(x: (Dimensions.size - Dimensions.indicator) / 2,
+                        y: (Dimensions.border - Dimensions.indicator) / 2,
+                        width: Dimensions.indicator, height: Dimensions.indicator)
+    view.backgroundColor = Color.General.life
+    view.layer.cornerRadius = Dimensions.indicatorOverlay / 2
 
     return view
   }()
 
   lazy var indicator: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor.blackColor()
-    view.frame = CGRect(x: Dimensions.size / 2 - 15, y: -8.5, width: 30, height: 30)
-    view.layer.cornerRadius = 15
+    view.backgroundColor = Color.General.life
+    view.layer.borderColor = Color.General.background.CGColor
+    view.layer.borderWidth = 2
+    view.layer.cornerRadius = Dimensions.indicator / 2
     view.userInteractionEnabled = true
+    view.translatesAutoresizingMaskIntoConstraints = false
 
     return view
   }()
@@ -70,6 +88,8 @@ class EditingView: UIView {
     return panGesture
   }()
 
+  var delegate: EditingViewDelegate?
+
   override init(frame: CGRect) {
     super.init(frame: frame)
 
@@ -78,14 +98,14 @@ class EditingView: UIView {
     wheelLayer.contents = createWheel()
     colorWheel.layer.addSublayer(wheelLayer)
 
-    [colorWheel, indicator, imageView].forEach {
+    [colorWheel, overlay, imageView, indicatorOverlay].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
       addSubview($0)
     }
 
-    colorWheel.addSubview(overlay)
     colorWheel.layer.mask = mask
-    indicator.addGestureRecognizer(panGesture)
+    indicatorOverlay.addSubview(indicator)
+    indicatorOverlay.addGestureRecognizer(panGesture)
 
     setupConstraints()
   }
@@ -97,25 +117,32 @@ class EditingView: UIView {
   // MARK: - Action methods
 
   func handlePanGesture() {
+    let point = indicatorLocation(panGesture.locationInView(self))
+    let x = abs(point.x - colorWheel.center.x)
+    let y = abs(point.y - colorWheel.center.y)
+    let size = sqrt(x * x + y * y) * 2
+    let reference = saturation(point)
+    let color = UIColor(hue: reference.hue,
+                        saturation: reference.saturation, brightness: 1, alpha: 1)
 
     if panGesture.state == .Ended || panGesture.state == .Cancelled {
-      // TODO: Do the request
-    } else {
-      let point = indicatorLocation(panGesture.locationInView(self))
-      let x = abs(point.x - colorWheel.center.x)
-      let y = abs(point.y - colorWheel.center.y)
-      let size = sqrt(x * x + y * y) * 2
+      delegate?.performRequest(color)
+    } else if size >= Dimensions.size / 3 {
       let pathFrame = CGRect(x: (colorWheel.frame.width - size) / 2,
                              y: (colorWheel.frame.height - size) / 2,
                              width: size, height: size)
       let path = UIBezierPath(roundedRect: pathFrame, cornerRadius: size / 2)
 
+      delegate?.changeColor(color)
+
       mask.path = path.CGPath
-      indicator.center = point
-      overlay.frame = CGRect(x: pathFrame.origin.x + Dimensions.border,
-                             y: pathFrame.origin.x + Dimensions.border,
-                             width: size - Dimensions.border * 2,
-                             height: size - Dimensions.border * 2)
+      indicatorOverlay.center = CGPoint(x: point.x, y: point.y)
+      overlay.frame.size = CGSize(width: size - Dimensions.border * 2,
+                                  height: size - Dimensions.border * 2)
+      overlay.center = colorWheel.center
+      imageView.frame.size = CGSize(width: Dimensions.imageWidth * size / Dimensions.size,
+                                    height: Dimensions.imageHeight * size / Dimensions.size)
+      imageView.center = colorWheel.center
       overlay.layer.cornerRadius = overlay.frame.width / 2
     }
   }
@@ -141,10 +168,26 @@ class EditingView: UIView {
 
   func setupConstraints() {
     NSLayoutConstraint.activateConstraints([
-      colorWheel.widthAnchor.constraintEqualToAnchor(widthAnchor),
-      colorWheel.heightAnchor.constraintEqualToAnchor(heightAnchor),
+      colorWheel.widthAnchor.constraintEqualToConstant(Dimensions.size),
+      colorWheel.heightAnchor.constraintEqualToConstant(Dimensions.size),
       colorWheel.topAnchor.constraintEqualToAnchor(topAnchor),
       colorWheel.leftAnchor.constraintEqualToAnchor(leftAnchor),
+
+      overlay.widthAnchor.constraintEqualToConstant(Dimensions.size - Dimensions.border * 2),
+      overlay.heightAnchor.constraintEqualToConstant(Dimensions.size - Dimensions.border * 2),
+      overlay.centerXAnchor.constraintEqualToAnchor(colorWheel.centerXAnchor),
+      overlay.centerYAnchor.constraintEqualToAnchor(colorWheel.centerYAnchor),
+
+      indicatorOverlay.widthAnchor.constraintEqualToConstant(Dimensions.indicatorOverlay),
+      indicatorOverlay.heightAnchor.constraintEqualToConstant(Dimensions.indicatorOverlay),
+      indicatorOverlay.rightAnchor.constraintEqualToAnchor(colorWheel.rightAnchor,
+        constant: -(Dimensions.border - Dimensions.indicatorOverlay) / 2),
+      indicatorOverlay.centerYAnchor.constraintEqualToAnchor(colorWheel.centerYAnchor),
+
+      indicator.widthAnchor.constraintEqualToConstant(Dimensions.indicator),
+      indicator.heightAnchor.constraintEqualToConstant(Dimensions.indicator),
+      indicator.centerXAnchor.constraintEqualToAnchor(indicatorOverlay.centerXAnchor),
+      indicator.centerYAnchor.constraintEqualToAnchor(indicatorOverlay.centerYAnchor),
 
       imageView.widthAnchor.constraintEqualToConstant(Dimensions.imageWidth),
       imageView.heightAnchor.constraintEqualToConstant(Dimensions.imageHeight),

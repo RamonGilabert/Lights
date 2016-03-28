@@ -39,8 +39,9 @@ class LightsController: UIViewController {
     return button
   }()
 
-  lazy var editingView: EditingView = {
+  lazy var editingView: EditingView = { [unowned self] in
     let view = EditingView()
+    view.delegate = self
     view.userInteractionEnabled = true
 
     return view
@@ -133,5 +134,19 @@ class LightsController: UIViewController {
       turnButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       turnButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.buttonOffset)
       ])
+  }
+}
+
+extension LightsController: EditingViewDelegate {
+
+  func changeColor(color: UIColor) {
+    editingView.imageView.tintColor = color
+    editingView.indicatorOverlay.backgroundColor = color
+    editingView.indicator.backgroundColor = color
+    searchButton.tintColor = color
+  }
+
+  func performRequest(color: UIColor) {
+
   }
 }
