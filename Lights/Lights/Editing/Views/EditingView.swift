@@ -137,7 +137,7 @@ class EditingView: UIView {
     } else if panGesture.state == .Began {
       previousRadius = overlay.frame.size.width / 2 + Dimensions.border
       previousPoint = indicatorOverlay.center
-    } else if size >= Dimensions.imageHeight + 20 {
+    } else if size >= Dimensions.imageHeight + 40 {
       let pathFrame = CGRect(x: (colorWheel.frame.width - size) / 2,
                              y: (colorWheel.frame.height - size) / 2,
                              width: size, height: size)

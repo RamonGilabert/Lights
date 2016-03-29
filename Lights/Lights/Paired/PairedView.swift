@@ -26,9 +26,7 @@ class PairedView: UIView {
 
   lazy var titleLabel: UILabel = {
     let label = UILabel()
-    label.text = Text.Pairing.paired
-    label.textColor = Color.General.life
-    label.font = Font.Text.title
+    label.attributedText = Attributes.detail(Text.Pairing.paired)
 
     return label
   }()

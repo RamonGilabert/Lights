@@ -137,7 +137,7 @@ class LightsController: TapViewController {
       turnButton.widthAnchor.constraintEqualToConstant(DetailButton.Dimensions.buttonWidth),
       turnButton.heightAnchor.constraintEqualToConstant(DetailButton.Dimensions.buttonHeight),
       turnButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      turnButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: DetailButton.Dimensions.buttonOffset + 25)
+      turnButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: DetailButton.Dimensions.buttonOffset + 10)
       ])
   }
 }
