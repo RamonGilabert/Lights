@@ -10,8 +10,8 @@ class PairedView: UIView {
   struct Dimensions {
     static let pairedSize: CGFloat = 140
     static let pairedOffset: CGFloat = -75
-    static let titleOffset: CGFloat = 25
-    static let subtitleOffset: CGFloat = 33
+    static let titleOffset: CGFloat = 8
+    static let subtitleOffset: CGFloat = 28
     static let subtitleWidth: CGFloat = -56
   }
 
@@ -42,7 +42,7 @@ class PairedView: UIView {
   }()
 
   lazy var startButton: DetailButton = { [unowned self] in
-    let button = UIButton()
+    let button = DetailButton()
     button.addTarget(self, action: #selector(startButtonDidPress), forControlEvents: .TouchUpInside)
     button.setTitle(Text.Pairing.use, forState: .Normal)
 

@@ -7,10 +7,6 @@ import Ripple
 class LightsController: TapViewController {
 
   struct Dimensions {
-    static let buttonWidth: CGFloat = -64
-    static let buttonHeight: CGFloat = 60
-    static let buttonOffset: CGFloat = -110
-
     static let wheelWidth: CGFloat = -120
     static let wheelOffset: CGFloat = 60
 
@@ -27,15 +23,10 @@ class LightsController: TapViewController {
     return button
   }()
 
-  lazy var turnButton: UIButton = { [unowned self] in
-    let button = UIButton()
+  lazy var turnButton: DetailButton = { [unowned self] in
+    let button = DetailButton()
     button.addTarget(self, action: #selector(turnButtonDidPress), forControlEvents: .TouchUpInside)
     button.setTitle(Text.Editing.turnOn, forState: .Normal)
-    button.setTitleColor(Color.General.life, forState: .Normal)
-    button.titleLabel?.font = Font.General.button
-    button.layer.borderColor = Color.General.life.CGColor
-    button.layer.borderWidth = 2
-    button.layer.cornerRadius = Dimensions.buttonHeight / 2
 
     return button
   }()
@@ -114,7 +105,7 @@ class LightsController: TapViewController {
         ripple(self.editingView.center,
           view: self.view,
           size: 120,
-          duration: 4, multiplier: 3, divider: 4,
+          duration: 4, multiplier: 3, divider: 3,
           color: Color.General.ripple)
       }
     }
@@ -142,10 +133,10 @@ class LightsController: TapViewController {
       editingView.topAnchor.constraintEqualToAnchor(searchButton.bottomAnchor, constant: Dimensions.wheelOffset),
       editingView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
 
-      turnButton.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.buttonWidth),
-      turnButton.heightAnchor.constraintEqualToConstant(Dimensions.buttonHeight),
+      turnButton.widthAnchor.constraintEqualToConstant(DetailButton.Dimensions.buttonWidth),
+      turnButton.heightAnchor.constraintEqualToConstant(DetailButton.Dimensions.buttonHeight),
       turnButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      turnButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.buttonOffset)
+      turnButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: DetailButton.Dimensions.buttonOffset - 20)
       ])
   }
 }
@@ -156,6 +147,7 @@ extension LightsController: EditingViewDelegate {
     editingView.imageView.tintColor = color
     editingView.indicatorOverlay.backgroundColor = color
     editingView.indicator.backgroundColor = color
+    editingView.imageView.layer.shadowColor = color.alpha(0.5).CGColor
   }
 
   func performRequest(color: UIColor) {

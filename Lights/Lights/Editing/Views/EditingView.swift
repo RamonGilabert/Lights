@@ -10,11 +10,11 @@ class EditingView: UIView {
 
   struct Dimensions {
     static let size: CGFloat = UIScreen.mainScreen().bounds.width + LightsController.Dimensions.wheelWidth
-    static let border: CGFloat = 7
-    static let indicator: CGFloat = 19
-    static let indicatorOverlay: CGFloat = 26
-    static let imageWidth: CGFloat = 80
-    static let imageHeight: CGFloat = 140
+    static let border: CGFloat = 4
+    static let indicator: CGFloat = 11
+    static let indicatorOverlay: CGFloat = 21
+    static let imageWidth: CGFloat = 60
+    static let imageHeight: CGFloat = 100
   }
 
   typealias RGB = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
@@ -25,6 +25,7 @@ class EditingView: UIView {
     imageView.contentMode = .ScaleAspectFit
     imageView.image = UIImage(named: Image.flame)?.imageWithRenderingMode(.AlwaysTemplate)
     imageView.tintColor = Color.General.life
+    imageView.prepareShadow(5, opacity: 0.2)
 
     return imageView
   }()
@@ -50,7 +51,7 @@ class EditingView: UIView {
 
   lazy var overlay: UIView = {
     let view = UIView()
-    view.backgroundColor = Color.Background.top
+    view.backgroundColor = Color.Background.pop
     view.layer.cornerRadius = (Dimensions.size - Dimensions.border * 2) / 2
 
     return view

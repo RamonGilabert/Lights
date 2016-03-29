@@ -89,8 +89,6 @@ class StartController: TapViewController {
   // MARK: - Constraints
 
   func setupConstraints() {
-    let width = UIScreen.mainScreen().bounds.width
-
     NSLayoutConstraint.activateConstraints([
       startView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       startView.bottomAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.bottomOffset),
@@ -103,7 +101,7 @@ class StartController: TapViewController {
       explanationView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth),
 
-      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3),
+      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: 90),
       searchingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.searchingOffset)
       ])
   }
