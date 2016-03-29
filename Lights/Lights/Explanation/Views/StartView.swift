@@ -37,7 +37,7 @@ class StartView: UIView {
 
   lazy var popView: UIView = {
     let view = UIView()
-    view.backgroundColor = Color.Background.top
+    view.backgroundColor = Color.Background.pop
     
     return view
   }()
@@ -76,6 +76,7 @@ class StartView: UIView {
 
   func startButtonDidPress() {
     delegate?.startButtonDidPress()
+    startButton.layer.shadowOpacity = 0
     startButton.userInteractionEnabled = false
     animateBackground(Color.Button.Start.background)
 

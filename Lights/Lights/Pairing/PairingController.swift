@@ -24,18 +24,14 @@ class PairingController: TapViewController {
 
   lazy var titleLabel: UILabel = {
     let label = UILabel()
-    label.font = Font.General.subtitle
-    label.textColor = Color.General.text
-    label.text = Text.Pairing.found
+    label.attributedText = Attributes.found(Text.Pairing.found)
 
     return label
   }()
 
   lazy var pairingLabel: UILabel = {
     let label = UILabel()
-    label.font = Font.General.detail
-    label.textColor = Color.General.titles
-    label.text = Text.Pairing.pairing
+    label.attributedText = Attributes.detail(Text.Pairing.pairing)
 
     return label
   }()
@@ -121,7 +117,7 @@ class PairingController: TapViewController {
   // MARK: - Timer methods
 
   func timerDidFire() {
-    guard let text = pairingLabel.text else { return }
+    guard let text = pairingLabel.attributedText?.string else { return }
 
     let transition = CATransition()
     transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
@@ -130,9 +126,9 @@ class PairingController: TapViewController {
     pairingLabel.layer.addAnimation(transition, forKey: "transition")
 
     if text.characters.count == Text.Pairing.pairing.characters.count + 3 {
-      pairingLabel.text = Text.Pairing.pairing
+      pairingLabel.attributedText = Attributes.detail(Text.Pairing.pairing)
     } else {
-      pairingLabel.text = text + "."
+      pairingLabel.attributedText = Attributes.detail(text + ".")
     }
 
     pairingLabel.sizeToFit()

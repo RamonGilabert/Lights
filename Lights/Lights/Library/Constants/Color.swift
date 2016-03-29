@@ -16,6 +16,7 @@ struct Color {
     static let general = UIColor.blackColor()
     static let top = UIColor.hex("131313")
     static let bottom = UIColor.hex("373C3F")
+    static let pop = UIColor.hex("212323")
   }
 
   struct Button {

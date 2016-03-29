@@ -8,10 +8,11 @@ class StartController: TapViewController {
 
   struct Dimensions {
     static let bottomOffset: CGFloat = -50
-    static let flameHeight: CGFloat = 50
+    static let flameHeight: CGFloat = 56
     static let flameOffset: CGFloat = 40
     static let explanationOffset: CGFloat = 22
     static let explanationWidth: CGFloat = -56
+    static let searchingWidth: CGFloat = 90
     static let searchingOffset: CGFloat = -130
   }
 
@@ -36,9 +37,7 @@ class StartController: TapViewController {
 
   lazy var searchingLabel: UILabel = {
     let label = UILabel()
-    label.font = Font.General.detail
-    label.textColor = Color.General.titles
-    label.text = Text.Detail.searching
+    label.attributedText = Attributes.detail(Text.Detail.searching)
 
     return label
   }()
@@ -104,7 +103,7 @@ class StartController: TapViewController {
       explanationView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth),
 
-      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3 - 25),
+      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3),
       searchingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.searchingOffset)
       ])
   }
@@ -173,7 +172,7 @@ class StartController: TapViewController {
   }
 
   func timerDidFire() {
-    guard let text = searchingLabel.text else { return }
+    guard let text = searchingLabel.attributedText?.string else { return }
 
     let transition = CATransition()
     transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
@@ -182,9 +181,9 @@ class StartController: TapViewController {
     searchingLabel.layer.addAnimation(transition, forKey: "transition")
 
     if text.characters.count == Text.Detail.searching.characters.count + 3 {
-      searchingLabel.text = Text.Detail.searching
+      searchingLabel.attributedText = Attributes.detail(Text.Detail.searching)
     } else {
-      searchingLabel.text = text + "."
+      searchingLabel.attributedText = Attributes.detail(text + ".")
     }
 
     searchingLabel.sizeToFit()

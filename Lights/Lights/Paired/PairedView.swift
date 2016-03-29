@@ -13,8 +13,8 @@ class PairedView: UIView {
     static let titleOffset: CGFloat = 25
     static let subtitleOffset: CGFloat = 5
     static let subtitleWidth: CGFloat = -56
-    static let buttonWidth: CGFloat = -64
-    static let buttonHeight: CGFloat = 60
+    static let buttonWidth: CGFloat = 210
+    static let buttonHeight: CGFloat = 54
     static let buttonOffset: CGFloat = -70
   }
 
@@ -48,10 +48,9 @@ class PairedView: UIView {
     let button = UIButton()
     button.addTarget(self, action: #selector(startButtonDidPress), forControlEvents: .TouchUpInside)
     button.setTitle(Text.Pairing.use, forState: .Normal)
-    button.setTitleColor(Color.General.life, forState: .Normal)
+    button.setTitleColor(Color.Background.bottom, forState: .Normal)
     button.titleLabel?.font = Font.General.button
-    button.layer.borderColor = Color.General.life.CGColor
-    button.layer.borderWidth = 2
+    button.backgroundColor = Color.General.life
     button.layer.cornerRadius = Dimensions.buttonHeight / 2
 
     return button
@@ -96,7 +95,7 @@ class PairedView: UIView {
       subtitleLabel.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
       subtitleLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: Dimensions.subtitleOffset),
 
-      startButton.widthAnchor.constraintEqualToAnchor(widthAnchor, constant: Dimensions.buttonWidth),
+      startButton.widthAnchor.constraintEqualToConstant(Dimensions.buttonWidth),
       startButton.heightAnchor.constraintEqualToConstant(Dimensions.buttonHeight),
       startButton.centerXAnchor.constraintEqualToAnchor(centerXAnchor),
       startButton.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: Dimensions.buttonOffset)

@@ -9,9 +9,9 @@ struct Font {
 
   struct General {
     static let start = UIFont(name: Brandon.bold, size: 36)!
-    static let button = UIFont(name: Brandon.bold, size: 22)!
-    static let detail = UIFont(name: Brandon.bold, size: 34)!
-    static let subtitle = UIFont(name: Brandon.bold, size: 22)!
+    static let button = UIFont(name: Brandon.bold, size: 23)!
+    static let detail = UIFont(name: Brandon.bold, size: 23)!
+    static let subtitle = UIFont(name: Brandon.bold, size: 14)!
   }
 
   struct Text {

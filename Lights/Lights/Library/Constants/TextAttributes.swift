@@ -29,8 +29,37 @@ struct Attributes {
       NSFontAttributeName : Font.Text.subtitle,
       NSForegroundColorAttributeName : Color.General.text,
       NSParagraphStyleAttributeName : paragraphStyle,
-      NSKernAttributeName : 0.3],
-                                   range: NSRange(location: 0, length: text.characters.count))
+      NSKernAttributeName : 0.3], range: NSRange(location: 0, length: text.characters.count))
+
+    return attributedString
+  }
+
+  static func found(text: String) -> NSAttributedString {
+    let attributedString = NSMutableAttributedString(string: text)
+
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.alignment = .Center
+
+    attributedString.addAttributes([
+      NSFontAttributeName : Font.General.subtitle,
+      NSForegroundColorAttributeName : Color.General.text,
+      NSParagraphStyleAttributeName : paragraphStyle,
+      NSKernAttributeName : 2], range: NSRange(location: 0, length: text.characters.count))
+
+    return attributedString
+  }
+
+  static func detail(text: String) -> NSAttributedString {
+    let attributedString = NSMutableAttributedString(string: text)
+
+    let paragraphStyle = NSMutableParagraphStyle()
+    paragraphStyle.alignment = .Left
+
+    attributedString.addAttributes([
+      NSFontAttributeName : Font.General.detail,
+      NSForegroundColorAttributeName : Color.General.text,
+      NSParagraphStyleAttributeName : paragraphStyle,
+      NSKernAttributeName : 5], range: NSRange(location: 0, length: text.characters.count))
 
     return attributedString
   }
