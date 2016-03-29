@@ -2,16 +2,17 @@ import UIKit
 import Transition
 import Walker
 import Sugar
+import Ripple
 
 class LightsController: TapViewController {
 
   struct Dimensions {
     static let buttonWidth: CGFloat = -64
     static let buttonHeight: CGFloat = 60
-    static let buttonOffset: CGFloat = -85
+    static let buttonOffset: CGFloat = -110
 
-    static let wheelWidth: CGFloat = -60
-    static let wheelOffset: CGFloat = 40
+    static let wheelWidth: CGFloat = -120
+    static let wheelOffset: CGFloat = 60
 
     static let buttonTopOffset: CGFloat = 36
     static let buttonRightOffset: CGFloat = -20
@@ -104,9 +105,19 @@ class LightsController: TapViewController {
       ? CGAffineTransformIdentity
       : CGAffineTransformMakeTranslation(0, -UIScreen.mainScreen().bounds.height)
 
+    calm()
+
     spring(searchButton, delay: show ? 0.4 : 0,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = transform
+    }.finally {
+      if show {
+        ripple(self.editingView.center,
+          view: self.view,
+          size: 120,
+          duration: 4, multiplier: 3, divider: 4,
+          color: Color.General.ripple)
+      }
     }
 
     spring(editingView, delay: 0.2,

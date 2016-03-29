@@ -15,7 +15,8 @@ class PairingController: TapViewController {
 
   lazy var flameView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = UIImage(named: Image.flame)
+    imageView.image = UIImage(named: Image.flame)?.imageWithRenderingMode(.AlwaysTemplate)
+    imageView.tintColor = Color.General.life
     imageView.contentMode = .ScaleAspectFit
 
     return imageView

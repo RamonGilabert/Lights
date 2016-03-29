@@ -9,7 +9,7 @@ protocol EditingViewDelegate {
 class EditingView: UIView {
 
   struct Dimensions {
-    static let size: CGFloat = UIScreen.mainScreen().bounds.width + LightsController.Dimensions.wheelWidth - 10
+    static let size: CGFloat = UIScreen.mainScreen().bounds.width + LightsController.Dimensions.wheelWidth
     static let border: CGFloat = 7
     static let indicator: CGFloat = 19
     static let indicatorOverlay: CGFloat = 26

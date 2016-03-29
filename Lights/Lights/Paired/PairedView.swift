@@ -21,7 +21,8 @@ class PairedView: UIView {
   lazy var pairedView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFit
-    imageView.image = UIImage(named: Image.paired)
+    imageView.image = UIImage(named: Image.paired)?.imageWithRenderingMode(.AlwaysTemplate)
+    imageView.tintColor = Color.General.life
 
     return imageView
   }()
