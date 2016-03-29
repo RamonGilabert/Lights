@@ -13,9 +13,9 @@ class DetailButton: UIButton {
 
     setTitleColor(Color.Background.bottom, forState: .Normal)
     titleLabel?.font = Font.General.button
-    backgroundColor = Color.General.life
+    backgroundColor = Color.Button.background
     layer.cornerRadius = Dimensions.buttonHeight / 2
-    prepareShadow(8, opacity: 0.3)
+    prepareShadow(4, opacity: 0.3)
   }
   
   required init?(coder aDecoder: NSCoder) {

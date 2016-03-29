@@ -149,6 +149,9 @@ extension LightsController: EditingViewDelegate {
     editingView.indicatorOverlay.backgroundColor = color
     editingView.indicator.backgroundColor = color
     editingView.imageView.layer.shadowColor = color.alpha(0.5).CGColor
+    searchButton.tintColor = color
+    turnButton.backgroundColor = color
+    turnButton.layer.shadowColor = color.alpha(0.5).CGColor
   }
 
   func performRequest(color: UIColor) {
