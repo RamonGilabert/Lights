@@ -43,4 +43,10 @@ class TapViewController: UIViewController {
             duration: 1, multiplier: 2.5,
             color: Color.General.ripple)
   }
+
+  // MARK: - Helper methods
+
+  override func preferredStatusBarStyle() -> UIStatusBarStyle {
+    return .LightContent
+  }
 }

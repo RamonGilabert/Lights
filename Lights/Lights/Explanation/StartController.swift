@@ -10,7 +10,7 @@ class StartController: TapViewController {
     static let bottomOffset: CGFloat = -50
     static let flameHeight: CGFloat = 50
     static let flameOffset: CGFloat = 40
-    static let explanationOffset: CGFloat = 14
+    static let explanationOffset: CGFloat = 22
     static let explanationWidth: CGFloat = -56
     static let searchingOffset: CGFloat = -130
   }

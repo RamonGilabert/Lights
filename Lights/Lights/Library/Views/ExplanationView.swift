@@ -3,16 +3,10 @@ import UIKit
 class ExplanationView: UIView {
 
   struct Dimensions {
-    static let topOffset: CGFloat = 16
+    static let topOffset: CGFloat = 20
   }
 
-  lazy var titleLabel: UILabel = {
-    let label = UILabel()
-    label.font = Font.Text.title
-    label.textColor = Color.General.titles
-    
-    return label
-  }()
+  lazy var titleLabel: UILabel = UILabel()
 
   lazy var subtitleLabel: UILabel = {
     let label = UILabel()
@@ -24,7 +18,7 @@ class ExplanationView: UIView {
   init(title: String, subtitle: String) {
     super.init(frame: CGRectZero)
 
-    titleLabel.text = title
+    titleLabel.attributedText = Attributes.title(title)
     subtitleLabel.attributedText = Attributes.subtitle(subtitle)
 
     [titleLabel, subtitleLabel].forEach {

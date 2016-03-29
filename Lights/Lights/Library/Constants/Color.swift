@@ -22,7 +22,7 @@ struct Color {
 
     struct Start {
       static let background = General.life
-      static let hover = UIColor.hex("E37A4B")
+      static let hover = UIColor.hex("E5E5E5")
     }
   }
 }
