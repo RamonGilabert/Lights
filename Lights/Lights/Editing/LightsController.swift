@@ -62,6 +62,7 @@ class LightsController: TapViewController {
       view.addSubview($0)
     }
 
+    changeColor(Color.General.initial)
     setupConstraints()
   }
 

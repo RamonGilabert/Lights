@@ -44,7 +44,7 @@ struct Attributes {
       NSFontAttributeName : Font.General.subtitle,
       NSForegroundColorAttributeName : Color.General.text,
       NSParagraphStyleAttributeName : paragraphStyle,
-      NSKernAttributeName : 2], range: NSRange(location: 0, length: text.characters.count))
+      NSKernAttributeName : 3], range: NSRange(location: 0, length: text.characters.count))
 
     return attributedString
   }

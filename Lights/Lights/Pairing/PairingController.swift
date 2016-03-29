@@ -140,7 +140,7 @@ class PairingController: TapViewController {
       titleLabel.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       titleLabel.topAnchor.constraintEqualToAnchor(flameView.bottomAnchor, constant: Dimensions.titleOffset),
 
-      pairingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3),
+      pairingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3 - 20),
       pairingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.pairingOffset),
 
       pairedView.widthAnchor.constraintEqualToAnchor(view.widthAnchor),

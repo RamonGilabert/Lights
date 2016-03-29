@@ -192,8 +192,8 @@ class EditingView: UIView {
 
       indicatorOverlay.widthAnchor.constraintEqualToConstant(Dimensions.indicatorOverlay),
       indicatorOverlay.heightAnchor.constraintEqualToConstant(Dimensions.indicatorOverlay),
-      indicatorOverlay.rightAnchor.constraintEqualToAnchor(colorWheel.rightAnchor,
-        constant: -(Dimensions.border - Dimensions.indicatorOverlay) / 2),
+      indicatorOverlay.leftAnchor.constraintEqualToAnchor(colorWheel.leftAnchor,
+        constant: (Dimensions.border - Dimensions.indicatorOverlay) / 2),
       indicatorOverlay.centerYAnchor.constraintEqualToAnchor(colorWheel.centerYAnchor),
 
       indicator.widthAnchor.constraintEqualToConstant(Dimensions.indicator),
