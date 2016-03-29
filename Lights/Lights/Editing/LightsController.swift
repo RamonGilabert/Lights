@@ -7,7 +7,7 @@ import Ripple
 class LightsController: TapViewController {
 
   struct Dimensions {
-    static let wheelWidth: CGFloat = -120
+    static let wheelWidth: CGFloat = -130
     static let wheelOffset: CGFloat = 60
 
     static let buttonTopOffset: CGFloat = 36
