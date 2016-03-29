@@ -85,8 +85,10 @@ class PairingController: TapViewController {
                                                    userInfo: nil, repeats: true)
 
     delay(2) {
+      closeDistilleries()
+
       let transform = CGAffineTransformMakeTranslation(0, -1000)
-      let duration: NSTimeInterval = 1.5
+      let duration: NSTimeInterval = 0.6
 
       animate(self.flameView, duration: duration, curve: .EaseInOut) {
         $0.transform = transform
@@ -100,8 +102,10 @@ class PairingController: TapViewController {
         $0.transform = transform
       }
 
-      spring(self.pairedView, delay: 0.6, spring: 40, friction: 50, mass: 50) {
-        $0.transform = CGAffineTransformIdentity
+      delay(1) {
+        spring(self.pairedView, spring: 100, friction: 70, mass: 70) {
+          $0.transform = CGAffineTransformIdentity
+        }
       }
     }
   }

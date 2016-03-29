@@ -11,7 +11,7 @@ class PairedView: UIView {
     static let pairedSize: CGFloat = 140
     static let pairedOffset: CGFloat = -75
     static let titleOffset: CGFloat = 8
-    static let subtitleOffset: CGFloat = 28
+    static let subtitleOffset: CGFloat = 32
     static let subtitleWidth: CGFloat = -56
   }
 

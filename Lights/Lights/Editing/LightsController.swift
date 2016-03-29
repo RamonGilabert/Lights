@@ -49,7 +49,7 @@ class LightsController: TapViewController {
     return transition
   }()
 
-  let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
+  let animation = (spring: CGFloat(90), friction: CGFloat(80), mass: CGFloat(80))
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -106,7 +106,7 @@ class LightsController: TapViewController {
         ripple(self.editingView.center,
           view: self.view,
           size: 120,
-          duration: 4, multiplier: 3, divider: 2,
+          duration: 4, multiplier: 3.2, divider: 3,
           color: Color.General.ripple.alpha(0.1))
       }
     }

@@ -89,7 +89,7 @@ class StartView: UIView {
 
     let animationGroup = CAAnimationGroup()
     animationGroup.animations = [boundsAnimation, borderAnimation]
-    animationGroup.duration = 0.35
+    animationGroup.duration = 0.25
     animationGroup.delegate = self
     animationGroup.timingFunction = CAMediaTimingFunction(controlPoints: 0.62, 0.68, 0.29, 0.98)
     animationGroup.removedOnCompletion = false
@@ -146,7 +146,7 @@ class StartView: UIView {
   }
 
   func rotateView() {
-    let duration: NSTimeInterval = 1
+    let duration: NSTimeInterval = 0.85
     let curve = Animation.Curve.Bezier(0.31, 0.62, 0.69, 0.44)
 
     animate(startButton, duration: duration, curve: curve) {
