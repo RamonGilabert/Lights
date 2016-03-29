@@ -50,7 +50,7 @@ class EditingView: UIView {
 
   lazy var overlay: UIView = {
     let view = UIView()
-    view.backgroundColor = Color.General.background
+    view.backgroundColor = Color.Background.top
     view.layer.cornerRadius = (Dimensions.size - Dimensions.border * 2) / 2
 
     return view
@@ -70,7 +70,7 @@ class EditingView: UIView {
   lazy var indicator: UIView = {
     let view = UIView()
     view.backgroundColor = Color.General.life
-    view.layer.borderColor = Color.General.background.CGColor
+    view.layer.borderColor = Color.Background.top.CGColor
     view.layer.borderWidth = 2
     view.layer.cornerRadius = Dimensions.indicator / 2
     view.userInteractionEnabled = true

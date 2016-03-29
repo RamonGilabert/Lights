@@ -78,8 +78,6 @@ class PairingController: TapViewController {
 
     pairedView.transform = CGAffineTransformMakeTranslation(0, UIScreen.mainScreen().bounds.height)
 
-    view.backgroundColor = Color.General.background
-
     setupConstraints()
   }
 

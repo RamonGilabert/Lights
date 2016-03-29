@@ -64,7 +64,6 @@ class LightsController: TapViewController {
     super.viewDidLoad()
 
     transitioningDelegate = transition
-    view.backgroundColor = Color.General.background
 
     [searchButton, editingView, turnButton].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false

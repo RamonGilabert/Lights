@@ -68,8 +68,6 @@ class StartController: TapViewController {
       view.addSubview($0)
     }
 
-    view.backgroundColor = Color.General.background
-
     setupConstraints()
   }
 

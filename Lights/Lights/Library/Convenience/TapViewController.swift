@@ -10,10 +10,26 @@ class TapViewController: UIViewController {
     return gesture
   }()
 
+  lazy var gradientLayer: CAGradientLayer = {
+    let layer = CAGradientLayer()
+    layer.colors = [Color.Background.top.CGColor, Color.Background.bottom.CGColor]
+    layer.cornerRadius = 12
+
+    return layer
+  }()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    view.backgroundColor = Color.Background.general
+    view.layer.insertSublayer(gradientLayer, atIndex: 0)
     view.addGestureRecognizer(tapGesture)
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    gradientLayer.frame = view.bounds
   }
 
   // MARK: - Action methods

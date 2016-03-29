@@ -26,7 +26,7 @@ class StartView: UIView {
                      forControlEvents: .TouchDragExit)
 
     button.setTitle("Start".uppercaseString, forState: .Normal)
-    button.setTitleColor(Color.General.background, forState: .Normal)
+    button.setTitleColor(Color.Background.bottom, forState: .Normal)
     button.backgroundColor = Color.Button.Start.background
     button.titleLabel?.font = Font.General.start
     button.layer.cornerRadius = Dimensions.buttonSize / 2
@@ -36,7 +36,7 @@ class StartView: UIView {
 
   lazy var popView: UIView = {
     let view = UIView()
-    view.backgroundColor = Color.General.background
+    view.backgroundColor = Color.Background.top
     
     return view
   }()
@@ -46,7 +46,7 @@ class StartView: UIView {
     view.layer.borderColor = Color.General.life.CGColor
     view.layer.borderWidth = 2
     view.layer.cornerRadius = 7
-    view.backgroundColor = Color.General.background
+    view.backgroundColor = Color.Background.top
     view.transform = CGAffineTransformMakeScale(0.1, 0.1)
     view.alpha = 0
 

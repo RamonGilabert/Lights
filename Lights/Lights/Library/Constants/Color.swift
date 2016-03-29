@@ -4,12 +4,17 @@ import Hue
 struct Color {
 
   struct General {
-    static let life = UIColor.hex("FF8B57")
-    static let background = UIColor.hex("111314")
+    static let life = UIColor.whiteColor()
     static let titles = General.life
-    static let text = UIColor.hex("D5D5D5")
-    static let shadow = UIColor.blackColor().alpha(0.2)
+    static let text = UIColor.whiteColor()
+    static let shadow = UIColor.whiteColor().alpha(0.2)
     static let ripple = General.life.alpha(0.3)
+  }
+
+  struct Background {
+    static let general = UIColor.blackColor()
+    static let top = UIColor.hex("131313")
+    static let bottom = UIColor.hex("373C3F")
   }
 
   struct Button {
