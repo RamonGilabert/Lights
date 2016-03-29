@@ -14,7 +14,6 @@
 		294DDE4E1CA6A8020020E986 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE4D1CA6A8020020E986 /* Color.swift */; };
 		294DDE501CA6ADAE0020E986 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE4F1CA6ADAE0020E986 /* Font.swift */; };
 		294DDE521CA6AE4E0020E986 /* Brandon_bld.otf in Resources */ = {isa = PBXBuildFile; fileRef = 294DDE511CA6AE4E0020E986 /* Brandon_bld.otf */; };
-		294DDE541CA6AE6A0020E986 /* 15705.otf in Resources */ = {isa = PBXBuildFile; fileRef = 294DDE531CA6AE6A0020E986 /* 15705.otf */; };
 		294DDE561CA6B6DE0020E986 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE551CA6B6DE0020E986 /* Image.swift */; };
 		294DDE5B1CA6F3D80020E986 /* ExplanationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE5A1CA6F3D80020E986 /* ExplanationView.swift */; };
 		294DDE5D1CA6F9BE0020E986 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE5C1CA6F9BE0020E986 /* Text.swift */; };
@@ -23,6 +22,8 @@
 		294DDE631CA839D60020E986 /* PairedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE621CA839D60020E986 /* PairedView.swift */; };
 		294DDE651CA9719E0020E986 /* TapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE641CA9719E0020E986 /* TapViewController.swift */; };
 		294DDE681CA976A20020E986 /* EditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE671CA976A10020E986 /* EditingView.swift */; };
+		294DDE6B1CAAE3B00020E986 /* Brandon_reg.otf in Resources */ = {isa = PBXBuildFile; fileRef = 294DDE691CAAE3B00020E986 /* Brandon_reg.otf */; };
+		294DDE6C1CAAE3B00020E986 /* Brandon_light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 294DDE6A1CAAE3B00020E986 /* Brandon_light.otf */; };
 		2982B7F41C7BBCE600270C74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982B7F31C7BBCE600270C74 /* AppDelegate.swift */; };
 		2982B80A1C7BBE1000270C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2982B8061C7BBE1000270C74 /* Assets.xcassets */; };
 		2982B80B1C7BBE1000270C74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2982B8071C7BBE1000270C74 /* LaunchScreen.storyboard */; };
@@ -37,7 +38,6 @@
 		294DDE4D1CA6A8020020E986 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		294DDE4F1CA6ADAE0020E986 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		294DDE511CA6AE4E0020E986 /* Brandon_bld.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Brandon_bld.otf; sourceTree = "<group>"; };
-		294DDE531CA6AE6A0020E986 /* 15705.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 15705.otf; sourceTree = "<group>"; };
 		294DDE551CA6B6DE0020E986 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		294DDE5A1CA6F3D80020E986 /* ExplanationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExplanationView.swift; sourceTree = "<group>"; };
 		294DDE5C1CA6F9BE0020E986 /* Text.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
@@ -46,6 +46,8 @@
 		294DDE621CA839D60020E986 /* PairedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PairedView.swift; sourceTree = "<group>"; };
 		294DDE641CA9719E0020E986 /* TapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapViewController.swift; sourceTree = "<group>"; };
 		294DDE671CA976A10020E986 /* EditingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditingView.swift; sourceTree = "<group>"; };
+		294DDE691CAAE3B00020E986 /* Brandon_reg.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Brandon_reg.otf; sourceTree = "<group>"; };
+		294DDE6A1CAAE3B00020E986 /* Brandon_light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Brandon_light.otf; sourceTree = "<group>"; };
 		2982B7F01C7BBCE600270C74 /* Lights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2982B7F31C7BBCE600270C74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2982B8061C7BBE1000270C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -201,7 +203,8 @@
 			isa = PBXGroup;
 			children = (
 				294DDE511CA6AE4E0020E986 /* Brandon_bld.otf */,
-				294DDE531CA6AE6A0020E986 /* 15705.otf */,
+				294DDE691CAAE3B00020E986 /* Brandon_reg.otf */,
+				294DDE6A1CAAE3B00020E986 /* Brandon_light.otf */,
 				2982B8061C7BBE1000270C74 /* Assets.xcassets */,
 				2982B8071C7BBE1000270C74 /* LaunchScreen.storyboard */,
 				2982B8091C7BBE1000270C74 /* Info.plist */,
@@ -279,9 +282,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294DDE6B1CAAE3B00020E986 /* Brandon_reg.otf in Resources */,
+				294DDE6C1CAAE3B00020E986 /* Brandon_light.otf in Resources */,
 				2982B80A1C7BBE1000270C74 /* Assets.xcassets in Resources */,
 				2982B80B1C7BBE1000270C74 /* LaunchScreen.storyboard in Resources */,
-				294DDE541CA6AE6A0020E986 /* 15705.otf in Resources */,
 				294DDE521CA6AE4E0020E986 /* Brandon_bld.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

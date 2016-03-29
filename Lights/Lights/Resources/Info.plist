@@ -25,7 +25,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Brandon_bld.otf</string>
-		<string>15705.otf</string>
+		<string>Brandon_reg.otf</string>
+		<string>Brandon_light.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
