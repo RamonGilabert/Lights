@@ -30,6 +30,7 @@ class StartView: UIView {
     button.backgroundColor = Color.Button.Start.background
     button.titleLabel?.font = Font.General.start
     button.layer.cornerRadius = Dimensions.buttonSize / 2
+    button.prepareShadow()
 
     return button
     }()
