@@ -101,7 +101,7 @@ class StartController: TapViewController {
       explanationView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth),
 
-      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: 90),
+      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: 92),
       searchingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.searchingOffset)
       ])
   }

@@ -13,7 +13,7 @@ class TapViewController: UIViewController {
   lazy var gradientLayer: CAGradientLayer = {
     let layer = CAGradientLayer()
     layer.colors = [Color.Background.top.CGColor, Color.Background.bottom.CGColor]
-    layer.cornerRadius = 12
+    layer.cornerRadius = 8
 
     return layer
   }()

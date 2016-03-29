@@ -25,7 +25,7 @@ class EditingView: UIView {
     imageView.contentMode = .ScaleAspectFit
     imageView.image = UIImage(named: Image.flame)?.imageWithRenderingMode(.AlwaysTemplate)
     imageView.tintColor = Color.General.life
-    imageView.prepareShadow(10, opacity: 0.5)
+    imageView.prepareShadow(10, opacity: 0.7)
 
     return imageView
   }()
@@ -71,8 +71,8 @@ class EditingView: UIView {
   lazy var indicator: UIView = {
     let view = UIView()
     view.backgroundColor = Color.General.life
-    view.layer.borderColor = Color.Background.top.CGColor
-    view.layer.borderWidth = 2.5
+    view.layer.borderColor = Color.Background.pop.CGColor
+    view.layer.borderWidth = 2
     view.layer.cornerRadius = Dimensions.indicator / 2
     view.userInteractionEnabled = true
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -142,18 +142,20 @@ class EditingView: UIView {
                              y: (colorWheel.frame.height - size) / 2,
                              width: size, height: size)
       let path = UIBezierPath(roundedRect: pathFrame, cornerRadius: size / 2)
-      let constantX: CGFloat = point.x - colorWheel.center.x > 0 ? -3.5 : 3.5
-      let constantY: CGFloat = point.y - colorWheel.center.y > 0 ? -3.5 : 3.5
+      let constantX: CGFloat = point.x - colorWheel.center.x > 0 ? -1 : 1
+      let constantY: CGFloat = point.y - colorWheel.center.y > 0 ? -1 : 1
+      let difference = size / Dimensions.size
+      let imageDifference: CGFloat = 50
 
       delegate?.changeColor(color)
 
       mask.path = path.CGPath
-      indicatorOverlay.center = CGPoint(x: point.x + constantX, y: point.y + constantY)
+      indicatorOverlay.center = CGPoint(x: point.x + constantX, y: point.y + constantY * Dimensions.border / 2)
       overlay.frame.size = CGSize(width: size - Dimensions.border * 2,
                                   height: size - Dimensions.border * 2)
       overlay.center = colorWheel.center
-      imageView.frame.size = CGSize(width: Dimensions.imageWidth * size / Dimensions.size,
-                                    height: Dimensions.imageHeight * size / Dimensions.size)
+      imageView.frame.size = CGSize(width: Dimensions.imageWidth * difference + imageDifference * (1 - difference),
+                                    height: Dimensions.imageHeight * difference + imageDifference * (1 - difference))
       imageView.center = colorWheel.center
       overlay.layer.cornerRadius = overlay.frame.width / 2
     }

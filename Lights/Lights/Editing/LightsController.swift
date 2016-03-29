@@ -107,7 +107,7 @@ class LightsController: TapViewController {
           view: self.view,
           size: 120,
           duration: 4, multiplier: 3, divider: 3,
-          color: Color.General.ripple)
+          color: Color.General.ripple.alpha(0.1))
       }
     }
 
@@ -137,7 +137,7 @@ class LightsController: TapViewController {
       turnButton.widthAnchor.constraintEqualToConstant(DetailButton.Dimensions.buttonWidth),
       turnButton.heightAnchor.constraintEqualToConstant(DetailButton.Dimensions.buttonHeight),
       turnButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      turnButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: DetailButton.Dimensions.buttonOffset - 20)
+      turnButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: DetailButton.Dimensions.buttonOffset + 25)
       ])
   }
 }
