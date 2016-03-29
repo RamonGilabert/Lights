@@ -29,7 +29,7 @@ struct Attributes {
       NSFontAttributeName : Font.Text.subtitle,
       NSForegroundColorAttributeName : Color.General.text,
       NSParagraphStyleAttributeName : paragraphStyle,
-      NSKernAttributeName : 0.3], range: NSRange(location: 0, length: text.characters.count))
+      NSKernAttributeName : 0.5], range: NSRange(location: 0, length: text.characters.count))
 
     return attributedString
   }

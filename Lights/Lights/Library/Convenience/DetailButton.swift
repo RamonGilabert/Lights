@@ -4,7 +4,7 @@ class DetailButton: UIButton {
 
   struct Dimensions {
     static let buttonWidth: CGFloat = 210
-    static let buttonHeight: CGFloat = 50
+    static let buttonHeight: CGFloat = 54
     static let buttonOffset: CGFloat = -85
   }
 

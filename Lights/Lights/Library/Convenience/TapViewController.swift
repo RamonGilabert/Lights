@@ -13,7 +13,7 @@ class TapViewController: UIViewController {
   lazy var gradientLayer: CAGradientLayer = {
     let layer = CAGradientLayer()
     layer.colors = [Color.Background.top.CGColor, Color.Background.bottom.CGColor]
-    layer.cornerRadius = 6
+    layer.cornerRadius = 7
 
     return layer
   }()
@@ -21,7 +21,6 @@ class TapViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = Color.Background.general
     view.layer.insertSublayer(gradientLayer, atIndex: 0)
     view.addGestureRecognizer(tapGesture)
   }

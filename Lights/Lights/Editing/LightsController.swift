@@ -106,7 +106,7 @@ class LightsController: TapViewController {
         ripple(self.editingView.center,
           view: self.view,
           size: 120,
-          duration: 4, multiplier: 3, divider: 3,
+          duration: 4, multiplier: 3, divider: 2,
           color: Color.General.ripple.alpha(0.1))
       }
     }
