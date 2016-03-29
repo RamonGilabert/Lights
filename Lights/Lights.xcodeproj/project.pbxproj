@@ -24,6 +24,7 @@
 		294DDE681CA976A20020E986 /* EditingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE671CA976A10020E986 /* EditingView.swift */; };
 		294DDE6B1CAAE3B00020E986 /* Brandon_reg.otf in Resources */ = {isa = PBXBuildFile; fileRef = 294DDE691CAAE3B00020E986 /* Brandon_reg.otf */; };
 		294DDE6C1CAAE3B00020E986 /* Brandon_light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 294DDE6A1CAAE3B00020E986 /* Brandon_light.otf */; };
+		294DDE6E1CAAEBA30020E986 /* DetailButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE6D1CAAEBA30020E986 /* DetailButton.swift */; };
 		2982B7F41C7BBCE600270C74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2982B7F31C7BBCE600270C74 /* AppDelegate.swift */; };
 		2982B80A1C7BBE1000270C74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2982B8061C7BBE1000270C74 /* Assets.xcassets */; };
 		2982B80B1C7BBE1000270C74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2982B8071C7BBE1000270C74 /* LaunchScreen.storyboard */; };
@@ -48,6 +49,7 @@
 		294DDE671CA976A10020E986 /* EditingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditingView.swift; sourceTree = "<group>"; };
 		294DDE691CAAE3B00020E986 /* Brandon_reg.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Brandon_reg.otf; sourceTree = "<group>"; };
 		294DDE6A1CAAE3B00020E986 /* Brandon_light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Brandon_light.otf; sourceTree = "<group>"; };
+		294DDE6D1CAAEBA30020E986 /* DetailButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailButton.swift; sourceTree = "<group>"; };
 		2982B7F01C7BBCE600270C74 /* Lights.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lights.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2982B7F31C7BBCE600270C74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2982B8061C7BBE1000270C74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			children = (
 				294DDE4B1CA6A6F20020E986 /* UIView+Shadow.swift */,
 				294DDE641CA9719E0020E986 /* TapViewController.swift */,
+				294DDE6D1CAAEBA30020E986 /* DetailButton.swift */,
 			);
 			path = Convenience;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				294DDE651CA9719E0020E986 /* TapViewController.swift in Sources */,
 				294DDE441CA696EF0020E986 /* StartController.swift in Sources */,
 				294DDE5B1CA6F3D80020E986 /* ExplanationView.swift in Sources */,
+				294DDE6E1CAAEBA30020E986 /* DetailButton.swift in Sources */,
 				294DDE5D1CA6F9BE0020E986 /* Text.swift in Sources */,
 				294DDE4E1CA6A8020020E986 /* Color.swift in Sources */,
 				294DDE5F1CA6FB490020E986 /* TextAttributes.swift in Sources */,
