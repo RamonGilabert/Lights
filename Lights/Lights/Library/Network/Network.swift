@@ -4,15 +4,15 @@ import SocketIOClientSwift
 
 struct Network {
 
-  static func GET(message: NetworkMessage) {
-
+  static func fetch<T : Requestable>(request: T, completion: (response: [String : AnyObject], error: NSError)) {
+    process(request, completion: completion)
   }
 
   static func socket() {
-
+    // TODO: Implement the sockets.
   }
 
-  static func process() {
-
+  static func process<T : Requestable>(request: T, completion: (response: [String : AnyObject], error: NSError)) {
+    
   }
 }
