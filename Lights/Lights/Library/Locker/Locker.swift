@@ -13,18 +13,41 @@ struct Locker {
     static let green = "green"
     static let blue = "blue"
     static let controllerID = "controller_id"
+    static let token = "controller_token"
+    static let light = "light"
     private static let exist = "exist"
   }
 
   static func save(light: JSONDictionary) {
-    defaults.bool(true, key: Key.exist)
-    defaults.integer(light[Key.id], key: Key.id)
-    defaults.bool(light[Key.status], key: Key.status)
-    defaults.float(light[Key.intensity], key: Key.intensity)
-    defaults.float(light[Key.red], key: Key.red)
-    defaults.float(light[Key.green], key: Key.green)
-    defaults.float(light[Key.blue], key: Key.blue)
-    defaults.integer(light[Key.controllerID], key: Key.controllerID)
+    guard var fire = defaults.objectForKey(Key.light) as? [String : AnyObject] else { return }
+
+    for (key, value) in light {
+      fire[key] = value
+    }
+
+    defaults.object(fire, key: Key.light)
+  }
+
+  static func token(token: String) {
+    guard var fire = defaults.objectForKey(Key.light) as? [String : AnyObject] else {
+      defaults.object([Key.token : token], key: Key.token)
+
+      return
+    }
+
+    fire[Key.token] = token
+    defaults.object(fire, key: Key.token)
+  }
+
+  static func light() -> [String : AnyObject]? {
+    guard defaults.boolForKey(Key.exist) else { return nil }
+    
+    return defaults.objectForKey(Key.token) as? [String : AnyObject]
+  }
+
+  static func clear() {
+    guard let domain = NSBundle.mainBundle().bundleIdentifier else { return }
+    defaults.removePersistentDomainForName(domain)
   }
 
   static func object<T>(type: T, _ key: String) -> T? {
@@ -36,6 +59,8 @@ struct Locker {
       return value
     } else if let value = defaults.floatForKey(key) as? T where T.self == Float.self {
       return value
+    } else if let value = defaults.stringForKey(key) as? T where T.self == String.self {
+      return value
     } else {
       return nil
     }
@@ -43,6 +68,10 @@ struct Locker {
 }
 
 extension NSUserDefaults {
+
+  func object(value: AnyObject?, key: String) {
+    setObject(value, forKey: key)
+  }
 
   func bool(value: AnyObject?, key: String) {
     if let value = value as? Bool {
@@ -59,6 +88,12 @@ extension NSUserDefaults {
   func float(value: AnyObject?, key: String) {
     if let value = value as? Float {
       setFloat(value, forKey: key)
+    }
+  }
+
+  func string(value: AnyObject?, key: String) {
+    if let value = value as? String {
+      setObject(value, forKey: key)
     }
   }
 }

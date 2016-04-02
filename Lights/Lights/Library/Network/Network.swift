@@ -10,10 +10,6 @@ struct Network {
     process(request.message, .GET, completion)
   }
 
-  static func socket() {
-    // TODO: Implement the sockets.
-  }
-
   static func process(message: NetworkMessage, _ method: Request.Method, _ completion: (JSON: JSONArray, error: NSError?) -> ()) {
     let request = NSMutableURLRequest()
     request.URL = message.URL
@@ -21,23 +17,57 @@ struct Network {
     request.allHTTPHeaderFields = message.headers
 
     let task = session.dataTaskWithRequest(request) { data, response, error in
-      guard let response = response as? NSHTTPURLResponse else { completion(JSON: [], error: error); return }
+      dispatch {
+        guard let response = response as? NSHTTPURLResponse else { completion(JSON: [], error: error); return }
 
-      guard let data = data where error == nil && API.OK.contains(response.statusCode)
-        else { completion(JSON: [], error: error); return }
-
-      do {
-        guard let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONArray
+        guard let data = data where error == nil && API.OK.contains(response.statusCode)
           else { completion(JSON: [], error: error); return }
 
-        completion(JSON: JSON, error: error)
-      } catch {
-        print("There was an error with your request.")
-      }
+        do {
+          guard let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONArray
+            else { completion(JSON: [], error: error); return }
 
-      completion(JSON: [], error: error)
+          completion(JSON: JSON, error: error)
+        } catch {
+          print("There was an error with your request.")
+        }
+        
+        completion(JSON: [], error: error)
+      }
     }
 
     task.resume()
+  }
+}
+
+struct Socket {
+
+  static var socket: SocketIOClient? = {
+    guard let URL = NSURL(string: API.route) else { return nil }
+
+    return SocketIOClient(socketURL: URL, options: [.Log(true), .ForcePolling(true)])
+  }()
+
+
+  static func connect() {
+    guard let socket = socket else { return }
+
+    handle()
+    
+    socket.connect()
+  }
+
+  static func handle() {
+    guard let socket = socket else { return }
+
+    socket.on("connect") { data, error in
+      print("Socket connected")
+    }
+  }
+
+  static func change(completion: (() -> ())? = nil) {
+    guard let socket = socket, light = Locker.light() else { return }
+
+    socket.emit(API.socket, light)
   }
 }
