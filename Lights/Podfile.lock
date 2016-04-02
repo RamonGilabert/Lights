@@ -2,7 +2,8 @@ PODS:
   - Hue (1.1)
   - Morgan (0.9.1):
     - Walker
-  - Ripple (2.0)
+  - Noise (0.1.0)
+  - Ripple (2.1)
   - Sugar (1.0.12)
   - Transition (0.1.0)
   - Walker (0.9.1)
@@ -10,6 +11,7 @@ PODS:
 DEPENDENCIES:
   - Hue
   - Morgan (from `https://github.com/RamonGilabert/Morgan.git`)
+  - Noise (from `https://github.com/RamonGilabert/Noise`)
   - Ripple (from `https://github.com/RamonGilabert/Ripple.git`)
   - Sugar
   - Transition (from `https://github.com/hyperoslo/Transition`)
@@ -17,6 +19,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Morgan:
     :git: https://github.com/RamonGilabert/Morgan.git
+  Noise:
+    :git: https://github.com/RamonGilabert/Noise
   Ripple:
     :git: https://github.com/RamonGilabert/Ripple.git
   Transition:
@@ -26,8 +30,11 @@ CHECKOUT OPTIONS:
   Morgan:
     :commit: 5728b9d7a2fdaa8384821a71403216b07fbbfbc4
     :git: https://github.com/RamonGilabert/Morgan.git
+  Noise:
+    :commit: 989e94b23ee7e671ff42c918233411c1acf93e5a
+    :git: https://github.com/RamonGilabert/Noise
   Ripple:
-    :commit: b0987d4c88f3a971a4e56865c3d9966565fde682
+    :commit: f34a46d3927612b7935130beadf3c2c3624d542d
     :git: https://github.com/RamonGilabert/Ripple.git
   Transition:
     :commit: 0d94057f824787973ae34bac4906164e3d6a2c8b
@@ -36,9 +43,12 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
   Morgan: 9cb6cdfd5eaafcdc98af5c05620cad575ace77de
-  Ripple: 59c84addacbfa502274ce0d351e6de1fd20ef9fc
+  Noise: c6caeaa25b4f50b15c397f7bb325100d430bb679
+  Ripple: fb35d2d638e9bcc03c291f14e80ae6ab1e3a3dea
   Sugar: 7280dfee5299f98cbae23d86c800cccd86377117
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
   Walker: 9a765e7f35adb19ce59079e26d425c1e8c463241
 
-COCOAPODS: 0.39.0.beta.4
+PODFILE CHECKSUM: 05056ffe37c98fe2545356816a69902139df17ce
+
+COCOAPODS: 1.0.0.beta.6
