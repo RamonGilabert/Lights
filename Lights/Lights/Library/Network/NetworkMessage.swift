@@ -8,16 +8,19 @@ struct NetworkMessage {
   }
 
   var resource: String = ""
-  var headers: [String : AnyObject] = [:]
+  var headers: [String : String] = [:]
+  var URL: NSURL?
 
-  init(resource: String, headers: [String : AnyObject]) {
+  init(resource: String, headers: [String : String]) {
     self.resource = resource
     self.headers = headers
+    self.URL = nil
 
     prepare()
   }
 
   mutating func prepare() {
     headers[Constants.contentType] = Constants.application
+    URL = NSURL(string: API.route + resource)
   }
 }

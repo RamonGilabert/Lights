@@ -11,6 +11,7 @@
 		293BF7851CB020AD006CEC43 /* NetworkMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7841CB020AD006CEC43 /* NetworkMessage.swift */; };
 		293BF7871CB02361006CEC43 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7861CB02361006CEC43 /* Request.swift */; };
 		293BF7891CB025B1006CEC43 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7881CB025B1006CEC43 /* API.swift */; };
+		293BF78B1CB02B1E006CEC43 /* Sugars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF78A1CB02B1E006CEC43 /* Sugars.swift */; };
 		294DDE421CA696B60020E986 /* LightsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE411CA696B60020E986 /* LightsController.swift */; };
 		294DDE441CA696EF0020E986 /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE431CA696EF0020E986 /* StartController.swift */; };
 		294DDE471CA697800020E986 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE461CA697800020E986 /* StartView.swift */; };
@@ -40,6 +41,7 @@
 		293BF7841CB020AD006CEC43 /* NetworkMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMessage.swift; sourceTree = "<group>"; };
 		293BF7861CB02361006CEC43 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		293BF7881CB025B1006CEC43 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		293BF78A1CB02B1E006CEC43 /* Sugars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sugars.swift; sourceTree = "<group>"; };
 		294DDE411CA696B60020E986 /* LightsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightsController.swift; sourceTree = "<group>"; };
 		294DDE431CA696EF0020E986 /* StartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
 		294DDE461CA697800020E986 /* StartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				294DDE641CA9719E0020E986 /* TapViewController.swift */,
 				294DDE6D1CAAEBA30020E986 /* DetailButton.swift */,
 				293BF7881CB025B1006CEC43 /* API.swift */,
+				293BF78A1CB02B1E006CEC43 /* Sugars.swift */,
 			);
 			path = Convenience;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 				294DDE501CA6ADAE0020E986 /* Font.swift in Sources */,
 				294DDE631CA839D60020E986 /* PairedView.swift in Sources */,
 				2982B7F41C7BBCE600270C74 /* AppDelegate.swift in Sources */,
+				293BF78B1CB02B1E006CEC43 /* Sugars.swift in Sources */,
 				294DDE471CA697800020E986 /* StartView.swift in Sources */,
 				294DDE611CA7F9280020E986 /* PairingController.swift in Sources */,
 				294DDE651CA9719E0020E986 /* TapViewController.swift in Sources */,

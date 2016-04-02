@@ -7,10 +7,16 @@ protocol Requestable {
 
 struct Request {
 
+  enum Method: String {
+    case GET = "GET"
+    case POST = "POST"
+    case PATCH = "PATCH"
+  }
+
   struct Lights: Requestable {
 
     var message: NetworkMessage = {
-      return NetworkMessage(resource: "/lights", headers: ["controller_id" : 1])
+      return NetworkMessage(resource: "/lights", headers: ["controller_id" : "1"])
     }()
   }
 }
