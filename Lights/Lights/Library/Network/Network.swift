@@ -23,7 +23,7 @@ struct Network {
     let task = session.dataTaskWithRequest(request) { data, response, error in
       guard let response = response as? NSHTTPURLResponse else { completion(JSON: [], error: error); return }
 
-      guard let data = data where error != nil && API.OK.contains(response.statusCode)
+      guard let data = data where error == nil && API.OK.contains(response.statusCode)
         else { completion(JSON: [], error: error); return }
 
       do {

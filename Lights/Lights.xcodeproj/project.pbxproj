@@ -12,6 +12,7 @@
 		293BF7871CB02361006CEC43 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7861CB02361006CEC43 /* Request.swift */; };
 		293BF7891CB025B1006CEC43 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7881CB025B1006CEC43 /* API.swift */; };
 		293BF78B1CB02B1E006CEC43 /* Sugars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF78A1CB02B1E006CEC43 /* Sugars.swift */; };
+		293BF78E1CB02FB8006CEC43 /* Locker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF78D1CB02FB8006CEC43 /* Locker.swift */; };
 		294DDE421CA696B60020E986 /* LightsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE411CA696B60020E986 /* LightsController.swift */; };
 		294DDE441CA696EF0020E986 /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE431CA696EF0020E986 /* StartController.swift */; };
 		294DDE471CA697800020E986 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE461CA697800020E986 /* StartView.swift */; };
@@ -42,6 +43,7 @@
 		293BF7861CB02361006CEC43 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		293BF7881CB025B1006CEC43 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		293BF78A1CB02B1E006CEC43 /* Sugars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sugars.swift; sourceTree = "<group>"; };
+		293BF78D1CB02FB8006CEC43 /* Locker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locker.swift; sourceTree = "<group>"; };
 		294DDE411CA696B60020E986 /* LightsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightsController.swift; sourceTree = "<group>"; };
 		294DDE431CA696EF0020E986 /* StartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
 		294DDE461CA697800020E986 /* StartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -102,6 +104,14 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		293BF78C1CB02FB1006CEC43 /* Locker */ = {
+			isa = PBXGroup;
+			children = (
+				293BF78D1CB02FB8006CEC43 /* Locker.swift */,
+			);
+			path = Locker;
+			sourceTree = "<group>";
+		};
 		294DDE3B1CA696390020E986 /* Editing */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +149,7 @@
 		294DDE3F1CA6968B0020E986 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				293BF78C1CB02FB1006CEC43 /* Locker */,
 				293BF7811CB01DE6006CEC43 /* Network */,
 				294DDE481CA698790020E986 /* Convenience */,
 				294DDE401CA696950020E986 /* Constants */,
@@ -390,6 +401,7 @@
 				294DDE441CA696EF0020E986 /* StartController.swift in Sources */,
 				293BF7891CB025B1006CEC43 /* API.swift in Sources */,
 				294DDE5B1CA6F3D80020E986 /* ExplanationView.swift in Sources */,
+				293BF78E1CB02FB8006CEC43 /* Locker.swift in Sources */,
 				294DDE6E1CAAEBA30020E986 /* DetailButton.swift in Sources */,
 				294DDE5D1CA6F9BE0020E986 /* Text.swift in Sources */,
 				294DDE4E1CA6A8020020E986 /* Color.swift in Sources */,
