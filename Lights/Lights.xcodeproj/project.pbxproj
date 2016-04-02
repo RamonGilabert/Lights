@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		293BF7831CB01E28006CEC43 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7821CB01E28006CEC43 /* Network.swift */; };
 		293BF7851CB020AD006CEC43 /* NetworkMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7841CB020AD006CEC43 /* NetworkMessage.swift */; };
+		293BF7871CB02361006CEC43 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7861CB02361006CEC43 /* Request.swift */; };
 		294DDE421CA696B60020E986 /* LightsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE411CA696B60020E986 /* LightsController.swift */; };
 		294DDE441CA696EF0020E986 /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE431CA696EF0020E986 /* StartController.swift */; };
 		294DDE471CA697800020E986 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE461CA697800020E986 /* StartView.swift */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		293BF7821CB01E28006CEC43 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		293BF7841CB020AD006CEC43 /* NetworkMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMessage.swift; sourceTree = "<group>"; };
+		293BF7861CB02361006CEC43 /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		294DDE411CA696B60020E986 /* LightsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightsController.swift; sourceTree = "<group>"; };
 		294DDE431CA696EF0020E986 /* StartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
 		294DDE461CA697800020E986 /* StartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			children = (
 				293BF7821CB01E28006CEC43 /* Network.swift */,
 				293BF7841CB020AD006CEC43 /* NetworkMessage.swift */,
+				293BF7861CB02361006CEC43 /* Request.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				294DDE611CA7F9280020E986 /* PairingController.swift in Sources */,
 				294DDE651CA9719E0020E986 /* TapViewController.swift in Sources */,
 				293BF7831CB01E28006CEC43 /* Network.swift in Sources */,
+				293BF7871CB02361006CEC43 /* Request.swift in Sources */,
 				294DDE441CA696EF0020E986 /* StartController.swift in Sources */,
 				294DDE5B1CA6F3D80020E986 /* ExplanationView.swift in Sources */,
 				294DDE6E1CAAEBA30020E986 /* DetailButton.swift in Sources */,

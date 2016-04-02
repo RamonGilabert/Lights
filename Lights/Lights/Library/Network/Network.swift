@@ -4,7 +4,7 @@ import SocketIOClientSwift
 
 struct Network {
 
-  static func GET() {
+  static func GET(message: NetworkMessage) {
 
   }
 
