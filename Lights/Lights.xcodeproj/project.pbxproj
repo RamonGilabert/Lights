@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		293BF7831CB01E28006CEC43 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7821CB01E28006CEC43 /* Network.swift */; };
+		293BF7851CB020AD006CEC43 /* NetworkMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7841CB020AD006CEC43 /* NetworkMessage.swift */; };
 		294DDE421CA696B60020E986 /* LightsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE411CA696B60020E986 /* LightsController.swift */; };
 		294DDE441CA696EF0020E986 /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE431CA696EF0020E986 /* StartController.swift */; };
 		294DDE471CA697800020E986 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE461CA697800020E986 /* StartView.swift */; };
@@ -32,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		293BF7821CB01E28006CEC43 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		293BF7841CB020AD006CEC43 /* NetworkMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMessage.swift; sourceTree = "<group>"; };
 		294DDE411CA696B60020E986 /* LightsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightsController.swift; sourceTree = "<group>"; };
 		294DDE431CA696EF0020E986 /* StartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
 		294DDE461CA697800020E986 /* StartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -82,6 +86,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		293BF7811CB01DE6006CEC43 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				293BF7821CB01E28006CEC43 /* Network.swift */,
+				293BF7841CB020AD006CEC43 /* NetworkMessage.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		294DDE3B1CA696390020E986 /* Editing */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +132,7 @@
 		294DDE3F1CA6968B0020E986 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				293BF7811CB01DE6006CEC43 /* Network */,
 				294DDE481CA698790020E986 /* Convenience */,
 				294DDE401CA696950020E986 /* Constants */,
 				294DDE591CA6F3B90020E986 /* Views */,
@@ -354,12 +368,14 @@
 				294DDE421CA696B60020E986 /* LightsController.swift in Sources */,
 				294DDE561CA6B6DE0020E986 /* Image.swift in Sources */,
 				294DDE4C1CA6A6F20020E986 /* UIView+Shadow.swift in Sources */,
+				293BF7851CB020AD006CEC43 /* NetworkMessage.swift in Sources */,
 				294DDE501CA6ADAE0020E986 /* Font.swift in Sources */,
 				294DDE631CA839D60020E986 /* PairedView.swift in Sources */,
 				2982B7F41C7BBCE600270C74 /* AppDelegate.swift in Sources */,
 				294DDE471CA697800020E986 /* StartView.swift in Sources */,
 				294DDE611CA7F9280020E986 /* PairingController.swift in Sources */,
 				294DDE651CA9719E0020E986 /* TapViewController.swift in Sources */,
+				293BF7831CB01E28006CEC43 /* Network.swift in Sources */,
 				294DDE441CA696EF0020E986 /* StartController.swift in Sources */,
 				294DDE5B1CA6F3D80020E986 /* ExplanationView.swift in Sources */,
 				294DDE6E1CAAEBA30020E986 /* DetailButton.swift in Sources */,

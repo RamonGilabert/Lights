@@ -7,5 +7,6 @@ pod 'Morgan',     :git => 'https://github.com/RamonGilabert/Morgan.git'
 pod 'Transition', :git => 'https://github.com/hyperoslo/Transition'
 pod 'Hue'
 pod 'Sugar'
+pod 'Socket.IO-Client-Swift'
 
 target 'Lights'
