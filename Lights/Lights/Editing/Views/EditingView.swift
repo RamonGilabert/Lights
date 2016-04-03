@@ -267,6 +267,19 @@ class EditingView: UIView {
     return (hue, saturation)
   }
 
+//  func point(red: CGFloat, green: CGFloat, blue: CGFloat) -> CGPoint {
+//    let color = UIColor(red: red, green: green, blue: blue, alpha: 1)
+//    let hue = UIColor.getHue(color)
+//    let dimension = Dimensions.size / 2
+//    let diferentialX = CGFloat(position.x - dimension) / dimension
+//    let diferentialY = CGFloat(position.y - dimension) / dimension
+//    let saturation = sqrt(CGFloat(diferentialX * diferentialX + diferentialY * diferentialY))
+//    let expression = acos(diferentialX / saturation) / CGFloat(M_PI) / 2
+//    let hue = saturation == 0 ? 0 : diferentialY < 0 ? 1 - expression : expression
+//
+//    return (hue, saturation)
+//  }
+
   func convertHSV(initial: HSV) -> RGB {
     var color: RGB = (red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
 

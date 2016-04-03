@@ -62,8 +62,22 @@ class LightsController: TapViewController {
       view.addSubview($0)
     }
 
-    changeColor(Color.General.initial)
     setupConstraints()
+  }
+
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+
+    guard let light = Locker.light(),
+      red = light[Locker.Key.red] as? CGFloat,
+      green = light[Locker.Key.green] as? CGFloat,
+      blue = light[Locker.Key.blue] as? CGFloat,
+      status = light[Locker.Key.status] as? Bool else { return }
+
+    turnButton.setTitle(status ? Text.Editing.turnOn : Text.Editing.turnOff, forState: .Normal)
+
+    let color = UIColor(red: red * 255, green: green * 255, blue: blue * 255, alpha: 1)
+    changeColor(color)
   }
 
   // MARK: - Action methods
@@ -149,6 +163,18 @@ extension LightsController: EditingViewDelegate {
   }
 
   func performRequest(color: UIColor) {
+    let on = turnButton.titleForState(.Normal) == Text.Editing.turnOn
 
+    var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+    color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+    Locker.save([
+      Locker.Key.status : on,
+      Locker.Key.red : red / 255,
+      Locker.Key.green : green / 255,
+      Locker.Key.blue : blue / 255
+      ])
+
+    Socket.change()
   }
 }

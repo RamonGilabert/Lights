@@ -51,7 +51,7 @@ struct Socket {
 
   static func connect() {
     guard let socket = socket else { return }
-
+    
     handle()
     
     socket.connect()
