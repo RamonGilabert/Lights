@@ -1,4 +1,5 @@
 import UIKit
+import Sugar
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,8 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
-    if Locker.light() == nil { // TODO: Change that to !=
-
+    if Locker.light() != nil {
       controller.view.addSubview(launchScreen)
       window?.rootViewController = controller
 

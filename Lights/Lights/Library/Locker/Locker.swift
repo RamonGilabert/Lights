@@ -19,7 +19,12 @@ struct Locker {
   }
 
   static func save(light: JSONDictionary) {
-    guard var fire = defaults.objectForKey(Key.light) as? [String : AnyObject] else { return }
+    defaults.bool(true, key: Key.exist)
+
+    guard var fire = defaults.objectForKey(Key.light) as? [String : AnyObject] else {
+      defaults.object(light, key: Key.light)
+      return
+    }
 
     for (key, value) in light {
       fire[key] = value
@@ -42,7 +47,7 @@ struct Locker {
   static func light() -> [String : AnyObject]? {
     guard defaults.boolForKey(Key.exist) else { return nil }
     
-    return defaults.objectForKey(Key.token) as? [String : AnyObject]
+    return defaults.objectForKey(Key.light) as? [String : AnyObject]
   }
 
   static func clear() {
