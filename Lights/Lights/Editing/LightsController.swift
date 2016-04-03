@@ -49,11 +49,14 @@ class LightsController: TapViewController {
     return transition
   }()
 
-  lazy var offlineView: UIView = {
-    let view = UIView()
+  lazy var offlineView: OfflineView = {
+    let view = OfflineView()
+    view.alpha = 0
+
     return view
   }()
 
+  var reachability: Reachability?
   let animation = (spring: CGFloat(90), friction: CGFloat(80), mass: CGFloat(80))
 
   override func viewDidLoad() {
@@ -74,7 +77,20 @@ class LightsController: TapViewController {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
 
-    presentViews(true)
+    do {
+      reachability = try Reachability.reachabilityForInternetConnection()
+    } catch { return }
+
+    if let reachability = reachability where reachability.isReachable() {
+      presentViews(true)
+    } else {
+      offlineView(true)
+    }
+
+    NSNotificationCenter.defaultCenter().addObserver(
+      self, selector: #selector(reachabilityChanged(_:)), name: ReachabilityChangedNotification, object: reachability)
+
+    do { try reachability?.startNotifier() } catch { return }
   }
 
   // MARK: - Action methods
@@ -127,6 +143,15 @@ class LightsController: TapViewController {
     }
   }
 
+  // MARK: - Notifications
+
+  func reachabilityChanged(notification: NSNotification) {
+    guard let reachability = notification.object as? Reachability else { return }
+
+    presentViews(reachability.isReachable())
+    offlineView(!reachability.isReachable())
+  }
+
   // MARK: - Constraints
 
   func setupConstraints() {
@@ -149,11 +174,9 @@ class LightsController: TapViewController {
   // MARK: - Helper methods
 
   func offlineView(show: Bool = true) {
-    [searchButton, editingView, turnButton].forEach {
-      $0.alpha = show ? 0 : 1
-    }
-
-    offlineView.alpha = show ? 1 : 0
+    UIView.animateWithDuration(0.3, animations: {
+      self.offlineView.alpha = show ? 1 : 0
+    })
   }
 }
 
