@@ -32,10 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.launchScreen.removeFromSuperview()
         })
 
-        guard let JSON = JSON.first where error == nil else {
-          // TODO: 
-          return
-        }
+        guard let JSON = JSON.first where error == nil else { return }
 
         Locker.save(JSON)
         Socket.connect()

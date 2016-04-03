@@ -49,6 +49,11 @@ class LightsController: TapViewController {
     return transition
   }()
 
+  lazy var offlineView: UIView = {
+    let view = UIView()
+    return view
+  }()
+
   let animation = (spring: CGFloat(90), friction: CGFloat(80), mass: CGFloat(80))
 
   override func viewDidLoad() {
@@ -139,6 +144,16 @@ class LightsController: TapViewController {
       turnButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
       turnButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: DetailButton.Dimensions.buttonOffset + 10)
       ])
+  }
+
+  // MARK: - Helper methods
+
+  func offlineView(show: Bool = true) {
+    [searchButton, editingView, turnButton].forEach {
+      $0.alpha = show ? 0 : 1
+    }
+
+    offlineView.alpha = show ? 1 : 0
   }
 }
 
