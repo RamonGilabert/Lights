@@ -80,10 +80,9 @@ class StartController: TapViewController {
   }
 
   override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-
     closeDistilleries()
-    animateController(true)
+    
+    super.viewDidAppear(animated)
   }
 
   // MARK: - Constraints
@@ -108,9 +107,9 @@ class StartController: TapViewController {
 
   // MARK: - Animations
 
-  func animateController(show: Bool) {
+  override func presentViews(show: Bool) {
     spring(startView, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
-      $0.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.01, 0.01)
+      $0.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.00001, 0.00001)
     }.finally {
       show ? self.stone() : calm()
     }

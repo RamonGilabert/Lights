@@ -9,6 +9,7 @@ struct Text {
 
   struct Detail {
     static let searching = "Searching".uppercaseString
+    static let offline = "You seem to be offline".uppercaseString
   }
 
   struct Pairing {

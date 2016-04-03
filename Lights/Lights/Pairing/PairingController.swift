@@ -153,6 +153,15 @@ class PairingController: TapViewController {
       pairedView.leftAnchor.constraintEqualToAnchor(view.leftAnchor)
       ])
   }
+
+  // MARK: - Helper methods
+
+  override func presentViews(show: Bool = true) {
+    UIView.animateWithDuration(0.5, animations: {
+      self.pairedView.alpha = show ? 1 : 0
+      self.pairedView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(2, 2)
+    })
+  }
 }
 
 extension PairingController: PairedViewDelegate {

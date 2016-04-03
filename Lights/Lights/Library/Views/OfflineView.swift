@@ -8,12 +8,18 @@ class OfflineView: UIView {
 
   lazy var sadView: UIImageView = {
     let imageView = UIImageView()
+    imageView.contentMode = .ScaleAspectFit
+    imageView.image = UIImage(named: Image.offline)
+
     return imageView
   }()
 
   lazy var offlineLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 0
+    label.text = Text.Detail.offline
+    label.font = Font.General.subtitle
+    label.textColor = Color.General.text
 
     return label
   }()
