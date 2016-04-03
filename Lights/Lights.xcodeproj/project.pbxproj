@@ -14,6 +14,7 @@
 		293BF78B1CB02B1E006CEC43 /* Sugars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF78A1CB02B1E006CEC43 /* Sugars.swift */; };
 		293BF78E1CB02FB8006CEC43 /* Locker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF78D1CB02FB8006CEC43 /* Locker.swift */; };
 		293BF7901CB1220E006CEC43 /* OfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF78F1CB1220E006CEC43 /* OfflineView.swift */; };
+		293BF7921CB123B0006CEC43 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7911CB123B0006CEC43 /* Reachability.swift */; };
 		294DDE421CA696B60020E986 /* LightsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE411CA696B60020E986 /* LightsController.swift */; };
 		294DDE441CA696EF0020E986 /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE431CA696EF0020E986 /* StartController.swift */; };
 		294DDE471CA697800020E986 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE461CA697800020E986 /* StartView.swift */; };
@@ -46,6 +47,7 @@
 		293BF78A1CB02B1E006CEC43 /* Sugars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sugars.swift; sourceTree = "<group>"; };
 		293BF78D1CB02FB8006CEC43 /* Locker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locker.swift; sourceTree = "<group>"; };
 		293BF78F1CB1220E006CEC43 /* OfflineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineView.swift; sourceTree = "<group>"; };
+		293BF7911CB123B0006CEC43 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		294DDE411CA696B60020E986 /* LightsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightsController.swift; sourceTree = "<group>"; };
 		294DDE431CA696EF0020E986 /* StartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
 		294DDE461CA697800020E986 /* StartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		294DDE481CA698790020E986 /* Convenience */ = {
 			isa = PBXGroup;
 			children = (
+				293BF7911CB123B0006CEC43 /* Reachability.swift */,
 				294DDE4B1CA6A6F20020E986 /* UIView+Shadow.swift */,
 				294DDE641CA9719E0020E986 /* TapViewController.swift */,
 				294DDE6D1CAAEBA30020E986 /* DetailButton.swift */,
@@ -401,6 +404,7 @@
 				294DDE651CA9719E0020E986 /* TapViewController.swift in Sources */,
 				293BF7831CB01E28006CEC43 /* Network.swift in Sources */,
 				293BF7871CB02361006CEC43 /* Request.swift in Sources */,
+				293BF7921CB123B0006CEC43 /* Reachability.swift in Sources */,
 				294DDE441CA696EF0020E986 /* StartController.swift in Sources */,
 				293BF7901CB1220E006CEC43 /* OfflineView.swift in Sources */,
 				293BF7891CB025B1006CEC43 /* API.swift in Sources */,
