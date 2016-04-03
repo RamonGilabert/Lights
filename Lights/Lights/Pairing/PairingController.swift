@@ -102,7 +102,11 @@ class PairingController: TapViewController {
         $0.transform = transform
       }
 
-      delay(1) {
+      delay(0.85) {
+        closeDistilleries()
+
+        [self.flameView, self.titleLabel, self.pairingLabel].forEach { $0.transform = transform }
+
         spring(self.pairedView, spring: 100, friction: 70, mass: 70) {
           $0.transform = CGAffineTransformIdentity
         }
@@ -157,6 +161,8 @@ class PairingController: TapViewController {
   // MARK: - Helper methods
 
   override func presentViews(show: Bool = true) {
+    guard !CGAffineTransformIsIdentity(flameView.transform) else { return }
+
     UIView.animateWithDuration(0.5, animations: {
       self.pairedView.alpha = show ? 1 : 0
       self.pairedView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(2, 2)
