@@ -14,9 +14,8 @@ struct Request {
   }
 
   struct Lights: Requestable {
-
     var message: NetworkMessage = {
-      return NetworkMessage(resource: "/lights", headers: ["controller_id" : "1"])
+      return NetworkMessage(resource: "/lights", headers: ["controller_id" : "\(Locker.controller())"])
     }()
   }
 }

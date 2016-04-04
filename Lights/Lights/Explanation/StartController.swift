@@ -193,7 +193,9 @@ extension StartController: StartViewDelegate {
 
 extension StartController: BluetoothDelegate {
 
-  func shouldShowMessage(message: String) {
-    print(message) // TODO: Handle the error.
+  func bluetoothLight() {
+    lightFound()
   }
+
+  func shouldShowMessage(message: String) {  }
 }

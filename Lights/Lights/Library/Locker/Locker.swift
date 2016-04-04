@@ -33,6 +33,14 @@ struct Locker {
     defaults.object(fire, key: Key.light)
   }
 
+  static func controller(id: Int) {
+    defaults.integer(id, key: Key.controllerID)
+  }
+
+  static func controller() -> Int {
+    return defaults.integerForKey(Key.controllerID)
+  }
+
   static func token(token: String) {
     defaults.object(token, key: Key.token)
   }

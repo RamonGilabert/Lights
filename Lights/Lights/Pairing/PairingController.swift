@@ -101,16 +101,6 @@ class PairingController: TapViewController {
       animate(self.pairingLabel, duration: duration, delay: 0.3, curve: .EaseInOut) {
         $0.transform = transform
       }
-
-      delay(0.85) {
-        closeDistilleries()
-
-        [self.flameView, self.titleLabel, self.pairingLabel].forEach { $0.transform = transform }
-
-        spring(self.pairedView, spring: 100, friction: 70, mass: 70) {
-          $0.transform = CGAffineTransformIdentity
-        }
-      }
     }
   }
 
@@ -156,5 +146,32 @@ extension PairingController: PairedViewDelegate {
     }.finally {
       self.presentViewController(LightsController(), animated: true, completion: nil)
     }
+  }
+}
+
+extension PairingController: BluetoothPairedDelegate {
+
+  func pairedDevice(token: String, controllerID: String) {
+    guard let controllerID = Int(controllerID) else { return }
+
+    Locker.token(token)
+    Locker.controller(controllerID)
+    
+    Network.fetch(Request.Lights(), completion: { JSON, error in
+      guard let JSON = JSON.first where error == nil else { return }
+
+      let transform = CGAffineTransformMakeTranslation(0, -1000)
+
+      closeDistilleries()
+
+      [self.flameView, self.titleLabel, self.pairingLabel].forEach { $0.transform = transform }
+
+      spring(self.pairedView, spring: 100, friction: 70, mass: 70) {
+        $0.transform = CGAffineTransformIdentity
+      }
+
+      Locker.save(JSON)
+      Socket.connect()
+    })
   }
 }

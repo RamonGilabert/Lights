@@ -6,24 +6,34 @@ var bluetooth = Bluetooth()
 
 protocol BluetoothDelegate {
 
+  func bluetoothLight()
   func shouldShowMessage(message: String)
+}
+
+protocol BluetoothPairedDelegate {
+
+  func pairedDevice(token: String, controllerID: String)
 }
 
 class Bluetooth: NSObject {
 
-  private var centralManager: CBCentralManager?
-  private var peripheralBLE: CBPeripheral?
+  struct Constants {
+    static let name = "raspberrypi"
+  }
+
+  var manager: CBCentralManager?
   var delegate: BluetoothDelegate?
+  var pairedDelegate: BluetoothPairedDelegate?
 
   override init() {
     super.init()
 
     let queue = dispatch_queue_create("no.bluetooth", DISPATCH_QUEUE_SERIAL)
-    centralManager = CBCentralManager(delegate: self, queue: queue)
+    manager = CBCentralManager(delegate: self, queue: queue)
   }
 
   func scan() {
-    guard let central = centralManager else { return }
+    guard let central = manager else { return }
     central.scanForPeripheralsWithServices(nil, options: nil)
   }
 }
@@ -31,15 +41,18 @@ class Bluetooth: NSObject {
 extension Bluetooth: CBCentralManagerDelegate {
 
   func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
-    print(peripheral)
+    if peripheral.name == Constants.name {
+      print("Found")
+      central.connectPeripheral(peripheral, options: nil)
+
+      delegate?.bluetoothLight()
+    }
   }
 
   func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
     print(peripheral)
-  }
-
-  func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-    print(peripheral)
+    pairedDelegate?.pairedDevice("", controllerID: "")
+    manager?.stopScan()
   }
 
   func centralManagerDidUpdateState(central: CBCentralManager) {
@@ -113,36 +126,3 @@ extension Bluetooth: CBCentralManagerDelegate {
 //    // Start scanning for new devices
 //    self.startScanning()
 //  }
-//
-//  // MARK: - Private
-//
-//  func clearDevices() {
-//    self.bleService = nil
-//    self.peripheralBLE = nil
-//  }
-//
-//  func centralManagerDidUpdateState(central: CBCentralManager) {
-//    switch (central.state) {
-//    case CBCentralManagerState.PoweredOff:
-//      self.clearDevices()
-//
-//    case CBCentralManagerState.Unauthorized:
-//      // Indicate to user that the iOS device does not support BLE.
-//      break
-//
-//    case CBCentralManagerState.Unknown:
-//      // Wait for another event
-//      break
-//
-//    case CBCentralManagerState.PoweredOn:
-//      self.startScanning()
-//
-//    case CBCentralManagerState.Resetting:
-//      self.clearDevices()
-//
-//    case CBCentralManagerState.Unsupported:
-//      break
-//    }
-//  }
-//
-//}
