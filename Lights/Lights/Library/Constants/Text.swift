@@ -24,4 +24,12 @@ struct Text {
     static let turnOn = "Turn on".uppercaseString
     static let turnOff = "Turn off".uppercaseString
   }
+
+  struct Bluetooth {
+    static let title = "Bluetooth"
+    static let button = "All right"
+    static let unauthorized = "You don't have the app authorized to use the bluetooth devices."
+    static let powered = "Try turning the bluetooth on and starting the process again."
+    static let unknown = "There was an unknown problem, try it again later."
+  }
 }
