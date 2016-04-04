@@ -34,20 +34,22 @@ struct Locker {
   }
 
   static func token(token: String) {
-    guard var fire = defaults.objectForKey(Key.light) as? [String : AnyObject] else {
-      defaults.object([Key.token : token], key: Key.token)
-
-      return
-    }
-
-    fire[Key.token] = token
-    defaults.object(fire, key: Key.token)
+    defaults.object(token, key: Key.token)
   }
 
-  static func light() -> [String : AnyObject]? {
+  static func token() -> String {
+    return defaults.stringForKey(Key.token) ?? ""
+  }
+
+  static func light() -> LightViewModel? {
     guard defaults.boolForKey(Key.exist) else { return nil }
     
-    return defaults.objectForKey(Key.light) as? [String : AnyObject]
+    if let JSON = defaults.objectForKey(Key.light) as? [String : AnyObject] {
+      let light = Light(JSON: JSON)
+      return light.viewModel()
+    }
+
+    return nil
   }
 
   static func clear() {

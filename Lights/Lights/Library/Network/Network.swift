@@ -68,6 +68,15 @@ struct Socket {
   static func change(completion: (() -> ())? = nil) {
     guard let socket = socket, light = Locker.light() else { return }
 
-    socket.emit(API.socket, light)
+    socket.emit(API.socket, [
+      Locker.Key.id : light.id,
+      Locker.Key.status : light.status,
+      Locker.Key.intensity : light.intensity,
+      Locker.Key.red : light.red,
+      Locker.Key.green : light.green,
+      Locker.Key.blue : light.blue,
+      Locker.Key.controllerID : light.controllerID,
+      Locker.Key.token : Locker.token()
+      ])
   }
 }

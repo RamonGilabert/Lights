@@ -68,15 +68,11 @@ class LightsController: TapViewController {
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
 
-    guard let light = Locker.light(),
-      red = light[Locker.Key.red] as? CGFloat,
-      green = light[Locker.Key.green] as? CGFloat,
-      blue = light[Locker.Key.blue] as? CGFloat,
-      status = light[Locker.Key.status] as? Bool else { return }
+    guard let light = Locker.light() else { return }
 
-    turnButton.setTitle(status ? Text.Editing.turnOn : Text.Editing.turnOff, forState: .Normal)
+    turnButton.setTitle(light.status ? Text.Editing.turnOn : Text.Editing.turnOff, forState: .Normal)
 
-    let color = UIColor(red: red * 255, green: green * 255, blue: blue * 255, alpha: 1)
+    let color = UIColor(red: light.red * 255, green: light.green * 255, blue: light.blue * 255, alpha: 1)
     changeColor(color)
   }
 

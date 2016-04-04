@@ -52,7 +52,7 @@ class StartController: TapViewController {
     return transition
   }()
 
-  lazy var pairingController = PairingController()
+  lazy var pairingController: PairingController = PairingController()
 
   let animation = (spring: CGFloat(90), friction: CGFloat(80), mass: CGFloat(80))
   var timer = NSTimer()
