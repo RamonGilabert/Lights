@@ -17,6 +17,7 @@
 		293BF7921CB123B0006CEC43 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293BF7911CB123B0006CEC43 /* Reachability.swift */; };
 		2947FC2B1CB2F0CA00DF058C /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2947FC2A1CB2F0CA00DF058C /* Light.swift */; };
 		2947FC2D1CB2F87600DF058C /* Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2947FC2C1CB2F87600DF058C /* Constraints.swift */; };
+		2947FC301CB2F9D400DF058C /* Bluetooth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2947FC2F1CB2F9D400DF058C /* Bluetooth.swift */; };
 		294DDE421CA696B60020E986 /* LightsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE411CA696B60020E986 /* LightsController.swift */; };
 		294DDE441CA696EF0020E986 /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE431CA696EF0020E986 /* StartController.swift */; };
 		294DDE471CA697800020E986 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294DDE461CA697800020E986 /* StartView.swift */; };
@@ -52,6 +53,7 @@
 		293BF7911CB123B0006CEC43 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		2947FC2A1CB2F0CA00DF058C /* Light.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
 		2947FC2C1CB2F87600DF058C /* Constraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
+		2947FC2F1CB2F9D400DF058C /* Bluetooth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bluetooth.swift; sourceTree = "<group>"; };
 		294DDE411CA696B60020E986 /* LightsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightsController.swift; sourceTree = "<group>"; };
 		294DDE431CA696EF0020E986 /* StartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
 		294DDE461CA697800020E986 /* StartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -128,6 +130,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		2947FC2E1CB2F9B400DF058C /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				2947FC2F1CB2F9D400DF058C /* Bluetooth.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
 		294DDE3B1CA696390020E986 /* Editing */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +175,7 @@
 		294DDE3F1CA6968B0020E986 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				2947FC2E1CB2F9B400DF058C /* Bluetooth */,
 				2947FC291CB2F0B900DF058C /* Models */,
 				293BF78C1CB02FB1006CEC43 /* Locker */,
 				293BF7811CB01DE6006CEC43 /* Network */,
@@ -426,6 +437,7 @@
 				293BF7891CB025B1006CEC43 /* API.swift in Sources */,
 				294DDE5B1CA6F3D80020E986 /* ExplanationView.swift in Sources */,
 				293BF78E1CB02FB8006CEC43 /* Locker.swift in Sources */,
+				2947FC301CB2F9D400DF058C /* Bluetooth.swift in Sources */,
 				294DDE6E1CAAEBA30020E986 /* DetailButton.swift in Sources */,
 				294DDE5D1CA6F9BE0020E986 /* Text.swift in Sources */,
 				294DDE4E1CA6A8020020E986 /* Color.swift in Sources */,
