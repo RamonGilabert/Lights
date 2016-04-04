@@ -125,25 +125,6 @@ class LightsController: TapViewController {
       $0.transform = transform
     }
   }
-
-  // MARK: - Constraints
-
-  func setupConstraints() {
-    NSLayoutConstraint.activateConstraints([
-      searchButton.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: Dimensions.buttonTopOffset),
-      searchButton.rightAnchor.constraintEqualToAnchor(view.rightAnchor, constant: Dimensions.buttonRightOffset),
-
-      editingView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.wheelWidth),
-      editingView.heightAnchor.constraintEqualToAnchor(editingView.widthAnchor),
-      editingView.topAnchor.constraintEqualToAnchor(searchButton.bottomAnchor, constant: Dimensions.wheelOffset),
-      editingView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-
-      turnButton.widthAnchor.constraintEqualToConstant(DetailButton.Dimensions.buttonWidth),
-      turnButton.heightAnchor.constraintEqualToConstant(DetailButton.Dimensions.buttonHeight),
-      turnButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      turnButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: DetailButton.Dimensions.buttonOffset + 10)
-      ])
-  }
 }
 
 extension LightsController: EditingViewDelegate {

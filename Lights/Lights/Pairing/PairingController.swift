@@ -134,30 +134,6 @@ class PairingController: TapViewController {
     pairingLabel.sizeToFit()
   }
 
-  // MARK: - Constraints
-
-  func setupConstraints() {
-    let width = UIScreen.mainScreen().bounds.width
-
-    NSLayoutConstraint.activateConstraints([
-      flameView.widthAnchor.constraintEqualToConstant(Dimensions.flameWidth),
-      flameView.heightAnchor.constraintEqualToConstant(Dimensions.flameHeight),
-      flameView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      flameView.bottomAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.flameOffset),
-
-      titleLabel.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      titleLabel.topAnchor.constraintEqualToAnchor(flameView.bottomAnchor, constant: Dimensions.titleOffset),
-
-      pairingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3 - 10),
-      pairingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.pairingOffset),
-
-      pairedView.widthAnchor.constraintEqualToAnchor(view.widthAnchor),
-      pairedView.heightAnchor.constraintEqualToAnchor(view.heightAnchor),
-      pairedView.topAnchor.constraintEqualToAnchor(view.topAnchor),
-      pairedView.leftAnchor.constraintEqualToAnchor(view.leftAnchor)
-      ])
-  }
-
   // MARK: - Helper methods
 
   override func presentViews(show: Bool = true) {

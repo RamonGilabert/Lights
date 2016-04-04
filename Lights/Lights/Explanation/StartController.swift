@@ -85,26 +85,6 @@ class StartController: TapViewController {
     super.viewDidAppear(animated)
   }
 
-  // MARK: - Constraints
-
-  func setupConstraints() {
-    NSLayoutConstraint.activateConstraints([
-      startView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      startView.bottomAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.bottomOffset),
-
-      flameView.heightAnchor.constraintEqualToConstant(Dimensions.flameHeight),
-      flameView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      flameView.topAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.flameOffset),
-
-      explanationView.topAnchor.constraintEqualToAnchor(flameView.bottomAnchor, constant: Dimensions.explanationOffset),
-      explanationView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth),
-
-      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: 92),
-      searchingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.searchingOffset)
-      ])
-  }
-
   // MARK: - Animations
 
   override func presentViews(show: Bool) {
