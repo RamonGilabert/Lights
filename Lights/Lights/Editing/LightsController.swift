@@ -147,9 +147,9 @@ extension LightsController: EditingViewDelegate {
 
     Locker.save([
       Locker.Key.status : on,
-      Locker.Key.red : red / 255,
-      Locker.Key.green : green / 255,
-      Locker.Key.blue : blue / 255
+      Locker.Key.red : red,
+      Locker.Key.green : green,
+      Locker.Key.blue : blue
       ])
 
     Socket.change()

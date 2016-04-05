@@ -132,9 +132,7 @@ class EditingView: UIView {
     previousRadius = size / 2
     previousPoint = point
 
-    if panGesture.state == .Ended || panGesture.state == .Cancelled {
-      delegate?.performRequest(color)
-    } else if panGesture.state == .Began {
+    if panGesture.state == .Began {
       previousRadius = overlay.frame.size.width / 2 + Dimensions.border
       previousPoint = indicatorOverlay.center
     } else if size >= Dimensions.imageHeight + 40 {
@@ -159,6 +157,8 @@ class EditingView: UIView {
       imageView.center = colorWheel.center
       overlay.layer.cornerRadius = overlay.frame.width / 2
     }
+
+    delegate?.performRequest(color)
   }
 
   func indicatorLocation(location: CGPoint) -> CGPoint {
