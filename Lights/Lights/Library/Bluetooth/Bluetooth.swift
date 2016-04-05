@@ -12,7 +12,7 @@ protocol BluetoothDelegate {
 
 protocol BluetoothPairedDelegate {
 
-  func pairedDevice(token: String, controllerID: String)
+  func pairedDevice()
 }
 
 class Bluetooth: NSObject {
@@ -44,20 +44,19 @@ class Bluetooth: NSObject {
 extension Bluetooth: CBCentralManagerDelegate {
 
   func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
-    print(peripheral)
     if peripheral.name == Constants.name {
+      print("Lights found.") // Logs.
+
       manager?.stopScan()
       light = peripheral
 
       central.connectPeripheral(peripheral, options: nil)
 
-      //delegate?.bluetoothLight()
+      delegate?.bluetoothLight()
     }
   }
 
   func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
-    //pairedDelegate?.pairedDevice("", controllerID: "1")
-
     light = peripheral
 
     peripheral.delegate = self
@@ -88,7 +87,6 @@ extension Bluetooth: CBPeripheralDelegate {
     guard let services = peripheral.services else { return }
 
     for service in services {
-      print(service.UUID)
       peripheral.discoverCharacteristics([CBUUID(string: Constants.characteristic)], forService: service)
     }
   }
@@ -97,11 +95,30 @@ extension Bluetooth: CBPeripheralDelegate {
     guard let characteristics = service.characteristics else { return }
 
     for characteristic in characteristics {
-      print(characteristic)
+      print("Characteristic found.") // Logs.
 
-      if let data = characteristic.value, deserialized = String(data: data, encoding: NSUTF8StringEncoding) {
-        print(deserialized)
+      peripheral.setNotifyValue(true, forCharacteristic: characteristic)
+    }
+  }
+
+  func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+    if let data = characteristic.value,
+      string = String(data: data, encoding: NSUTF8StringEncoding) {
+
+      let controllerID = string.characters[string.endIndex.predecessor()]
+      let token = string.substringToIndex(string.endIndex.predecessor())
+
+      if let controllerID = Int(String(controllerID)) {
+        Locker.controller(controllerID)
       }
+
+      Locker.token(token)
+
+      manager?.cancelPeripheralConnection(peripheral)
+      light = nil
+      manager = nil
+
+      pairedDelegate?.pairedDevice()
     }
   }
 }

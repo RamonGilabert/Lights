@@ -161,12 +161,7 @@ extension PairingController: PairedViewDelegate {
 
 extension PairingController: BluetoothPairedDelegate {
 
-  func pairedDevice(token: String, controllerID: String) {
-    guard let controllerID = Int(controllerID) else { return }
-
-    Locker.token(token)
-    Locker.controller(controllerID)
-    
+  func pairedDevice() {
     Network.fetch(Request.Lights(), completion: { [weak self] JSON, error in
       guard let weakSelf = self, JSON = JSON.first where error == nil else { return }
 
