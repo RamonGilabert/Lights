@@ -70,7 +70,7 @@ class LightsController: TapViewController {
 
     guard let light = Locker.light() else { return }
 
-    turnButton.setTitle(light.status ? Text.Editing.turnOn : Text.Editing.turnOff, forState: .Normal)
+    turnButton.setTitle(light.status ? Text.Editing.turnOff : Text.Editing.turnOn, forState: .Normal)
 
     let color = UIColor(red: light.red * 255, green: light.green * 255, blue: light.blue * 255, alpha: 1)
     changeColor(color)
@@ -91,6 +91,10 @@ class LightsController: TapViewController {
     let title = shouldTurn ? Text.Editing.turnOff : Text.Editing.turnOn
 
     turnButton.setTitle(title, forState: .Normal)
+
+    Locker.save([Locker.Key.status : shouldTurn])
+
+    Socket.change()
   }
 
   // MARK: - Animations
@@ -139,17 +143,15 @@ extension LightsController: EditingViewDelegate {
     turnButton.layer.shadowColor = color.alpha(0.5).CGColor
   }
 
-  func performRequest(color: UIColor) {
-    let on = turnButton.titleForState(.Normal) == Text.Editing.turnOn
-
+  func performRequest(color: UIColor, radius: CGFloat) {
     var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
     color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
 
     Locker.save([
-      Locker.Key.status : on,
       Locker.Key.red : red,
       Locker.Key.green : green,
-      Locker.Key.blue : blue
+      Locker.Key.blue : blue,
+      Locker.Key.intensity : radius * 100 / (EditingView.Dimensions.size / 2)
       ])
 
     Socket.change()

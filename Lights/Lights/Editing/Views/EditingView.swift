@@ -3,7 +3,7 @@ import UIKit
 protocol EditingViewDelegate {
 
   func changeColor(color: UIColor)
-  func performRequest(color: UIColor)
+  func performRequest(color: UIColor, radius: CGFloat)
 }
 
 class EditingView: UIView {
@@ -158,7 +158,7 @@ class EditingView: UIView {
       overlay.layer.cornerRadius = overlay.frame.width / 2
     }
 
-    delegate?.performRequest(color)
+    delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
   }
 
   func indicatorLocation(location: CGPoint) -> CGPoint {
