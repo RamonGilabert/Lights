@@ -3,18 +3,18 @@ import UIKit
 protocol EditingViewDelegate {
 
   func changeColor(color: UIColor)
-  func performRequest(color: UIColor)
+  func performRequest(color: UIColor, radius: CGFloat)
 }
 
 class EditingView: UIView {
 
   struct Dimensions {
-    static let size: CGFloat = UIScreen.mainScreen().bounds.width + LightsController.Dimensions.wheelWidth - 10
-    static let border: CGFloat = 7
-    static let indicator: CGFloat = 19
-    static let indicatorOverlay: CGFloat = 26
-    static let imageWidth: CGFloat = 80
-    static let imageHeight: CGFloat = 140
+    static let size: CGFloat = UIScreen.mainScreen().bounds.width + LightsController.Dimensions.wheelWidth
+    static let border: CGFloat = 4
+    static let indicator: CGFloat = 14
+    static let indicatorOverlay: CGFloat = 18
+    static let imageWidth: CGFloat = 54
+    static let imageHeight: CGFloat = 88
   }
 
   typealias RGB = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
@@ -25,6 +25,7 @@ class EditingView: UIView {
     imageView.contentMode = .ScaleAspectFit
     imageView.image = UIImage(named: Image.flame)?.imageWithRenderingMode(.AlwaysTemplate)
     imageView.tintColor = Color.General.life
+    imageView.prepareShadow(10, opacity: 0.7)
 
     return imageView
   }()
@@ -50,7 +51,7 @@ class EditingView: UIView {
 
   lazy var overlay: UIView = {
     let view = UIView()
-    view.backgroundColor = Color.General.background
+    view.backgroundColor = Color.Background.pop
     view.layer.cornerRadius = (Dimensions.size - Dimensions.border * 2) / 2
 
     return view
@@ -70,7 +71,7 @@ class EditingView: UIView {
   lazy var indicator: UIView = {
     let view = UIView()
     view.backgroundColor = Color.General.life
-    view.layer.borderColor = Color.General.background.CGColor
+    view.layer.borderColor = Color.Background.pop.CGColor
     view.layer.borderWidth = 2
     view.layer.cornerRadius = Dimensions.indicator / 2
     view.userInteractionEnabled = true
@@ -91,6 +92,7 @@ class EditingView: UIView {
 
   var delegate: EditingViewDelegate?
   var previousRadius = Dimensions.size / 2
+  var previousPoint = CGPointZero
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -125,36 +127,38 @@ class EditingView: UIView {
     let reference = saturation(point)
     let color = UIColor(hue: reference.hue,
                         saturation: reference.saturation, brightness: 1, alpha: 1)
-    var size = sqrt(x * x + y * y) * 2
-
-    if abs(previousRadius - size / 2) < 0.5 {
-      size = previousRadius * 2
-    }
+    let size = sqrt(x * x + y * y) * 2
 
     previousRadius = size / 2
+    previousPoint = point
 
-    if panGesture.state == .Ended || panGesture.state == .Cancelled {
-      delegate?.performRequest(color)
-    } else if size >= Dimensions.size / 2 {
+    if panGesture.state == .Began {
+      previousRadius = overlay.frame.size.width / 2 + Dimensions.border
+      previousPoint = indicatorOverlay.center
+    } else if size >= Dimensions.imageHeight + 40 {
       let pathFrame = CGRect(x: (colorWheel.frame.width - size) / 2,
                              y: (colorWheel.frame.height - size) / 2,
                              width: size, height: size)
       let path = UIBezierPath(roundedRect: pathFrame, cornerRadius: size / 2)
-      let constantX: CGFloat = point.x - colorWheel.center.x > 0 ? -3.5 : 3.5
-      let constantY: CGFloat = point.y - colorWheel.center.y > 0 ? -3.5 : 3.5
+      let constantX: CGFloat = point.x - colorWheel.center.x > 0 ? -1 : 1
+      let constantY: CGFloat = point.y - colorWheel.center.y > 0 ? -1 : 1
+      let difference = size / Dimensions.size
+      let imageDifference: CGFloat = 50
 
       delegate?.changeColor(color)
 
       mask.path = path.CGPath
-      indicatorOverlay.center = CGPoint(x: point.x + constantX, y: point.y + constantY)
+      indicatorOverlay.center = CGPoint(x: point.x + constantX, y: point.y + constantY * Dimensions.border / 2)
       overlay.frame.size = CGSize(width: size - Dimensions.border * 2,
                                   height: size - Dimensions.border * 2)
       overlay.center = colorWheel.center
-      imageView.frame.size = CGSize(width: Dimensions.imageWidth * size / Dimensions.size,
-                                    height: Dimensions.imageHeight * size / Dimensions.size)
+      imageView.frame.size = CGSize(width: Dimensions.imageWidth * difference + imageDifference * (1 - difference),
+                                    height: Dimensions.imageHeight * difference + imageDifference * (1 - difference))
       imageView.center = colorWheel.center
       overlay.layer.cornerRadius = overlay.frame.width / 2
     }
+
+    delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
   }
 
   func indicatorLocation(location: CGPoint) -> CGPoint {
@@ -190,8 +194,8 @@ class EditingView: UIView {
 
       indicatorOverlay.widthAnchor.constraintEqualToConstant(Dimensions.indicatorOverlay),
       indicatorOverlay.heightAnchor.constraintEqualToConstant(Dimensions.indicatorOverlay),
-      indicatorOverlay.rightAnchor.constraintEqualToAnchor(colorWheel.rightAnchor,
-        constant: -(Dimensions.border - Dimensions.indicatorOverlay) / 2),
+      indicatorOverlay.leftAnchor.constraintEqualToAnchor(colorWheel.leftAnchor,
+        constant: (Dimensions.border - Dimensions.indicatorOverlay) / 2),
       indicatorOverlay.centerYAnchor.constraintEqualToAnchor(colorWheel.centerYAnchor),
 
       indicator.widthAnchor.constraintEqualToConstant(Dimensions.indicator),
@@ -262,6 +266,19 @@ class EditingView: UIView {
 
     return (hue, saturation)
   }
+
+//  func point(red: CGFloat, green: CGFloat, blue: CGFloat) -> CGPoint {
+//    let color = UIColor(red: red, green: green, blue: blue, alpha: 1)
+//    let hue = UIColor.getHue(color)
+//    let dimension = Dimensions.size / 2
+//    let diferentialX = CGFloat(position.x - dimension) / dimension
+//    let diferentialY = CGFloat(position.y - dimension) / dimension
+//    let saturation = sqrt(CGFloat(diferentialX * diferentialX + diferentialY * diferentialY))
+//    let expression = acos(diferentialX / saturation) / CGFloat(M_PI) / 2
+//    let hue = saturation == 0 ? 0 : diferentialY < 0 ? 1 - expression : expression
+//
+//    return (hue, saturation)
+//  }
 
   func convertHSV(initial: HSV) -> RGB {
     var color: RGB = (red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)

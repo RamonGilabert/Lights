@@ -8,10 +8,11 @@ class StartController: TapViewController {
 
   struct Dimensions {
     static let bottomOffset: CGFloat = -50
-    static let flameHeight: CGFloat = 50
+    static let flameHeight: CGFloat = 56
     static let flameOffset: CGFloat = 40
-    static let explanationOffset: CGFloat = 14
+    static let explanationOffset: CGFloat = 22
     static let explanationWidth: CGFloat = -56
+    static let searchingWidth: CGFloat = 90
     static let searchingOffset: CGFloat = -130
   }
 
@@ -24,7 +25,8 @@ class StartController: TapViewController {
 
   lazy var flameView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = UIImage(named: Image.flame)
+    imageView.image = UIImage(named: Image.flame)?.imageWithRenderingMode(.AlwaysTemplate)
+    imageView.tintColor = Color.General.life
     imageView.contentMode = .ScaleAspectFit
 
     return imageView
@@ -35,9 +37,7 @@ class StartController: TapViewController {
 
   lazy var searchingLabel: UILabel = {
     let label = UILabel()
-    label.font = Font.General.detail
-    label.textColor = Color.General.titles
-    label.text = Text.Detail.searching
+    label.attributedText = Attributes.detail(Text.Detail.searching)
 
     return label
   }()
@@ -54,7 +54,7 @@ class StartController: TapViewController {
 
   lazy var pairingController: PairingController = PairingController()
 
-  let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
+  let animation = (spring: CGFloat(90), friction: CGFloat(80), mass: CGFloat(80))
   var timer = NSTimer()
 
   override func viewDidLoad() {
@@ -66,8 +66,6 @@ class StartController: TapViewController {
       $0.translatesAutoresizingMaskIntoConstraints = false
       view.addSubview($0)
     }
-
-    view.backgroundColor = Color.General.background
 
     setupConstraints()
   }
@@ -82,39 +80,16 @@ class StartController: TapViewController {
   }
 
   override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-
     closeDistilleries()
-    animateController(true)
-  }
-
-  // MARK: - Constraints
-
-  func setupConstraints() {
-    let width = UIScreen.mainScreen().bounds.width
-
-    NSLayoutConstraint.activateConstraints([
-      startView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      startView.bottomAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.bottomOffset),
-
-      flameView.heightAnchor.constraintEqualToConstant(Dimensions.flameHeight),
-      flameView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      flameView.topAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.flameOffset),
-
-      explanationView.topAnchor.constraintEqualToAnchor(flameView.bottomAnchor, constant: Dimensions.explanationOffset),
-      explanationView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      explanationView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.explanationWidth),
-
-      searchingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3 - 25),
-      searchingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.searchingOffset)
-      ])
+    
+    super.viewDidAppear(animated)
   }
 
   // MARK: - Animations
 
-  func animateController(show: Bool) {
+  override func presentViews(show: Bool) {
     spring(startView, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
-      $0.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.01, 0.01)
+      $0.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.00001, 0.00001)
     }.finally {
       show ? self.stone() : calm()
     }
@@ -174,7 +149,7 @@ class StartController: TapViewController {
   }
 
   func timerDidFire() {
-    guard let text = searchingLabel.text else { return }
+    guard let text = searchingLabel.attributedText?.string else { return }
 
     let transition = CATransition()
     transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
@@ -183,9 +158,9 @@ class StartController: TapViewController {
     searchingLabel.layer.addAnimation(transition, forKey: "transition")
 
     if text.characters.count == Text.Detail.searching.characters.count + 3 {
-      searchingLabel.text = Text.Detail.searching
+      searchingLabel.attributedText = Attributes.detail(Text.Detail.searching)
     } else {
-      searchingLabel.text = text + "."
+      searchingLabel.attributedText = Attributes.detail(text + ".")
     }
 
     searchingLabel.sizeToFit()
@@ -206,11 +181,27 @@ extension StartController: StartViewDelegate {
     spring(searchingLabel, delay: 0.45, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = CGAffineTransformIdentity
     }.finally {
+      delay(1) {
+        bluetooth = Bluetooth()
+        bluetooth.delegate = self
+      }
+
       self.startView.loadingAnimation()
       self.timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self,
         selector: #selector(self.timerDidFire), userInfo: nil, repeats: true)
-
-      delay(4) { self.lightFound() } // TODO: Delete this line.
     }
   }
+}
+
+extension StartController: BluetoothDelegate {
+
+  func bluetoothLight() {
+    lightFound()
+  }
+
+  func showPairing() {
+    lightFound()
+  }
+
+  func shouldShowMessage(message: String) {  }
 }

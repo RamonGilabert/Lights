@@ -17,14 +17,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch-screen" translatesAutoresizingMaskIntoConstraints="NO" id="Mwk-r7-iVd">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5SK-oI-eN6">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch-screen" translatesAutoresizingMaskIntoConstraints="NO" id="Mwk-r7-iVd">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="5SK-oI-eN6" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-20" id="MBn-Wv-8YN"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Mwk-r7-iVd" secondAttribute="bottom" id="O3z-s7-luW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5SK-oI-eN6" secondAttribute="trailing" constant="-20" id="Oo9-GN-Ltm"/>
+                            <constraint firstItem="5SK-oI-eN6" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" id="boa-zh-gml"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Mwk-r7-iVd" secondAttribute="trailing" constant="-20" id="gJS-tT-FBX"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="5SK-oI-eN6" secondAttribute="bottom" id="mcP-Oh-Soc"/>
                             <constraint firstItem="Mwk-r7-iVd" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" id="rFD-aJ-SE8"/>
                             <constraint firstItem="Mwk-r7-iVd" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-20" id="vEg-3r-4Ap"/>
                         </constraints>

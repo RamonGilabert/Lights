@@ -15,7 +15,8 @@ class PairingController: TapViewController {
 
   lazy var flameView: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = UIImage(named: Image.flame)
+    imageView.image = UIImage(named: Image.flame)?.imageWithRenderingMode(.AlwaysTemplate)
+    imageView.tintColor = Color.General.life
     imageView.contentMode = .ScaleAspectFit
 
     return imageView
@@ -23,18 +24,14 @@ class PairingController: TapViewController {
 
   lazy var titleLabel: UILabel = {
     let label = UILabel()
-    label.font = Font.General.subtitle
-    label.textColor = Color.General.text
-    label.text = Text.Pairing.found
+    label.attributedText = Attributes.found(Text.Pairing.found)
 
     return label
   }()
 
   lazy var pairingLabel: UILabel = {
     let label = UILabel()
-    label.font = Font.General.detail
-    label.textColor = Color.General.titles
-    label.text = Text.Pairing.pairing
+    label.attributedText = Attributes.detail(Text.Pairing.pairing)
 
     return label
   }()
@@ -68,6 +65,7 @@ class PairingController: TapViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    bluetooth.pairedDelegate = self
     transitioningDelegate = transition
 
     [flameView, titleLabel, pairingLabel, pairedView].forEach {
@@ -76,8 +74,6 @@ class PairingController: TapViewController {
     }
 
     pairedView.transform = CGAffineTransformMakeTranslation(0, UIScreen.mainScreen().bounds.height)
-
-    view.backgroundColor = Color.General.background
 
     setupConstraints()
   }
@@ -88,41 +84,12 @@ class PairingController: TapViewController {
     timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self,
                                                    selector: #selector(timerDidFire),
                                                    userInfo: nil, repeats: true)
-
-    delay(2) {
-      let transform = CGAffineTransformMakeTranslation(0, -1000)
-      let duration: NSTimeInterval = 1.5
-
-      animate(self.flameView, duration: duration, curve: .EaseInOut) {
-        $0.transform = transform
-      }
-
-      animate(self.titleLabel, duration: duration, delay: 0.15, curve: .EaseInOut) {
-        $0.transform = transform
-      }
-
-      animate(self.pairingLabel, duration: duration, delay: 0.3, curve: .EaseInOut) {
-        $0.transform = transform
-      }
-
-      spring(self.pairedView, delay: 0.6, spring: 40, friction: 50, mass: 50) {
-        $0.transform = CGAffineTransformIdentity
-      }.finally {
-        for (index, element) in self.pairedView.subviews.enumerate() {
-          let delay: NSTimeInterval = 0.25 * Double(index)
-
-          animate(element, duration: duration, delay: delay, curve: .EaseInOut, options: [.Reverse, .Repeat(Float.infinity)]) {
-            $0.transform = CGAffineTransformMakeTranslation(0, 5)
-          }
-        }
-      }
-    }
   }
 
   // MARK: - Timer methods
 
   func timerDidFire() {
-    guard let text = pairingLabel.text else { return }
+    guard let text = pairingLabel.attributedText?.string else { return }
 
     let transition = CATransition()
     transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
@@ -131,36 +98,51 @@ class PairingController: TapViewController {
     pairingLabel.layer.addAnimation(transition, forKey: "transition")
 
     if text.characters.count == Text.Pairing.pairing.characters.count + 3 {
-      pairingLabel.text = Text.Pairing.pairing
+      pairingLabel.attributedText = Attributes.detail(Text.Pairing.pairing)
     } else {
-      pairingLabel.text = text + "."
+      pairingLabel.attributedText = Attributes.detail(text + ".")
     }
 
     pairingLabel.sizeToFit()
   }
 
-  // MARK: - Constraints
+  // MARK: - Helper methods
 
-  func setupConstraints() {
-    let width = UIScreen.mainScreen().bounds.width
+  override func presentViews(show: Bool = true) {
+    guard !CGAffineTransformIsIdentity(flameView.transform) else { return }
 
-    NSLayoutConstraint.activateConstraints([
-      flameView.widthAnchor.constraintEqualToConstant(Dimensions.flameWidth),
-      flameView.heightAnchor.constraintEqualToConstant(Dimensions.flameHeight),
-      flameView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      flameView.bottomAnchor.constraintEqualToAnchor(view.centerYAnchor, constant: Dimensions.flameOffset),
+    UIView.animateWithDuration(0.5, animations: {
+      self.pairedView.alpha = show ? 1 : 0
+      self.pairedView.transform = show ? CGAffineTransformIdentity : CGAffineTransformMakeScale(2, 2)
+    })
+  }
 
-      titleLabel.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      titleLabel.topAnchor.constraintEqualToAnchor(flameView.bottomAnchor, constant: Dimensions.titleOffset),
+  func presentPairedView() {
+    closeDistilleries()
 
-      pairingLabel.leftAnchor.constraintEqualToAnchor(view.leftAnchor, constant: width / 3),
-      pairingLabel.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.pairingOffset),
+    let transform = CGAffineTransformMakeTranslation(0, -1000)
+    let duration: NSTimeInterval = 0.6
 
-      pairedView.widthAnchor.constraintEqualToAnchor(view.widthAnchor),
-      pairedView.heightAnchor.constraintEqualToAnchor(view.heightAnchor),
-      pairedView.topAnchor.constraintEqualToAnchor(view.topAnchor),
-      pairedView.leftAnchor.constraintEqualToAnchor(view.leftAnchor)
-      ])
+    animate(flameView, duration: duration, curve: .EaseInOut) {
+      $0.transform = transform
+    }
+
+    animate(titleLabel, duration: duration, delay: 0.15, curve: .EaseInOut) {
+      $0.transform = transform
+    }
+
+    animate(pairingLabel, duration: duration, delay: 0.3, curve: .EaseInOut) {
+      $0.transform = transform
+    }
+
+    delay(1) {
+      closeDistilleries()
+      [self.flameView, self.titleLabel, self.pairingLabel].forEach { $0.transform = transform }
+
+      spring(self.pairedView, spring: 100, friction: 70, mass: 70) {
+        $0.transform = CGAffineTransformIdentity
+      }
+    }
   }
 }
 
@@ -174,5 +156,19 @@ extension PairingController: PairedViewDelegate {
     }.finally {
       self.presentViewController(LightsController(), animated: true, completion: nil)
     }
+  }
+}
+
+extension PairingController: BluetoothPairedDelegate {
+
+  func pairedDevice() {
+    Network.fetch(Request.Lights(), completion: { [weak self] JSON, error in
+      guard let weakSelf = self where error == nil else { return }
+
+      weakSelf.presentPairedView()
+
+      Locker.save(JSON)
+      Socket.connect()
+    })
   }
 }

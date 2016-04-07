@@ -26,17 +26,18 @@ class StartView: UIView {
                      forControlEvents: .TouchDragExit)
 
     button.setTitle("Start".uppercaseString, forState: .Normal)
-    button.setTitleColor(Color.General.background, forState: .Normal)
+    button.setTitleColor(Color.Background.bottom, forState: .Normal)
     button.backgroundColor = Color.Button.Start.background
     button.titleLabel?.font = Font.General.start
     button.layer.cornerRadius = Dimensions.buttonSize / 2
+    button.prepareShadow()
 
     return button
     }()
 
   lazy var popView: UIView = {
     let view = UIView()
-    view.backgroundColor = Color.General.background
+    view.backgroundColor = Color.Background.pop
     
     return view
   }()
@@ -46,7 +47,7 @@ class StartView: UIView {
     view.layer.borderColor = Color.General.life.CGColor
     view.layer.borderWidth = 2
     view.layer.cornerRadius = 7
-    view.backgroundColor = Color.General.background
+    view.backgroundColor = Color.Background.top
     view.transform = CGAffineTransformMakeScale(0.1, 0.1)
     view.alpha = 0
 
@@ -75,7 +76,9 @@ class StartView: UIView {
 
   func startButtonDidPress() {
     delegate?.startButtonDidPress()
+    startButton.layer.shadowOpacity = 0
     startButton.userInteractionEnabled = false
+    
     animateBackground(Color.Button.Start.background)
 
     let boundsAnimation = CABasicAnimation(keyPath: "bounds.size")
@@ -87,7 +90,7 @@ class StartView: UIView {
 
     let animationGroup = CAAnimationGroup()
     animationGroup.animations = [boundsAnimation, borderAnimation]
-    animationGroup.duration = 0.35
+    animationGroup.duration = 0.25
     animationGroup.delegate = self
     animationGroup.timingFunction = CAMediaTimingFunction(controlPoints: 0.62, 0.68, 0.29, 0.98)
     animationGroup.removedOnCompletion = false
@@ -144,7 +147,7 @@ class StartView: UIView {
   }
 
   func rotateView() {
-    let duration: NSTimeInterval = 1
+    let duration: NSTimeInterval = 0.85
     let curve = Animation.Curve.Bezier(0.31, 0.62, 0.69, 0.44)
 
     animate(startButton, duration: duration, curve: curve) {

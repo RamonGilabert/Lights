@@ -2,7 +2,8 @@ import UIKit
 
 struct Image {
 
-  static let flame = "flame"
+  static let flame = "light"
   static let paired = "paired"
   static let search = "search"
+  static let offline = "offline"
 }

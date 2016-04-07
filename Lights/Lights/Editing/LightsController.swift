@@ -2,16 +2,13 @@ import UIKit
 import Transition
 import Walker
 import Sugar
+import Ripple
 
 class LightsController: TapViewController {
 
   struct Dimensions {
-    static let buttonWidth: CGFloat = -64
-    static let buttonHeight: CGFloat = 60
-    static let buttonOffset: CGFloat = -85
-
-    static let wheelWidth: CGFloat = -60
-    static let wheelOffset: CGFloat = 40
+    static let wheelWidth: CGFloat = -130
+    static let wheelOffset: CGFloat = 60
 
     static let buttonTopOffset: CGFloat = 36
     static let buttonRightOffset: CGFloat = -20
@@ -26,15 +23,10 @@ class LightsController: TapViewController {
     return button
   }()
 
-  lazy var turnButton: UIButton = { [unowned self] in
-    let button = UIButton()
+  lazy var turnButton: DetailButton = { [unowned self] in
+    let button = DetailButton()
     button.addTarget(self, action: #selector(turnButtonDidPress), forControlEvents: .TouchUpInside)
     button.setTitle(Text.Editing.turnOn, forState: .Normal)
-    button.setTitleColor(Color.General.life, forState: .Normal)
-    button.titleLabel?.font = Font.General.button
-    button.layer.borderColor = Color.General.life.CGColor
-    button.layer.borderWidth = 2
-    button.layer.cornerRadius = Dimensions.buttonHeight / 2
 
     return button
   }()
@@ -57,13 +49,12 @@ class LightsController: TapViewController {
     return transition
   }()
 
-  let animation = (spring: CGFloat(40), friction: CGFloat(50), mass: CGFloat(50))
+  let animation = (spring: CGFloat(90), friction: CGFloat(80), mass: CGFloat(80))
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     transitioningDelegate = transition
-    view.backgroundColor = Color.General.background
 
     [searchButton, editingView, turnButton].forEach {
       $0.translatesAutoresizingMaskIntoConstraints = false
@@ -74,10 +65,15 @@ class LightsController: TapViewController {
     setupConstraints()
   }
 
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
 
-    presentViews(true)
+    guard let light = Locker.light() else { return }
+
+    turnButton.setTitle(light.status ? Text.Editing.turnOff : Text.Editing.turnOn, forState: .Normal)
+
+    let color = UIColor(red: light.red * 255, green: light.green * 255, blue: light.blue * 255, alpha: 1)
+    changeColor(color)
   }
 
   // MARK: - Action methods
@@ -95,18 +91,32 @@ class LightsController: TapViewController {
     let title = shouldTurn ? Text.Editing.turnOff : Text.Editing.turnOn
 
     turnButton.setTitle(title, forState: .Normal)
+
+    Locker.save([Locker.Key.status : shouldTurn])
+
+    Socket.change()
   }
 
   // MARK: - Animations
 
-  func presentViews(show: Bool) {
+  override func presentViews(show: Bool) {
     let transform = show
       ? CGAffineTransformIdentity
       : CGAffineTransformMakeTranslation(0, -UIScreen.mainScreen().bounds.height)
 
+    calm()
+
     spring(searchButton, delay: show ? 0.4 : 0,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = transform
+    }.finally {
+      if show {
+        ripple(self.editingView.center,
+          view: self.view,
+          size: 120,
+          duration: 4, multiplier: 3.2, divider: 3,
+          color: Color.General.ripple.alpha(0.1))
+      }
     }
 
     spring(editingView, delay: 0.2,
@@ -119,25 +129,6 @@ class LightsController: TapViewController {
       $0.transform = transform
     }
   }
-
-  // MARK: - Constraints
-
-  func setupConstraints() {
-    NSLayoutConstraint.activateConstraints([
-      searchButton.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: Dimensions.buttonTopOffset),
-      searchButton.rightAnchor.constraintEqualToAnchor(view.rightAnchor, constant: Dimensions.buttonRightOffset),
-
-      editingView.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.wheelWidth),
-      editingView.heightAnchor.constraintEqualToAnchor(editingView.widthAnchor),
-      editingView.topAnchor.constraintEqualToAnchor(searchButton.bottomAnchor, constant: Dimensions.wheelOffset),
-      editingView.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-
-      turnButton.widthAnchor.constraintEqualToAnchor(view.widthAnchor, constant: Dimensions.buttonWidth),
-      turnButton.heightAnchor.constraintEqualToConstant(Dimensions.buttonHeight),
-      turnButton.centerXAnchor.constraintEqualToAnchor(view.centerXAnchor),
-      turnButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor, constant: Dimensions.buttonOffset)
-      ])
-  }
 }
 
 extension LightsController: EditingViewDelegate {
@@ -146,12 +137,23 @@ extension LightsController: EditingViewDelegate {
     editingView.imageView.tintColor = color
     editingView.indicatorOverlay.backgroundColor = color
     editingView.indicator.backgroundColor = color
+    editingView.imageView.layer.shadowColor = color.alpha(0.5).CGColor
     searchButton.tintColor = color
-    turnButton.setTitleColor(color, forState: .Normal)
-    turnButton.layer.borderColor = color.CGColor
+    turnButton.backgroundColor = color
+    turnButton.layer.shadowColor = color.alpha(0.5).CGColor
   }
 
-  func performRequest(color: UIColor) {
+  func performRequest(color: UIColor, radius: CGFloat) {
+    var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+    color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
 
+    Locker.save([
+      Locker.Key.red : red,
+      Locker.Key.green : green,
+      Locker.Key.blue : blue,
+      Locker.Key.intensity : radius / (EditingView.Dimensions.size / 2)
+      ])
+
+    Socket.change()
   }
 }

@@ -2,10 +2,10 @@ import UIKit
 
 extension UIView {
 
-  func prepareShadow() {
+  func prepareShadow(radius: CGFloat = 20, opacity: Float = 1) {
     layer.shadowColor = Color.General.shadow.CGColor
-    layer.shadowOffset = CGSize(width: 0, height: 2)
-    layer.shadowRadius = 5
-    layer.shadowOpacity = 1
+    layer.shadowOffset = CGSize(width: 0, height: 0)
+    layer.shadowRadius = radius
+    layer.shadowOpacity = opacity
   }
 }
