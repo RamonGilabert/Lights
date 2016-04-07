@@ -18,21 +18,21 @@ struct Network {
 
     let task = session.dataTaskWithRequest(request) { data, response, error in
       dispatch {
-        guard let response = response as? NSHTTPURLResponse else { completion(JSON: [], error: error); return }
+        guard let response = response as? NSHTTPURLResponse else { completion(JSON: [:], error: error); return }
 
         guard let data = data where error == nil && API.OK.contains(response.statusCode)
-          else { completion(JSON: [], error: error); return }
+          else { completion(JSON: [:], error: error); return }
 
         do {
           guard let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONDictionary
-            else { completion(JSON: [], error: error); return }
+            else { completion(JSON: [:], error: error); return }
 
           completion(JSON: JSON, error: error)
         } catch {
           print("There was an error with your request.")
         }
         
-        completion(JSON: [], error: error)
+        completion(JSON: [:], error: error)
       }
     }
 
