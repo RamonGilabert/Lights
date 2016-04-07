@@ -23,7 +23,7 @@ class Bluetooth: NSObject {
     static let peripheral = "E20A39F4-73F5-4BC4-A12F-17D1AD07A951"
     static let service = "E20A39F4-73F5-4BC4-A12F-17D1AD07A961"
     static let characteristic = "08590F7E-DB05-467E-8757-72F6FAEB13D4"
-    static let advertiser = "08590F7E-DB05-467E-8757-72F6FAEB13D49"
+    static let advertiser = "7DAB9750-4510-410C-B030-D5597D3EBE6D"
     static let information = [
       CBAdvertisementDataLocalNameKey : "Lights",
       CBAdvertisementDataServiceUUIDsKey : [CBUUID(string: Constants.peripheral)]
@@ -33,6 +33,7 @@ class Bluetooth: NSObject {
   var manager: CBCentralManager?
   var peripheralManager: CBPeripheralManager?
   var characteristic: CBMutableCharacteristic?
+  var service: CBMutableService?
   var light: CBPeripheral?
   var delegate: BluetoothDelegate?
   var pairedDelegate: BluetoothPairedDelegate?
@@ -148,13 +149,13 @@ extension Bluetooth: CBPeripheralManagerDelegate {
   func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
     guard peripheral.state == .PoweredOn else { return }
 
-    let service = CBMutableService(type: CBUUID(string: Constants.service), primary: true)
+    service = CBMutableService(type: CBUUID(string: Constants.service), primary: true)
 
     peripheralManager = peripheral
     characteristic = CBMutableCharacteristic(
-      type: CBUUID(string: Constants.advertiser), properties: .Read, value: nil, permissions: .Writeable)
+      type: CBUUID(string: Constants.advertiser), properties: [.Read, .Write], value: nil, permissions: [.Writeable, .Readable])
 
-    guard let characteristic = characteristic else { return }
+    guard let service = service, characteristic = characteristic else { return }
 
     service.characteristics = [characteristic]
     peripheral.addService(service)
@@ -162,14 +163,13 @@ extension Bluetooth: CBPeripheralManagerDelegate {
     advertise()
   }
 
-  func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didSubscribeToCharacteristic characteristic: CBCharacteristic) {
-    delegate?.showPairing()
-  }
-
   func peripheralManager(peripheral: CBPeripheralManager, didReceiveWriteRequests requests: [CBATTRequest]) {
     guard let request = requests.first else { return }
-    
-    if let data = request.characteristic.value,
+
+    delegate?.showPairing()
+    peripheralManager?.stopAdvertising()
+
+    if let data = request.value,
       string = String(data: data, encoding: NSUTF8StringEncoding) {
 
       let controllerID = string.characters[string.endIndex.predecessor()]
@@ -179,14 +179,12 @@ extension Bluetooth: CBPeripheralManagerDelegate {
         Locker.controller(controllerID)
       }
 
-      print(token)
-
       Locker.token(token)
 
       light = nil
       manager = nil
 
-      pairedDelegate?.pairedDevice()
+      delay(1.5) { self.pairedDelegate?.pairedDevice() }
     }
   }
 }
