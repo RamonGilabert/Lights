@@ -8,11 +8,11 @@ protocol BluetoothDelegate {
 
   func bluetoothLight()
   func shouldShowMessage(message: String)
+  func showPairing()
 }
 
 protocol BluetoothPairedDelegate {
 
-  func showPairing()
   func pairedDevice()
 }
 
@@ -33,7 +33,7 @@ class Bluetooth: NSObject {
   var characteristic: CBMutableCharacteristic?
   var light: CBPeripheral?
   var delegate: BluetoothDelegate?
-  var pairDelegate: BluetoothPairedDelegate?
+  var pairedDelegate: BluetoothPairedDelegate?
 
   override init() {
     super.init()
@@ -86,7 +86,7 @@ extension Bluetooth: CBCentralManagerDelegate {
     case .PoweredOff:
       message = Text.Bluetooth.powered
     case .PoweredOn:
-      scan(); return
+      advertise(); return
     default:
       message = Text.Bluetooth.unknown
     }
@@ -132,7 +132,7 @@ extension Bluetooth: CBPeripheralDelegate {
       light = nil
       manager = nil
 
-      pairDelegate?.pairedDevice()
+      pairedDelegate?.pairedDevice()
     }
   }
 }
@@ -153,7 +153,7 @@ extension Bluetooth: CBPeripheralManagerDelegate {
   }
 
   func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didSubscribeToCharacteristic characteristic: CBCharacteristic) {
-    pairDelegate?.showPairing()
+    delegate?.showPairing()
   }
 
   func peripheralManager(peripheral: CBPeripheralManager, didReceiveWriteRequests requests: [CBATTRequest]) {
@@ -176,7 +176,7 @@ extension Bluetooth: CBPeripheralManagerDelegate {
       light = nil
       manager = nil
 
-      pairDelegate?.pairedDevice()
+      pairedDelegate?.pairedDevice()
     }
   }
 }

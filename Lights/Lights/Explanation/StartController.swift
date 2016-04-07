@@ -197,5 +197,9 @@ extension StartController: BluetoothDelegate {
     lightFound()
   }
 
+  func showPairing() {
+    lightFound()
+  }
+
   func shouldShowMessage(message: String) {  }
 }

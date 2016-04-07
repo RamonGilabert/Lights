@@ -78,6 +78,7 @@ class StartView: UIView {
     delegate?.startButtonDidPress()
     startButton.layer.shadowOpacity = 0
     startButton.userInteractionEnabled = false
+    
     animateBackground(Color.Button.Start.background)
 
     let boundsAnimation = CABasicAnimation(keyPath: "bounds.size")
