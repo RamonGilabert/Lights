@@ -12,6 +12,7 @@ protocol BluetoothDelegate {
 
 protocol BluetoothPairedDelegate {
 
+  func showPairing()
   func pairedDevice()
 }
 
@@ -21,23 +22,36 @@ class Bluetooth: NSObject {
     static let name = "raspberrypi"
     static let service = "E20A39F4-73F5-4BC4-A12F-17D1AD07A961"
     static let characteristic = "08590F7E-DB05-467E-8757-72F6FAEB13D4"
+    static let information = [
+      CBAdvertisementDataLocalNameKey : "Lights",
+      CBAdvertisementDataServiceUUIDsKey : "E20A39F4-73F5-4BC4-A12F-17D1AD07A962"
+    ]
   }
 
   var manager: CBCentralManager?
+  var peripheralManager: CBPeripheralManager?
+  var characteristic: CBMutableCharacteristic?
   var light: CBPeripheral?
   var delegate: BluetoothDelegate?
-  var pairedDelegate: BluetoothPairedDelegate?
+  var pairDelegate: BluetoothPairedDelegate?
 
   override init() {
     super.init()
 
     let queue = dispatch_queue_create("no.bluetooth", DISPATCH_QUEUE_SERIAL)
+
     manager = CBCentralManager(delegate: self, queue: queue)
+    peripheralManager = CBPeripheralManager(delegate: self, queue: queue)
   }
 
   func scan() {
     guard let central = manager else { return }
     central.scanForPeripheralsWithServices([CBUUID(string: Constants.service)], options: nil)
+  }
+
+  func advertise() {
+    guard let central = peripheralManager else { return }
+    central.startAdvertising(Constants.information)
   }
 }
 
@@ -118,7 +132,51 @@ extension Bluetooth: CBPeripheralDelegate {
       light = nil
       manager = nil
 
-      pairedDelegate?.pairedDevice()
+      pairDelegate?.pairedDevice()
+    }
+  }
+}
+
+extension Bluetooth: CBPeripheralManagerDelegate {
+
+  func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
+    guard peripheral.state == .PoweredOn else { return }
+    let service = CBMutableService(type: CBUUID(string: Constants.service), primary: true)
+
+    characteristic = CBMutableCharacteristic(
+      type: CBUUID(string: Constants.characteristic), properties: .Read, value: nil, permissions: .Writeable)
+
+    guard let characteristic = characteristic else { return }
+
+    service.characteristics = [characteristic]
+    peripheral.addService(service)
+  }
+
+  func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didSubscribeToCharacteristic characteristic: CBCharacteristic) {
+    pairDelegate?.showPairing()
+  }
+
+  func peripheralManager(peripheral: CBPeripheralManager, didReceiveWriteRequests requests: [CBATTRequest]) {
+    guard let request = requests.first else { return }
+    
+    if let data = request.characteristic.value,
+      string = String(data: data, encoding: NSUTF8StringEncoding) {
+
+      let controllerID = string.characters[string.endIndex.predecessor()]
+      let token = string.substringToIndex(string.endIndex.predecessor())
+
+      if let controllerID = Int(String(controllerID)) {
+        Locker.controller(controllerID)
+      }
+
+      print(token)
+
+      Locker.token(token)
+
+      light = nil
+      manager = nil
+
+      pairDelegate?.pairedDevice()
     }
   }
 }
