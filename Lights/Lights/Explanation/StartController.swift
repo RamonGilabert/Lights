@@ -181,8 +181,10 @@ extension StartController: StartViewDelegate {
     spring(searchingLabel, delay: 0.45, spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = CGAffineTransformIdentity
     }.finally {
-      bluetooth = Bluetooth()
-      bluetooth.delegate = self
+      delay(1) {
+        bluetooth = Bluetooth()
+        bluetooth.delegate = self
+      }
 
       self.startView.loadingAnimation()
       self.timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self,

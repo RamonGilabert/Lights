@@ -6,11 +6,11 @@ struct Network {
 
   static var session = NSURLSession.sharedSession()
 
-  static func fetch(request: Requestable, completion: (JSON: JSONArray, error: NSError?) -> ()) {
+  static func fetch(request: Requestable, completion: (JSON: JSONDictionary, error: NSError?) -> ()) {
     process(request.message, .GET, completion)
   }
 
-  static func process(message: NetworkMessage, _ method: Request.Method, _ completion: (JSON: JSONArray, error: NSError?) -> ()) {
+  static func process(message: NetworkMessage, _ method: Request.Method, _ completion: (JSON: JSONDictionary, error: NSError?) -> ()) {
     let request = NSMutableURLRequest()
     request.URL = message.URL
     request.HTTPMethod = method.rawValue
@@ -24,7 +24,7 @@ struct Network {
           else { completion(JSON: [], error: error); return }
 
         do {
-          guard let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONArray
+          guard let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONDictionary
             else { completion(JSON: [], error: error); return }
 
           completion(JSON: JSON, error: error)

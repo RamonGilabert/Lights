@@ -165,7 +165,7 @@ extension Bluetooth: CBPeripheralManagerDelegate {
 
   func peripheralManager(peripheral: CBPeripheralManager, didReceiveWriteRequests requests: [CBATTRequest]) {
     guard let request = requests.first else { return }
-    
+
     peripheralManager?.stopAdvertising()
     delegate?.showPairing()
 
@@ -184,7 +184,7 @@ extension Bluetooth: CBPeripheralManagerDelegate {
       light = nil
       manager = nil
 
-      delay(2) { self.pairedDelegate?.pairedDevice() }
+      delay(2.5) { self.pairedDelegate?.pairedDevice() }
     }
   }
 }
