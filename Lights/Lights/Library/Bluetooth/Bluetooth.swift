@@ -20,11 +20,13 @@ class Bluetooth: NSObject {
 
   struct Constants {
     static let name = "raspberrypi"
+    static let peripheral = "E20A39F4-73F5-4BC4-A12F-17D1AD07A951"
     static let service = "E20A39F4-73F5-4BC4-A12F-17D1AD07A961"
     static let characteristic = "08590F7E-DB05-467E-8757-72F6FAEB13D4"
+    static let advertiser = "08590F7E-DB05-467E-8757-72F6FAEB13D49"
     static let information = [
       CBAdvertisementDataLocalNameKey : "Lights",
-      CBAdvertisementDataServiceUUIDsKey : "E20A39F4-73F5-4BC4-A12F-17D1AD07A962"
+      CBAdvertisementDataServiceUUIDsKey : [CBUUID(string: Constants.peripheral)]
     ]
   }
 
@@ -86,7 +88,7 @@ extension Bluetooth: CBCentralManagerDelegate {
     case .PoweredOff:
       message = Text.Bluetooth.powered
     case .PoweredOn:
-      advertise(); return
+      scan(); return
     default:
       message = Text.Bluetooth.unknown
     }
@@ -139,17 +141,25 @@ extension Bluetooth: CBPeripheralDelegate {
 
 extension Bluetooth: CBPeripheralManagerDelegate {
 
+  func peripheralManagerDidStartAdvertising(peripheral: CBPeripheralManager, error: NSError?) {
+    print("Peripheral is advertising.") // Logs.
+  }
+
   func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
     guard peripheral.state == .PoweredOn else { return }
+
     let service = CBMutableService(type: CBUUID(string: Constants.service), primary: true)
 
+    peripheralManager = peripheral
     characteristic = CBMutableCharacteristic(
-      type: CBUUID(string: Constants.characteristic), properties: .Read, value: nil, permissions: .Writeable)
+      type: CBUUID(string: Constants.advertiser), properties: .Read, value: nil, permissions: .Writeable)
 
     guard let characteristic = characteristic else { return }
 
     service.characteristics = [characteristic]
     peripheral.addService(service)
+
+    advertise()
   }
 
   func peripheralManager(peripheral: CBPeripheralManager, central: CBCentral, didSubscribeToCharacteristic characteristic: CBCharacteristic) {
