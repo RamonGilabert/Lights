@@ -184,7 +184,7 @@ extension Bluetooth: CBPeripheralManagerDelegate {
       light = nil
       manager = nil
 
-      delay(1.5) { self.pairedDelegate?.pairedDevice() }
+      delay(2) { self.pairedDelegate?.pairedDevice() }
     }
   }
 }
