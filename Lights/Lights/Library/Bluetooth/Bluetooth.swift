@@ -165,9 +165,9 @@ extension Bluetooth: CBPeripheralManagerDelegate {
 
   func peripheralManager(peripheral: CBPeripheralManager, didReceiveWriteRequests requests: [CBATTRequest]) {
     guard let request = requests.first else { return }
-
-    delegate?.showPairing()
+    
     peripheralManager?.stopAdvertising()
+    delegate?.showPairing()
 
     if let data = request.value,
       string = String(data: data, encoding: NSUTF8StringEncoding) {
