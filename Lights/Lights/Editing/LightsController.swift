@@ -151,7 +151,7 @@ extension LightsController: EditingViewDelegate {
       Locker.Key.red : red,
       Locker.Key.green : green,
       Locker.Key.blue : blue,
-      Locker.Key.intensity : radius * 100 / (EditingView.Dimensions.size / 2)
+      Locker.Key.intensity : radius / (EditingView.Dimensions.size / 2)
       ])
 
     Socket.change()
