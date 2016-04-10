@@ -43,7 +43,7 @@ class Bluetooth: NSObject {
 
     let queue = dispatch_queue_create("no.bluetooth", DISPATCH_QUEUE_SERIAL)
 
-    manager = CBCentralManager(delegate: self, queue: queue)
+    // manager = CBCentralManager(delegate: self, queue: queue) // TODO: Implement that when being a central manager.
     peripheralManager = CBPeripheralManager(delegate: self, queue: queue)
   }
 
@@ -172,9 +172,9 @@ extension Bluetooth: CBPeripheralManagerDelegate {
     if let data = request.value,
       string = String(data: data, encoding: NSUTF8StringEncoding) {
 
-      let substrings = string.componentsSeparatedByString("")
+      let substrings = string.componentsSeparatedByString(" ")
 
-      if let controllerID = Int(String(substrings.last)) {
+      if let string = substrings.last, controllerID = Int(string) {
         Locker.controller(controllerID)
       }
 

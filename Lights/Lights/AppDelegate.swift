@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       window?.rootViewController = controller
 
       Network.fetch(Request.Lights(), completion: { JSON, error in
+        print(JSON)
         UIView.animateWithDuration(0.3, animations: {
           self.launchScreen.transform = CGAffineTransformMakeScale(3, 3)
           self.launchScreen.alpha = 0
@@ -32,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.launchScreen.removeFromSuperview()
         })
 
-        guard error == nil else { return }
+        guard let JSON = JSON.first where error == nil else { return }
 
         Locker.save(JSON)
         Socket.connect()

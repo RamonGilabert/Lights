@@ -6,11 +6,11 @@ struct Network {
 
   static var session = NSURLSession.sharedSession()
 
-  static func fetch(request: Requestable, completion: (JSON: JSONDictionary, error: NSError?) -> ()) {
+  static func fetch(request: Requestable, completion: (JSON: JSONArray, error: NSError?) -> ()) {
     process(request.message, .GET, completion)
   }
 
-  static func process(message: NetworkMessage, _ method: Request.Method, _ completion: (JSON: JSONDictionary, error: NSError?) -> ()) {
+  static func process(message: NetworkMessage, _ method: Request.Method, _ completion: (JSON: JSONArray, error: NSError?) -> ()) {
     let request = NSMutableURLRequest()
     request.URL = message.URL
     request.HTTPMethod = method.rawValue
@@ -18,21 +18,21 @@ struct Network {
 
     let task = session.dataTaskWithRequest(request) { data, response, error in
       dispatch {
-        guard let response = response as? NSHTTPURLResponse else { completion(JSON: [:], error: error); return }
+        guard let response = response as? NSHTTPURLResponse else { completion(JSON: [], error: error); return }
 
         guard let data = data where error == nil && API.OK.contains(response.statusCode)
-          else { completion(JSON: [:], error: error); return }
+          else { completion(JSON: [], error: error); return }
 
         do {
-          guard let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONDictionary
-            else { completion(JSON: [:], error: error); return }
+          guard let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? JSONArray
+            else { completion(JSON: [], error: error); return }
 
           completion(JSON: JSON, error: error)
         } catch {
           print("There was an error with your request.")
         }
         
-        completion(JSON: [:], error: error)
+        completion(JSON: [], error: error)
       }
     }
 

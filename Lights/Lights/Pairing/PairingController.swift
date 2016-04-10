@@ -163,7 +163,7 @@ extension PairingController: BluetoothPairedDelegate {
 
   func pairedDevice() {
     Network.fetch(Request.Lights(), completion: { [weak self] JSON, error in
-      guard let weakSelf = self where error == nil else { return }
+      guard let weakSelf = self, JSON = JSON.first where error == nil else { return }
 
       weakSelf.presentPairedView()
 
