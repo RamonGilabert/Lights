@@ -172,14 +172,15 @@ extension Bluetooth: CBPeripheralManagerDelegate {
     if let data = request.value,
       string = String(data: data, encoding: NSUTF8StringEncoding) {
 
-      let controllerID = string.characters[string.endIndex.predecessor()]
-      let token = string.substringToIndex(string.endIndex.predecessor())
+      let substrings = string.componentsSeparatedByString("")
 
-      if let controllerID = Int(String(controllerID)) {
+      if let controllerID = Int(String(substrings.last)) {
         Locker.controller(controllerID)
       }
 
-      Locker.token(token)
+      if let token = substrings.first {
+        Locker.token(token)
+      }
 
       light = nil
       manager = nil
