@@ -17,6 +17,10 @@ class EditingView: UIView {
     static let imageHeight: CGFloat = 88
   }
 
+  struct Constants {
+    static let seconds: NSTimeInterval = 1
+  }
+
   typealias RGB = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)
   typealias HSV = (hue: CGFloat, saturation: CGFloat, brightness: CGFloat, alpha: CGFloat)
 
@@ -161,7 +165,9 @@ class EditingView: UIView {
       delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
     }
 
-    if abs(date.timeIntervalSinceDate(NSDate())) > 1 {
+    guard panGesture.state != .Ended else { return }
+
+    if abs(date.timeIntervalSinceDate(NSDate())) > Constants.seconds {
       date = NSDate()
 
       delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
