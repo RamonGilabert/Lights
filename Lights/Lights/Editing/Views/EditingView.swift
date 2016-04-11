@@ -141,26 +141,9 @@ class EditingView: UIView {
       previousRadius = overlay.frame.size.width / 2 + Dimensions.border
       previousPoint = indicatorOverlay.center
     } else if size >= Dimensions.imageHeight + 40 {
-      let pathFrame = CGRect(x: (colorWheel.frame.width - size) / 2,
-                             y: (colorWheel.frame.height - size) / 2,
-                             width: size, height: size)
-      let path = UIBezierPath(roundedRect: pathFrame, cornerRadius: size / 2)
-      let constantX: CGFloat = point.x - colorWheel.center.x > 0 ? -1 : 1
-      let constantY: CGFloat = point.y - colorWheel.center.y > 0 ? -1 : 1
-      let difference = size / Dimensions.size
-      let imageDifference: CGFloat = 50
+      performMovement(point)
 
       delegate?.changeColor(color)
-
-      mask.path = path.CGPath
-      indicatorOverlay.center = CGPoint(x: point.x + constantX, y: point.y + constantY * Dimensions.border / 2)
-      overlay.frame.size = CGSize(width: size - Dimensions.border * 2,
-                                  height: size - Dimensions.border * 2)
-      overlay.center = colorWheel.center
-      imageView.frame.size = CGSize(width: Dimensions.imageWidth * difference + imageDifference * (1 - difference),
-                                    height: Dimensions.imageHeight * difference + imageDifference * (1 - difference))
-      imageView.center = colorWheel.center
-      overlay.layer.cornerRadius = overlay.frame.width / 2
     } else if panGesture.state == .Ended {
       delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
     }
@@ -280,18 +263,70 @@ class EditingView: UIView {
     return (hue, saturation)
   }
 
-//  func point(red: CGFloat, green: CGFloat, blue: CGFloat) -> CGPoint {
-//    let color = UIColor(red: red, green: green, blue: blue, alpha: 1)
-//    let hue = UIColor.getHue(color)
-//    let dimension = Dimensions.size / 2
-//    let diferentialX = CGFloat(position.x - dimension) / dimension
-//    let diferentialY = CGFloat(position.y - dimension) / dimension
-//    let saturation = sqrt(CGFloat(diferentialX * diferentialX + diferentialY * diferentialY))
-//    let expression = acos(diferentialX / saturation) / CGFloat(M_PI) / 2
-//    let hue = saturation == 0 ? 0 : diferentialY < 0 ? 1 - expression : expression
-//
-//    return (hue, saturation)
-//  }
+  func point(red: CGFloat, green: CGFloat, blue: CGFloat) -> CGPoint {
+    let color = UIColor(red: red, green: green, blue: blue, alpha: 1)
+    let dimension = Dimensions.size / 2
+    var hue: CGFloat = 0
+    var saturation: CGFloat = 0
+    var brightness: CGFloat = 0
+    var alpha: CGFloat = 0
+
+    color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+
+    if hue == 0 && saturation == 0 {
+      let point = CGPoint(x: 0, y: dimension)
+      let reference = self.saturation(point)
+      let color = UIColor(hue: reference.hue,
+                          saturation: reference.saturation, brightness: 1, alpha: 1)
+
+      delegate?.performRequest(color, radius: dimension)
+
+      return point
+    } else {
+      var done = false
+      var expression = 1 - hue
+      var point = CGPointZero
+
+      while !done {
+        let first = dimension * dimension * (saturation * saturation - 2)
+        let x = cos(expression * CGFloat(M_PI) / 2) * saturation * dimension + dimension
+        let y = sqrt(first + 4 * dimension * x - x * x)
+
+        if (y - dimension) / dimension < 0 {
+          expression = hue
+        } else {
+          point = CGPoint(x: x, y: y)
+          done = true
+        }
+      }
+
+      return point
+    }
+  }
+
+  func performMovement(point: CGPoint) {
+    let x = abs(point.x - colorWheel.center.x)
+    let y = abs(point.y - colorWheel.center.y)
+    let size = sqrt(x * x + y * y) * 2
+    let pathFrame = CGRect(x: (colorWheel.frame.width - size) / 2,
+                           y: (colorWheel.frame.height - size) / 2,
+                           width: size, height: size)
+    let path = UIBezierPath(roundedRect: pathFrame, cornerRadius: size / 2)
+    let constantX: CGFloat = point.x - colorWheel.center.x > 0 ? -1 : 1
+    let constantY: CGFloat = point.y - colorWheel.center.y > 0 ? -1 : 1
+    let difference = size / Dimensions.size
+    let imageDifference: CGFloat = 50
+
+    mask.path = path.CGPath
+    indicatorOverlay.center = CGPoint(x: point.x + constantX, y: point.y + constantY * Dimensions.border / 2)
+    overlay.frame.size = CGSize(width: size - Dimensions.border * 2,
+                                height: size - Dimensions.border * 2)
+    overlay.center = colorWheel.center
+    imageView.frame.size = CGSize(width: Dimensions.imageWidth * difference + imageDifference * (1 - difference),
+                                  height: Dimensions.imageHeight * difference + imageDifference * (1 - difference))
+    imageView.center = colorWheel.center
+    overlay.layer.cornerRadius = overlay.frame.width / 2
+  }
 
   func convertHSV(initial: HSV) -> RGB {
     var color: RGB = (red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)

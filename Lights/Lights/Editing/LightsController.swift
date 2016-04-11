@@ -72,8 +72,13 @@ class LightsController: TapViewController {
 
     turnButton.setTitle(light.status ? Text.Editing.turnOff : Text.Editing.turnOn, forState: .Normal)
 
-    let color = UIColor(red: light.red * 255, green: light.green * 255, blue: light.blue * 255, alpha: 1)
+    let red = light.red * 255
+    let green = light.green * 255
+    let blue = light.blue * 255
+    let color = UIColor(red: red, green: green, blue: blue, alpha: 1)
     changeColor(color)
+
+    editingView.performMovement(editingView.point(red, green: green, blue: blue))
   }
 
   // MARK: - Action methods
