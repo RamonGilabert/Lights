@@ -93,6 +93,7 @@ class EditingView: UIView {
   var delegate: EditingViewDelegate?
   var previousRadius = Dimensions.size / 2
   var previousPoint = CGPointZero
+  var date = NSDate(timeIntervalSince1970: 0)
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -156,9 +157,15 @@ class EditingView: UIView {
                                     height: Dimensions.imageHeight * difference + imageDifference * (1 - difference))
       imageView.center = colorWheel.center
       overlay.layer.cornerRadius = overlay.frame.width / 2
+    } else if panGesture.state == .Ended {
+      delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
     }
 
-    delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
+    if abs(date.timeIntervalSinceDate(NSDate())) > 1 {
+      date = NSDate()
+
+      delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
+    }
   }
 
   func indicatorLocation(location: CGPoint) -> CGPoint {
