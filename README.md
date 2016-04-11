@@ -18,7 +18,7 @@ Here's a small sneak peak of the app:
 
 <div align = "center">
 <img src="https://github.com/RamonGilabert/Lights/blob/master/Resources/lights.jpg" />
-<br>
+<br><br>
 </div>
 
 **Lights** can control:
