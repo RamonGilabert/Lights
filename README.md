@@ -1,4 +1,6 @@
-![Lights](https://github.com/RamonGilabert/Lights/blob/master/Resources/lights.jpg)
+<div align = "center">
+<img src="https://github.com/RamonGilabert/Lights/blob/master/Resources/lights.jpg" />
+</div>
 
 **Lights** is a project that was born last November with the motivation to get my electronic knowledge together with my development one, they met and this is the first product out of it, the first product of a connected home, a light.
 
