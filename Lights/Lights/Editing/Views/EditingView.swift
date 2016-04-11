@@ -285,7 +285,7 @@ class EditingView: UIView {
       }
     }
 
-    return CGPointZero
+    return CGPoint(x: 0, y: Dimensions.size / 2)
   }
 
   func performMovement(point: CGPoint) {
