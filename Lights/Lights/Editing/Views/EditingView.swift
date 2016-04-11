@@ -264,8 +264,9 @@ class EditingView: UIView {
   }
 
   func point(red: CGFloat, green: CGFloat, blue: CGFloat) -> CGPoint {
+    let final = Int(Dimensions.size)
+    let error: CGFloat = 0.005
     let color = UIColor(red: red, green: green, blue: blue, alpha: 1)
-    let dimension = Dimensions.size / 2
     var hue: CGFloat = 0
     var saturation: CGFloat = 0
     var brightness: CGFloat = 0
@@ -273,35 +274,18 @@ class EditingView: UIView {
 
     color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
 
-    if hue == 0 && saturation == 0 {
-      let point = CGPoint(x: 0, y: dimension)
-      let reference = self.saturation(point)
-      let color = UIColor(hue: reference.hue,
-                          saturation: reference.saturation, brightness: 1, alpha: 1)
+    for x in 0 ..< final {
+      for y in 0 ..< final {
+        let point = CGPoint(x: CGFloat(x), y: CGFloat(y))
+        let color = self.saturation(point)
 
-      delegate?.performRequest(color, radius: dimension)
-
-      return point
-    } else {
-      var done = false
-      var expression = 1 - hue
-      var point = CGPointZero
-
-      while !done {
-        let first = dimension * dimension * (saturation * saturation - 2)
-        let x = cos(expression * CGFloat(M_PI) / 2) * saturation * dimension + dimension
-        let y = sqrt(first + 4 * dimension * x - x * x)
-
-        if (y - dimension) / dimension < 0 {
-          expression = hue
-        } else {
-          point = CGPoint(x: x, y: y)
-          done = true
+        if abs(color.hue - hue) < error && abs(color.saturation - saturation) < error {
+          return point
         }
       }
-
-      return point
     }
+
+    return CGPointZero
   }
 
   func performMovement(point: CGPoint) {
