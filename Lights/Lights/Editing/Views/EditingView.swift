@@ -140,12 +140,12 @@ class EditingView: UIView {
     if panGesture.state == .Began {
       previousRadius = overlay.frame.size.width / 2 + Dimensions.border
       previousPoint = indicatorOverlay.center
+    } else if panGesture.state == .Ended {
+      delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
     } else if size >= Dimensions.imageHeight + 40 {
       performMovement(point)
 
       delegate?.changeColor(color)
-    } else if panGesture.state == .Ended {
-      delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
     }
 
     guard panGesture.state != .Ended else { return }

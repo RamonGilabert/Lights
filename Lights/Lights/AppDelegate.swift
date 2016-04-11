@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       window?.rootViewController = controller
 
       Network.fetch(Request.Lights(), completion: { JSON, error in
-        print(JSON)
         UIView.animateWithDuration(0.3, animations: {
           self.launchScreen.transform = CGAffineTransformMakeScale(3, 3)
           self.launchScreen.alpha = 0
