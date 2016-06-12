@@ -2,11 +2,11 @@ use_frameworks!
 
 platform :ios, '8.0'
 
-pod 'Ripple',            :git => 'https://github.com/RamonGilabert/Ripple.git'
-pod 'Morgan',            :git => 'https://github.com/RamonGilabert/Morgan.git'
-pod 'Transition',        :git => 'https://github.com/hyperoslo/Transition'
+pod 'Ripple',                 :git => 'https://github.com/RamonGilabert/Ripple.git'
+pod 'Morgan',                 :git => 'https://github.com/RamonGilabert/Morgan.git'
+pod 'Transition',             :git => 'https://github.com/hyperoslo/Transition'
+pod 'Socket.IO-Client-Swift', :git => 'https://github.com/socketio/socket.io-client-swift'
 pod 'Hue'
 pod 'Sugar'
-pod 'Socket.IO-Client-Swift'
 
 target 'Lights'

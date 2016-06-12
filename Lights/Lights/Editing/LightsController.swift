@@ -76,6 +76,7 @@ class LightsController: TapViewController {
     let green = light.green
     let blue = light.blue
     let color = UIColor(red: red, green: green, blue: blue, alpha: 1)
+
     changeColor(color)
 
     let point = editingView.point(red, green: green, blue: blue)
@@ -130,7 +131,7 @@ class LightsController: TapViewController {
       $0.transform = transform
     }
 
-    spring(turnButton, delay: show ? 0 : 0.4,
+    spring(turnButton, delay: show ? 0.05 : 0.4,
            spring: animation.spring, friction: animation.friction, mass: animation.mass) {
       $0.transform = transform
     }

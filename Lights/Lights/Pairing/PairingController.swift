@@ -136,12 +136,13 @@ class PairingController: TapViewController {
     }
 
     delay(1) {
-      closeDistilleries()
       [self.flameView, self.titleLabel, self.pairingLabel].forEach { $0.transform = transform }
 
-      spring(self.pairedView, spring: 100, friction: 70, mass: 70) {
-        $0.transform = CGAffineTransformIdentity
-      }
+      UIView.animateWithDuration(
+        0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
+          self.pairedView.alpha = 1
+          self.pairedView.transform = CGAffineTransformIdentity
+        }, completion: nil)
     }
   }
 }
@@ -149,13 +150,12 @@ class PairingController: TapViewController {
 extension PairingController: PairedViewDelegate {
 
   func startButtonDidPress() {
-    closeDistilleries()
-
-    animate(pairedView) {
-      $0.transform = CGAffineTransformMakeScale(0.01, 0.01)
-    }.finally {
-      self.presentViewController(LightsController(), animated: true, completion: nil)
-    }
+    UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1,
+                               initialSpringVelocity: 1, options: [], animations: {
+      self.pairedView.transform = CGAffineTransformMakeScale(0.01, 0.01)
+      }, completion: { _ in
+        self.presentViewController(LightsController(), animated: true, completion: nil)
+    })
   }
 }
 

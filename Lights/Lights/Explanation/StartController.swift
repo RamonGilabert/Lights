@@ -56,6 +56,7 @@ class StartController: TapViewController {
 
   let animation = (spring: CGFloat(90), friction: CGFloat(80), mass: CGFloat(80))
   var timer = NSTimer()
+  var foundAlready = false
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -72,6 +73,8 @@ class StartController: TapViewController {
 
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+
+    foundAlready = false
 
     startView.transform = CGAffineTransformMakeScale(0.01, 0.01)
     [flameView, explanationView.titleLabel, explanationView.subtitleLabel, searchingLabel].forEach {
@@ -117,8 +120,12 @@ class StartController: TapViewController {
   }
 
   func lightFound() {
+    guard !foundAlready else { return }
+
     timer.invalidate()
     calm()
+
+    foundAlready = true
 
     UIView.animateWithDuration(0.3, animations: {
       self.startView.indicator.transform = CGAffineTransformMakeScale(0.1, 0.1)
@@ -132,7 +139,6 @@ class StartController: TapViewController {
       }.chains(duration: 0.3) {
         [$0, $1].forEach { $0.transform = CGAffineTransformMakeScale(0.01, 0.01) }
       }.finally {
-        closeDistilleries()
         self.presentViewController(self.pairingController, animated: true, completion: nil)
       }
     }

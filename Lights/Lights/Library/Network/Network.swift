@@ -51,10 +51,19 @@ struct Socket {
 
   static func connect() {
     guard let socket = socket else { return }
-    
+
+    if socket.status == .Connected {
+      socket.disconnect()
+    }
+
     handle()
-    
+
     socket.connect()
+  }
+
+  static func disconnect() {
+    guard let socket = socket else { return }
+    socket.disconnect()
   }
 
   static func handle() {

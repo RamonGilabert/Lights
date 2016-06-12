@@ -3,7 +3,7 @@ PODS:
   - Morgan (0.9.1):
     - Walker
   - Ripple (2.1)
-  - Socket.IO-Client-Swift (6.0.0)
+  - Socket.IO-Client-Swift (6.1.2)
   - Sugar (1.0.12)
   - Transition (0.1.0)
   - Walker (0.9.1)
@@ -12,7 +12,7 @@ DEPENDENCIES:
   - Hue
   - Morgan (from `https://github.com/RamonGilabert/Morgan.git`)
   - Ripple (from `https://github.com/RamonGilabert/Ripple.git`)
-  - Socket.IO-Client-Swift
+  - Socket.IO-Client-Swift (from `https://github.com/socketio/socket.io-client-swift`)
   - Sugar
   - Transition (from `https://github.com/hyperoslo/Transition`)
 
@@ -21,16 +21,21 @@ EXTERNAL SOURCES:
     :git: https://github.com/RamonGilabert/Morgan.git
   Ripple:
     :git: https://github.com/RamonGilabert/Ripple.git
+  Socket.IO-Client-Swift:
+    :git: https://github.com/socketio/socket.io-client-swift
   Transition:
     :git: https://github.com/hyperoslo/Transition
 
 CHECKOUT OPTIONS:
   Morgan:
-    :commit: 5728b9d7a2fdaa8384821a71403216b07fbbfbc4
+    :commit: 677a89a75b91c76bf8823450cddb2043cd409054
     :git: https://github.com/RamonGilabert/Morgan.git
   Ripple:
-    :commit: f34a46d3927612b7935130beadf3c2c3624d542d
+    :commit: 1f4db79fd823a4beba17584ae05c9157f730a6c7
     :git: https://github.com/RamonGilabert/Ripple.git
+  Socket.IO-Client-Swift:
+    :commit: 4fa3225cbae1174f65c2522522a2ec67d2217fc9
+    :git: https://github.com/socketio/socket.io-client-swift
   Transition:
     :commit: 0d94057f824787973ae34bac4906164e3d6a2c8b
     :git: https://github.com/hyperoslo/Transition
@@ -39,11 +44,11 @@ SPEC CHECKSUMS:
   Hue: ed6781be844b58b2a38150cfd4bf24c33449faf8
   Morgan: 9cb6cdfd5eaafcdc98af5c05620cad575ace77de
   Ripple: fb35d2d638e9bcc03c291f14e80ae6ab1e3a3dea
-  Socket.IO-Client-Swift: 014fe27dbb8d9d359d09b482309421fb4eccc16c
+  Socket.IO-Client-Swift: 60a60e8bfd7b16bc57c90ff6329e9f536b5eacdd
   Sugar: 7280dfee5299f98cbae23d86c800cccd86377117
   Transition: 66d86e3ae1b8f0b3d9ba2000c7a45fbc17b066f2
   Walker: 9a765e7f35adb19ce59079e26d425c1e8c463241
 
-PODFILE CHECKSUM: 982a94599380114cc22c5a6395365c4411344eb4
+PODFILE CHECKSUM: 30184393d5d00f6a5602bccd3b7c0d63aea286cb
 
-COCOAPODS: 1.0.0.beta.6
+COCOAPODS: 1.0.0
