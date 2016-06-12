@@ -139,7 +139,7 @@ class PairingController: TapViewController {
       [self.flameView, self.titleLabel, self.pairingLabel].forEach { $0.transform = transform }
 
       UIView.animateWithDuration(
-        0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
+        1.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.6, options: [], animations: {
           self.pairedView.alpha = 1
           self.pairedView.transform = CGAffineTransformIdentity
         }, completion: nil)
@@ -150,7 +150,7 @@ class PairingController: TapViewController {
 extension PairingController: PairedViewDelegate {
 
   func startButtonDidPress() {
-    UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 1,
+    UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 1,
                                initialSpringVelocity: 1, options: [], animations: {
       self.pairedView.transform = CGAffineTransformMakeScale(0.01, 0.01)
       }, completion: { _ in
