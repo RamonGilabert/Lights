@@ -95,6 +95,7 @@ class EditingView: UIView {
   }()
 
   var delegate: EditingViewDelegate?
+  var brightness: CGFloat = 1
   var previousRadius = Dimensions.size / 2
   var previousPoint = CGPointZero
   var date = NSDate(timeIntervalSince1970: 0)
@@ -131,7 +132,8 @@ class EditingView: UIView {
     let y = abs(point.y - colorWheel.center.y)
     let reference = saturation(point)
     let color = UIColor(hue: reference.hue,
-                        saturation: reference.saturation, brightness: 1, alpha: 1)
+                        saturation: reference.saturation,
+                        brightness: brightness, alpha: 1)
     let size = sqrt(x * x + y * y) * 2
 
     previousRadius = size / 2
@@ -144,7 +146,6 @@ class EditingView: UIView {
       delegate?.performRequest(color, radius: size >= Dimensions.imageHeight + 40 ? size / 2 : Dimensions.size / 2)
     } else if size >= Dimensions.imageHeight + 40 {
       performMovement(point)
-
       delegate?.changeColor(color)
     }
 
@@ -252,7 +253,7 @@ class EditingView: UIView {
     return reference
   }
 
-  func saturation(position: CGPoint) -> (hue: CGFloat, saturation: CGFloat) {
+  func saturation(position: CGPoint) -> (hue: CGFloat, saturation: CGFloat, brightness: CGFloat) {
     let dimension = Dimensions.size / 2
     let diferentialX = CGFloat(position.x - dimension) / dimension
     let diferentialY = CGFloat(position.y - dimension) / dimension
@@ -260,7 +261,7 @@ class EditingView: UIView {
     let expression = acos(diferentialX / saturation) / CGFloat(M_PI) / 2
     let hue = saturation == 0 ? 0 : diferentialY < 0 ? 1 - expression : expression
 
-    return (hue, saturation)
+    return (hue, saturation, 1)
   }
 
   func point(red: CGFloat, green: CGFloat, blue: CGFloat) -> CGPoint {
@@ -273,6 +274,8 @@ class EditingView: UIView {
     var alpha: CGFloat = 0
 
     color.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+
+    self.brightness = brightness
 
     for x in 0 ..< final {
       for y in 0 ..< final {
